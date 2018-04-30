@@ -8,9 +8,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
     private Entity[][] cells;
 
 
-    public FlattenedBoard(Board board) {
+    FlattenedBoard(Board board) {
         this.board = board;
-
         updateFlattenedBoard();
     }
 
@@ -20,10 +19,10 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
         Entity[] entityArray = board.getEntities();
 
-        for (Entity entity: entityArray) {
+        for (Entity entity : entityArray) {
             int x, y;
 
-            if(entity != null) {
+            if (entity != null) {
                 x = entity.getLocation().getX();
                 y = entity.getLocation().getY();
 
@@ -31,16 +30,33 @@ public class FlattenedBoard implements BoardView, EntityContext {
                     newFlatBoard[x][y] = entity;
                 }
             }
-
-
         }
-
         cells = newFlatBoard;
     }
 
     @Override
     public EntityType getEntityType(XY xy) {
         return getEntityType(xy.getX(), xy.getY());
+    }
+
+    @Override
+    public int getWaitingTimeBeast() {
+        return board.getConfig().getWaitingTimeBeast();
+    }
+
+    @Override
+    public int goodBeastViewDistance() {
+        return board.getConfig().getGoodBeastViewDistance();
+    }
+
+    @Override
+    public int badBeastViewDistance() {
+        return board.getConfig().getBadBestViewDistance();
+    }
+
+    @Override
+    public int playerEnityViewDistance() {
+        return board.getConfig().getPlayerEnityViewDistance();
     }
 
     @Override
@@ -59,39 +75,134 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
     @Override
     public void tryMove(MiniSquirrel miniSquirrel, XY moveDirection) {
-        //todo
+        XY nextPosition = miniSquirrel.getLocation().addVector(moveDirection);
+        Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
+        if (nextEntity != null) {
+            if (nextEntity instanceof Wall) {
+                miniSquirrel.updateEnergy(nextEntity.getEnergy());
+                miniSquirrel.isStunnedNextRound();
+            } else if (nextEntity instanceof GoodPlant || nextEntity instanceof BadPlant) {
+                miniSquirrel.updateEnergy(nextEntity.getEnergy());
+                killAndReplace(nextEntity);
+                if (miniSquirrel.getEnergy() <= 0) {
+                    kill(miniSquirrel);
+                }
+            } else if (nextEntity instanceof BadBeast || nextEntity instanceof GoodBeast) {
+                miniSquirrel.updateEnergy(nextEntity.getEnergy());
+                if (miniSquirrel.getEnergy() <= 0) {
+                    kill(miniSquirrel);
+                } else {
+                    miniSquirrel.move(moveDirection);
+                }
+            } else if (nextEntity instanceof MasterSquirrel) {
+                MasterSquirrel masterSquirrel = (MasterSquirrel) nextEntity;
+                if (masterSquirrel.mySquirrel(miniSquirrel)) {
+                    masterSquirrel.updateEnergy(miniSquirrel.getEnergy());
+                    kill(miniSquirrel);
+                } else {
+                    kill(miniSquirrel);
+                }
+            } else if (nextEntity instanceof MiniSquirrel) {
+                if (miniSquirrel.getDaddy() != ((MiniSquirrel) nextEntity).getDaddy()) {
+                    kill(miniSquirrel);
+                    kill(nextEntity);
+                }
+            }
+        } else {
+            miniSquirrel.move(moveDirection);
+        }
     }
 
     @Override
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
-        //todo
+        XY nextPosition = goodBeast.getLocation().addVector(moveDirection);
+        Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
+        if (nextEntity != null) {
+            if (nextEntity instanceof Wall) {
+                return;
+            } else if (nextEntity instanceof MiniSquirrel || nextEntity instanceof MasterSquirrel) {
+                nextEntity.updateEnergy(goodBeast.getEnergy());
+                killAndReplace(goodBeast);
+            }
+        } else {
+            goodBeast.move(moveDirection);
+        }
     }
-
 
     @Override
     public void tryMove(BadBeast badBeast, XY moveDirection) {
-        //todo
+        XY nextPosition = badBeast.getLocation().addVector(moveDirection);
+        Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
+        if (nextEntity != null) {
+            if (nextEntity instanceof Wall) {
+                return;
+            } else if (nextEntity instanceof MiniSquirrel) {
+                nextEntity.updateEnergy(badBeast.getEnergy());
+                if (nextEntity.getEnergy() <= 0) {
+                    kill(nextEntity);
+                }
+                badBeast.bites();
+                if (badBeast.getBitesLeft() == 0)
+                    killAndReplace(badBeast);
+            } else if (nextEntity instanceof MasterSquirrel) {
+                nextEntity.updateEnergy(badBeast.getEnergy());
+                badBeast.bites();
+                if (badBeast.getBitesLeft() == 0)
+                    killAndReplace(badBeast);
+            }
+        } else {
+            badBeast.move(moveDirection);
+        }
     }
-
 
     @Override
     public void tryMove(MasterSquirrel masterSquirrel, XY moveDirection) {
-        //todo
+        XY nextPosition = masterSquirrel.getLocation().addVector(moveDirection);
+        Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
+        if (nextEntity != null) {
+            if (nextEntity instanceof Wall) {
+                masterSquirrel.updateEnergy(nextEntity.getEnergy());
+                masterSquirrel.isStunnedNextRound();
+            } else if (nextEntity instanceof BadBeast) {
+                masterSquirrel.updateEnergy(nextEntity.getEnergy());
+                ((BadBeast) nextEntity).bites();
+                if (((BadBeast) nextEntity).getBitesLeft() == 0) {
+                    killAndReplace(nextEntity);
+                }
+            } else if (nextEntity instanceof GoodPlant || nextEntity instanceof BadPlant) {
+                masterSquirrel.updateEnergy(nextEntity.getEnergy());
+                killAndReplace(nextEntity);
+            } else if (nextEntity instanceof MiniSquirrel) {
+                MiniSquirrel miniSquirrel = (MiniSquirrel) nextEntity;
+                int energy;
+                if (masterSquirrel.mySquirrel(miniSquirrel)) {
+                    energy = miniSquirrel.getEnergy();
+                } else {
+                    energy = board.getConfig().getPointsOfBadMiniSquirrel();
+                }
+                masterSquirrel.updateEnergy(energy);
+                kill(masterSquirrel);
+                masterSquirrel.move(moveDirection);
+            } else if (nextEntity instanceof GoodBeast) {
+                masterSquirrel.updateEnergy(nextEntity.getEnergy());
+            }
+        } else {
+            masterSquirrel.move(moveDirection);
+        }
     }
 
 
     /**
      * Scans area with an offset of +-6 for the nearest player entity.
      *
-     * @param pos   the start position for the offset
-     * @return      the nearest player
+     * @param pos the start position for the offset
+     * @return the nearest player
      */
 
     @Override
     public Player nearestPlayerEntity(XY pos) {
-
         //define scan area
-        int viewDistance = 6;
+        int viewDistance = board.getConfig().getGoodBeastViewDistance();
 
         int startX = pos.getX() - viewDistance;
         if (startX < 0)
@@ -99,7 +210,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
         int endX = pos.getX() + viewDistance;
         if (endX >= getSize().getX())
-            endX = getSize().getX()-1;
+            endX = getSize().getX() - 1;
 
         int startY = pos.getY() - viewDistance;
         if (startY < 0)
@@ -107,29 +218,24 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
         int endY = pos.getY() + viewDistance;
         if (endY >= getSize().getY())
-            endY = getSize().getY()-1;
-
+            endY = getSize().getY() - 1;
 
         //find nearest player
-        Player player = null;
+        Player nearestPlayer = null;
 
-        for(int x = startX; x <= endX; x++) {
+        for (int x = startX; x <= endX; x++) {
             for (int y = startY; y <= endY; y++) {
-
                 Entity entity = cells[x][y];
-
                 if (entity instanceof Player) {
-                    if (player == null) {
-                        player = (Player) entity;
-                    } else if (pos.distanceFrom(entity.getLocation()) < pos.distanceFrom(player.getLocation())) {
-                        player = (Player) entity;
+                    if (nearestPlayer == null) {
+                        nearestPlayer = (Player) entity;
+                    } else if (pos.distanceFrom(entity.getLocation()) < pos.distanceFrom(nearestPlayer.getLocation())) {
+                        nearestPlayer = (Player) entity;
                     }
                 }
-
             }
         }
-
-        return player;
+        return nearestPlayer;
     }
 
     @Override

@@ -18,6 +18,9 @@ public abstract class MasterSquirrel extends Player {
         this.moveCommand = moveCommand;
     }
 
+    public boolean mySquirrel(MiniSquirrel squirrelToCheck) {
+        return this == squirrelToCheck.getDaddy();
+    }
 
     @Override
     public String toString() {
