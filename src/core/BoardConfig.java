@@ -10,6 +10,11 @@ public class BoardConfig {
     private final int badPlantQuant = 10;
     private final int goodPlantQuant = 10;
     private final int wallQuant = 30;
+    private final int pointsOfBadMiniSquirrel = 150;
+    private final int waitingTimeBeast = 4;
+    private final int goodBeastViewDistance = 6;
+    private final int badBestViewDistance = 6;
+    private final int playerEnityViewDistance = 6;
 
 
     public int getWidth() {
@@ -44,5 +49,23 @@ public class BoardConfig {
         return wallQuant;
     }
 
-}
+    public int getPointsOfBadMiniSquirrel() {
+        return pointsOfBadMiniSquirrel;
+    }
 
+    public int getWaitingTimeBeast() {
+        return waitingTimeBeast;
+    }
+
+    public int getGoodBeastViewDistance() {
+        return goodBeastViewDistance;
+    }
+
+    public int getBadBestViewDistance() {
+        return badBestViewDistance;
+    }
+
+    public int getPlayerEnityViewDistance() {
+        return playerEnityViewDistance;
+    }
+}

@@ -4,27 +4,27 @@ import core.EntityContext;
 import core.XY;
 
 public class MiniSquirrel extends Player {
+    private final MasterSquirrel daddy;
 
-    private final int masterSquirrelID;
-
-    public MiniSquirrel(int energy, XY location, int masterSquirrelID) {
+    public MiniSquirrel(int energy, XY location, MasterSquirrel daddy) {
         super(energy, location);
-        this.masterSquirrelID = masterSquirrelID;
+        this.daddy = daddy;
     }
 
 
-    public int getMasterSquirrelID() {
-        return masterSquirrelID;
+    public MasterSquirrel getDaddy() {
+        return daddy;
     }
+
 
     @Override
     public void nextStep(EntityContext entityContext) {
         //todo
     }
 
+
     @Override
     public String toString() {
         return "MiniSquirrel{ " + super.toString() + " }";
     }
-
 }
