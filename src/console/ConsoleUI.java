@@ -38,13 +38,13 @@ public class ConsoleUI implements UI {
                         c = 'B';
                         break;
                     case GOOD_BEAST:
-                        c = 'G';
-                        break;
-                    case BAD_PLANT:
                         c = 'b';
                         break;
+                    case BAD_PLANT:
+                        c = 'P';
+                        break;
                     case GOOD_PLANT:
-                        c = 'g';
+                        c = 'p';
                         break;
                     case MASTER_SQUIRREL:
                         c = 'M';
