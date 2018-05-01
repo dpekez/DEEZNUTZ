@@ -19,7 +19,8 @@ public class MiniSquirrel extends Player {
 
     @Override
     public void nextStep(EntityContext entityContext) {
-        //todo
+        updateEnergy(-1);
+        entityContext.tryMove(this, XY.generateRandomMoveVector());
     }
 
 
