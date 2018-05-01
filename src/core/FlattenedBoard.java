@@ -133,26 +133,30 @@ public class FlattenedBoard implements BoardView, EntityContext {
     public void tryMove(BadBeast badBeast, XY moveDirection) {
         XY nextPosition = badBeast.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
-        if (nextEntity != null) {
-            if (nextEntity instanceof Wall) {
-                return;
-            } else if (nextEntity instanceof MiniSquirrel) {
-                nextEntity.updateEnergy(badBeast.getEnergy());
-                if (nextEntity.getEnergy() <= 0) {
-                    kill(nextEntity);
-                }
-                badBeast.bites();
-                if (badBeast.getBitesLeft() == 0)
-                    killAndReplace(badBeast);
-            } else if (nextEntity instanceof MasterSquirrel) {
-                nextEntity.updateEnergy(badBeast.getEnergy());
-                badBeast.bites();
-                if (badBeast.getBitesLeft() == 0)
-                    killAndReplace(badBeast);
-            }
-        } else {
+
+        if(nextEntity == null) {
             badBeast.move(moveDirection);
+            return;
         }
+
+        if(nextEntity instanceof MiniSquirrel) {
+            nextEntity.updateEnergy(nextEntity.getEnergy());
+
+            if (nextEntity.getEnergy() <= 0)
+                kill(nextEntity);
+
+            badBeast.bite();
+
+            if (badBeast.getBitesLeft() == 0)
+                killAndReplace(badBeast);
+
+        } else if(nextEntity instanceof MasterSquirrel) {
+            badBeast.bite();
+
+            if (badBeast.getBitesLeft() == 0)
+                killAndReplace(badBeast);
+        }
+
     }
 
     @Override
@@ -160,7 +164,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
         XY nextPosition = masterSquirrel.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
 
-        if (nextEntity == null) {
+        if(nextEntity == null) {
             masterSquirrel.move(moveDirection);
             return;
         }
@@ -169,9 +173,9 @@ public class FlattenedBoard implements BoardView, EntityContext {
             masterSquirrel.updateEnergy(nextEntity.getEnergy());
             masterSquirrel.stun();
 
-        } else if (nextEntity instanceof BadBeast) {
+        } else if(nextEntity instanceof BadBeast) {
             masterSquirrel.updateEnergy(nextEntity.getEnergy());
-            ((BadBeast) nextEntity).bites();
+            ((BadBeast) nextEntity).bite();
 
             if(((BadBeast) nextEntity).getBitesLeft() == 0)
                 killAndReplace(nextEntity);
@@ -183,7 +187,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
         } else if(nextEntity instanceof MiniSquirrel) {
             MiniSquirrel miniSquirrel = (MiniSquirrel) nextEntity;
             int energy;
-            if (masterSquirrel.isMyChild(miniSquirrel)) {
+            if(masterSquirrel.isMyChild(miniSquirrel)) {
                 energy = miniSquirrel.getEnergy();
             } else {
                 energy = board.getConfig().getPointsOfBadMiniSquirrel();

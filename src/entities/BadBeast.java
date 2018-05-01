@@ -17,11 +17,34 @@ public class BadBeast extends Character {
 
     @Override
     public void nextStep(EntityContext entityContext) {
-        //todo
+        Player nearestPlayer = entityContext.nearestPlayerEntity(getLocation());
+
+        if(nearestPlayer == null) {
+            entityContext.tryMove(this, XY.generateRandomMoveVector());
+            return;
+        }
+
+        int xDiff = nearestPlayer.getLocation().getX() - getLocation().getX();
+        int yDiff = nearestPlayer.getLocation().getY() - getLocation().getY();
+
+        int moveX, moveY;
+
+        if(xDiff >= 0)
+            moveX = 1;
+        else
+            moveX = -1;
+
+        if(yDiff >= 0)
+            moveY = 1;
+        else
+            moveY = -1;
+
+        entityContext.tryMove(this, new XY(moveX, moveY));
     }
 
-    public void bites() {
+    public void bite() {
         bitesLeft--;
+
     }
 
     public int getBitesLeft() {
