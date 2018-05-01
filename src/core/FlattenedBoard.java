@@ -77,41 +77,48 @@ public class FlattenedBoard implements BoardView, EntityContext {
     public void tryMove(MiniSquirrel miniSquirrel, XY moveDirection) {
         XY nextPosition = miniSquirrel.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
-        if (nextEntity != null) {
-            if (nextEntity instanceof Wall) {
-                miniSquirrel.updateEnergy(nextEntity.getEnergy());
-                miniSquirrel.isStunnedNextRound();
-            } else if (nextEntity instanceof GoodPlant || nextEntity instanceof BadPlant) {
-                miniSquirrel.updateEnergy(nextEntity.getEnergy());
-                killAndReplace(nextEntity);
-                if (miniSquirrel.getEnergy() <= 0) {
-                    kill(miniSquirrel);
-                }
-            } else if (nextEntity instanceof BadBeast || nextEntity instanceof GoodBeast) {
-                miniSquirrel.updateEnergy(nextEntity.getEnergy());
-                if (miniSquirrel.getEnergy() <= 0) {
-                    kill(miniSquirrel);
-                } else {
-                    miniSquirrel.move(moveDirection);
-                }
-            } else if (nextEntity instanceof MasterSquirrel) {
-                MasterSquirrel masterSquirrel = (MasterSquirrel) nextEntity;
-                if (masterSquirrel.isMyChild(miniSquirrel)) {
-                    masterSquirrel.updateEnergy(miniSquirrel.getEnergy());
-                    kill(miniSquirrel);
-                } else {
-                    kill(miniSquirrel);
-                }
-            } else if (nextEntity instanceof MiniSquirrel) {
-                if (miniSquirrel.getDaddy() != ((MiniSquirrel) nextEntity).getDaddy()) {
-                    kill(miniSquirrel);
-                    kill(nextEntity);
-                }
-            }
-        } else {
+
+        if(nextEntity == null)
             miniSquirrel.move(moveDirection);
+
+        if(nextEntity instanceof Wall) {
+            miniSquirrel.updateEnergy(nextEntity.getEnergy());
+            miniSquirrel.isStunnedNextRound();
+
+        } else if(nextEntity instanceof GoodPlant || nextEntity instanceof BadPlant) {
+            miniSquirrel.updateEnergy(nextEntity.getEnergy());
+            killAndReplace(nextEntity);
+
+            if (miniSquirrel.getEnergy() <= 0)
+                kill(miniSquirrel);
+
+        } else if(nextEntity instanceof BadBeast || nextEntity instanceof GoodBeast) {
+            miniSquirrel.updateEnergy(nextEntity.getEnergy());
+            if (miniSquirrel.getEnergy() <= 0) {
+                kill(miniSquirrel);
+            } else {
+                miniSquirrel.move(moveDirection);
+            }
+
+        } else if(nextEntity instanceof MasterSquirrel) {
+            MasterSquirrel masterSquirrel = (MasterSquirrel) nextEntity;
+
+            if(masterSquirrel.isMyChild(miniSquirrel)) {
+                masterSquirrel.updateEnergy(miniSquirrel.getEnergy());
+                kill(miniSquirrel);
+            } else {
+                kill(miniSquirrel);
+            }
+
+        } else if(nextEntity instanceof MiniSquirrel) {
+
+            if (miniSquirrel.getDaddy() != ((MiniSquirrel) nextEntity).getDaddy()) {
+                kill(miniSquirrel);
+                kill(nextEntity);
+            }
         }
     }
+
 
     @Override
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
