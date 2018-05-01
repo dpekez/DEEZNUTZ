@@ -124,16 +124,15 @@ public class FlattenedBoard implements BoardView, EntityContext {
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
         XY nextPosition = goodBeast.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
-        if (nextEntity != null) {
-            if (nextEntity instanceof Wall) {
-                return;
-            } else if (nextEntity instanceof MiniSquirrel || nextEntity instanceof MasterSquirrel) {
-                nextEntity.updateEnergy(goodBeast.getEnergy());
-                killAndReplace(goodBeast);
-            }
-        } else {
+
+        if(nextEntity == null)
             goodBeast.move(moveDirection);
+
+        if(nextEntity instanceof Player) {
+            nextEntity.updateEnergy(goodBeast.getEnergy());
+            killAndReplace(goodBeast);
         }
+
     }
 
     @Override
