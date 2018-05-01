@@ -32,5 +32,11 @@ public abstract class Player extends Character {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Player{" +
+                " stunnedRounds=" + stunnedRounds +
+                " " + super.toString() +
+                '}';
+    }
 }

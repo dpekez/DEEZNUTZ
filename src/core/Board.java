@@ -74,6 +74,9 @@ public class Board {
         return boardConfig;
     }
 
+    public int getEntityCount() {
+        return entityCount;
+    }
 
     @Override
     public String toString() {
