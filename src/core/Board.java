@@ -4,7 +4,7 @@ import entities.*;
 
 public class Board {
 
-    private int entityCount; //todo: implement an entity counter
+    private int entityCount;
     private EntitySet entitySet;
     private BoardConfig boardConfig;
 
@@ -15,36 +15,35 @@ public class Board {
 
         //fill upper and bottom border with walls
         for(int i=0; i < boardConfig.getWidth(); i++) {
-            entitySet.add(new Wall(new XY(i, 0)));
-            entitySet.add(new Wall(new XY(i, boardConfig.getHeight()-1)));
+            insert(new Wall(new XY(i, 0)));
+            insert(new Wall(new XY(i, boardConfig.getHeight()-1)));
         }
 
         //fill left and right border with walls
         for(int i=0; i < boardConfig.getHeight(); i++) {
-            entitySet.add(new Wall(new XY(0, i)));
-            entitySet.add(new Wall(new XY(boardConfig.getWidth()-1, i)));
+            insert(new Wall(new XY(0, i)));
+            insert(new Wall(new XY(boardConfig.getWidth()-1, i)));
         }
 
         //and now some random walls inside the walled board
-        //todo: (low priority) algorithm to get connected walls
         for(int i=0; i < boardConfig.getWallQuant(); i++) {
-            entitySet.add(new Wall(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new Wall(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
         for(int i=0; i < boardConfig.getBadBeastQuant(); i++) {
-            entitySet.add(new BadBeast(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new BadBeast(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
         for(int i=0; i < boardConfig.getGoodBeastQuant(); i++) {
-            entitySet.add(new GoodBeast(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new GoodBeast(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
         for(int i=0; i < boardConfig.getBadPlantQuant(); i++) {
-            entitySet.add(new BadPlant(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new BadPlant(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
         for(int i=0; i < boardConfig.getGoodPlantQuant(); i++) {
-            entitySet.add(new GoodPlant(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new GoodPlant(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
     }
@@ -60,10 +59,12 @@ public class Board {
 
     public void remove(Entity e) {
         entitySet.remove(e);
+        entityCount--;
     }
 
     public void insert(Entity e) {
         entitySet.add(e);
+        entityCount++;
     }
 
     public Entity[] getEntities() {
