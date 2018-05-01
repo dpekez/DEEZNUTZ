@@ -23,16 +23,12 @@ public abstract class Player extends Character {
     }
 
     public boolean isStunned() {
-        if(stunnedRounds > 0)
-            return true;
-        return false;
+        return stunnedRounds > 0;
 
     }
 
     public boolean isStunnedNextRound() {
-        if(stunnedRounds > 1)
-            return true;
-        return false;
+        return stunnedRounds > 1;
     }
 
 
