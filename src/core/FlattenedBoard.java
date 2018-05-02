@@ -151,7 +151,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
         }
 
         if(nextEntity instanceof MiniSquirrel) {
-            nextEntity.updateEnergy(nextEntity.getEnergy());
+            nextEntity.updateEnergy(badBeast.getEnergy());
 
             if (nextEntity.getEnergy() <= 0)
                 kill(nextEntity);
@@ -162,6 +162,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 killAndReplace(badBeast);
 
         } else if(nextEntity instanceof MasterSquirrel) {
+            nextEntity.updateEnergy(badBeast.getEnergy());
+
             badBeast.bite();
 
             if (badBeast.getBitesLeft() == 0)

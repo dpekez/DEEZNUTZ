@@ -12,6 +12,7 @@ public class GoodBeast extends Character {
         super(DEFAULT_ENERGY, location);
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void nextStep(EntityContext entityContext) {
         stepCount++;
