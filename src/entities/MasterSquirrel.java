@@ -13,6 +13,13 @@ public abstract class MasterSquirrel extends Player {
         super(DEFAULT_ENERGY, location);
     }
 
+    @Override
+    public void updateEnergy(int energy) {
+        if(getEnergy() + energy >= 0)
+            super.updateEnergy(energy);
+        else
+            super.updateEnergy(- getEnergy());
+    }
 
     public void setMoveCommand(MoveCommand moveCommand) {
         this.moveCommand = moveCommand;
