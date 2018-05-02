@@ -6,4 +6,6 @@ public interface BoardView {
 
     XY getSize();
 
+    int getEntityCount();
+
 }

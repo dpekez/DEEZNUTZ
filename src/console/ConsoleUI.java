@@ -67,6 +67,8 @@ public class ConsoleUI implements UI {
             System.out.println();
         }
 
+        System.out.println("Number of Entities: " + view.getEntityCount());
+
     }
 
 }

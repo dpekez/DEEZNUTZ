@@ -40,22 +40,27 @@ public class FlattenedBoard implements BoardView, EntityContext {
     }
 
     @Override
+    public int getEntityCount() {
+        return board.getEntityCount();
+    }
+
+    @Override
     public int getWaitingTimeBeast() {
         return board.getConfig().getWaitingTimeBeast();
     }
 
     @Override
-    public int goodBeastViewDistance() {
+    public int getGoodBeastViewDistance() {
         return board.getConfig().getGoodBeastViewDistance();
     }
 
     @Override
-    public int badBeastViewDistance() {
+    public int getBadBeastViewDistance() {
         return board.getConfig().getBadBestViewDistance();
     }
 
     @Override
-    public int playerEnityViewDistance() {
+    public int getPlayerViewDistance() {
         return board.getConfig().getPlayerEnityViewDistance();
     }
 
