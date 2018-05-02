@@ -78,7 +78,8 @@ public final class XY {
             xy = new XY(randomX, randomY);
 
             for(Entity entity: entities)
-                if(entity != null && entity.getLocation().equals(xy)) {
+                if(entity != null && entity.getLocation().getX() == xy.x &&
+                                     entity.getLocation().getY() == xy.y) {
                     isNotEmpty = true;
                 }
 
