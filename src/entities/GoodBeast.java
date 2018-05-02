@@ -31,15 +31,8 @@ public class GoodBeast extends Character {
 
             int moveX, moveY;
 
-            if(xDiff >= 0)
-                moveX = -1;
-            else
-                moveX = 1;
-
-            if(yDiff >= 0)
-                moveY = -1;
-            else
-                moveY = 1;
+            moveX = Integer.compare(0, xDiff);
+            moveY = Integer.compare(0, yDiff);
 
             entityContext.tryMove(this, new XY(moveX, moveY));
 
