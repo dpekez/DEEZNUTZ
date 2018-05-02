@@ -24,6 +24,6 @@ public abstract class MasterSquirrel extends Player {
 
     @Override
     public String toString() {
-        return "MasterSquirrel{ " + super.toString() + " }";
+        return "MasterSquirrel{ " + super.toString() + '}';
     }
 }

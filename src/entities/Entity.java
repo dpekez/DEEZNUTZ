@@ -46,7 +46,7 @@ public abstract class Entity {
                 "id=" + id +
                 ", energy=" + energy +
                 ", location=" + location +
-                " }";
+                '}';
     }
 
 }
