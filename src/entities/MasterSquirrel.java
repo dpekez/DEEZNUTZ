@@ -7,7 +7,7 @@ public abstract class MasterSquirrel extends Player {
 
     private static final int DEFAULT_ENERGY = 1000;
     private MiniSquirrel miniSquirrel;
-    protected MoveCommand moveCommand;
+
 
     public MasterSquirrel(XY location) {
         super(DEFAULT_ENERGY, location);
@@ -21,9 +21,6 @@ public abstract class MasterSquirrel extends Player {
             super.updateEnergy(- getEnergy());
     }
 
-    public void setMoveCommand(MoveCommand moveCommand) {
-        this.moveCommand = moveCommand;
-    }
 
     public boolean isMyChild(MiniSquirrel squirrelToCheck) {
         return this == squirrelToCheck.getDaddy();

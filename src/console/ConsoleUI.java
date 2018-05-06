@@ -1,29 +1,24 @@
 package console;
 
 import core.BoardView;
-import core.MoveCommand;
-import core.XY;
-
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class ConsoleUI implements UI {
 
-    private Scanner userInput = new Scanner(System.in);
+    CommandScanner commandScanner=new CommandScanner(GameCommandType.values(),new BufferedReader(new InputStreamReader(System.in)));
 
-    @Override
-    public MoveCommand getMoveCommand() {
-        switch (userInput.next()) {
-            case "w":
-                return new MoveCommand(new XY(0, -1));
-            case "a":
-                return new MoveCommand(new XY(-1, 0));
-            case "s":
-                return new MoveCommand(new XY(0, 1));
-            case "d":
-                return new MoveCommand(new XY(1, 0));
-            default:
-                return null;
+    public Command getCommand() {
+
+        try {
+            return commandScanner.next();
+        } catch (ScanException e) {
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override

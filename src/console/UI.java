@@ -5,6 +5,6 @@ import core.MoveCommand;
 
 public interface UI {
 
-    public MoveCommand getMoveCommand();
+    public abstract Command getCommand();
     public void render(BoardView view);
 }

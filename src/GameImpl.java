@@ -1,10 +1,13 @@
-import console.ConsoleUI;
-import console.UI;
-import core.MoveCommand;
+import console.*;
 import core.State;
 import core.XY;
 import entities.HandOperatedMasterSquirrel;
 import entities.MasterSquirrel;
+import entities.MiniSquirrel;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class GameImpl extends Game {
 
@@ -20,15 +23,19 @@ public class GameImpl extends Game {
 
 
     @Override
-    protected void processInput() {
-        MoveCommand cmd;
+    protected void processInput() throws ScanException ,IOException  {
+        CommandScanner commandScanner = new CommandScanner(GameCommandType.values(), new BufferedReader(new InputStreamReader(System.in)));
 
-        do {
-            cmd = ui.getMoveCommand();
-        } while (cmd == null);
+        Command command = commandScanner.next();
 
-        masterSquirrel.setMoveCommand(cmd);
+        Object[] params = command.getParams();
 
+    }
+
+    public void spawnMiniSquirrel(){
+        System.out.println("Spawn MiniSquirrel");
+        int energy = 200;
+        MiniSquirrel miniSquirrel = new MiniSquirrel(energy, (XY.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities())),masterSquirrel.isMyChild(this.spawnMiniSquirrel()));
     }
 
     @Override
