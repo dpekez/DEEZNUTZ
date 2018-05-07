@@ -13,7 +13,7 @@ public abstract class Game {
         this.state = state;
     }
 
-    public void run() {
+    public void run() throws IOException, ScanException {
         while (true) {
             render();
             processInput();

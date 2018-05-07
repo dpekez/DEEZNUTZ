@@ -42,7 +42,7 @@ public class CommandScanner {
         //Leerräume nach Eingabe entfernen
         command = (inputReader.readLine().trim());
         //String nach Leerzeichen trennen
-        String[] splitCommand = command.split(" ");
+        String[] splitCommand = command.split(",");
 
         for (CommandTypeInfo i : commandTypeInfo) {
             if (i.getName().equals(splitCommand[0])) {
