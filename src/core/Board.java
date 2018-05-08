@@ -79,6 +79,10 @@ public class Board {
         return entityCount;
     }
 
+    public EntitySet getEntitySet() {
+        return entitySet;
+    }
+
     @Override
     public String toString() {
         return "Board{" +

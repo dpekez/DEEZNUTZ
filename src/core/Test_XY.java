@@ -10,14 +10,21 @@ import entities.Entity;
 
 public class Test_XY {
     public static void main(String[] args) {
+
+
         Board board = new Board(new BoardConfig());
 
         System.out.println(board);
 
+
+        System.out.println(board.getEntitySet());
+
+        /*
         for(Entity entity: board.getEntities())
             if(entity != null)
                 System.out.println(entity);
-
+*/
     }
+
 
 }

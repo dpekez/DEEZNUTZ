@@ -124,6 +124,7 @@ public class ConsoleUI implements UI {
     }
 
     public void all(){
-
+        //System.out.println("lol");
+        System.out.println(board.getEntitySet());
     }
 }
