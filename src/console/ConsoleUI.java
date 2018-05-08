@@ -41,6 +41,7 @@ public class ConsoleUI implements UI {
                         break;
                     case ALL:
                          all();
+                         break;
                     case LEFT:
                         return new MoveCommand(new XY(-1, 0));
                     case UP:
@@ -51,8 +52,10 @@ public class ConsoleUI implements UI {
                         return new MoveCommand(new XY(1, 0));
                     case MASTER_ENERGY:
                         //return master_energy();
+                        break;
                     case SPAWN_MINI:
                         spawnMiniSquirrel();
+                        break;
                         default:
                             return null;
                 }
