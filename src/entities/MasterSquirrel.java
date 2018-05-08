@@ -1,13 +1,15 @@
 package entities;
 
 import core.MoveCommand;
+import core.State;
 import core.XY;
 
 public abstract class MasterSquirrel extends Player {
 
     private static final int DEFAULT_ENERGY = 1000;
     private MiniSquirrel miniSquirrel;
-    protected MoveCommand moveCommand;
+    MoveCommand moveCommand;
+
 
     public MasterSquirrel(XY location) {
         super(DEFAULT_ENERGY, location);
@@ -25,6 +27,7 @@ public abstract class MasterSquirrel extends Player {
         this.moveCommand = moveCommand;
     }
 
+
     public boolean isMyChild(MiniSquirrel squirrelToCheck) {
         return this == squirrelToCheck.getDaddy();
     }
@@ -33,4 +36,5 @@ public abstract class MasterSquirrel extends Player {
     public String toString() {
         return "MasterSquirrel{ " + super.toString() + '}';
     }
+
 }

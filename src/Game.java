@@ -1,5 +1,8 @@
+import console.ScanException;
 import core.Board;
 import core.State;
+
+import java.io.IOException;
 
 public abstract class Game {
 
@@ -10,7 +13,7 @@ public abstract class Game {
         this.state = state;
     }
 
-    public void run() {
+    public void run() throws IOException, ScanException {
         while (true) {
             render();
             processInput();
@@ -20,7 +23,7 @@ public abstract class Game {
 
     protected abstract void render();
 
-    protected abstract void processInput();
+    protected abstract void processInput() throws IOException, ScanException;
 
     protected void update() {
         state.update();

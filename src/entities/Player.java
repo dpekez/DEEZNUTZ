@@ -24,7 +24,6 @@ public abstract class Player extends Character {
 
     public boolean isStunned() {
         return stunnedRounds > 0;
-
     }
 
     public boolean isStunnedNextRound() {

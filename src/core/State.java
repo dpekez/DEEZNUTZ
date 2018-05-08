@@ -1,6 +1,7 @@
 package core;
 
 import entities.MasterSquirrel;
+import entities.MiniSquirrel;
 
 public class State {
 
@@ -16,6 +17,7 @@ public class State {
         this.masterSquirrel = masterSquirrel;
         board.insert(masterSquirrel);
     }
+
 
     public int getHighScore() {
         return highScore;
