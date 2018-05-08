@@ -1,9 +1,8 @@
 package console;
 
-import core.BoardView;
-import core.MoveCommand;
-import core.State;
-import core.XY;
+import core.*;
+import entities.MasterSquirrel;
+import entities.MiniSquirrel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +16,8 @@ public class ConsoleUI implements UI {
     private Command command;
     private GameCommandType[] gameCommandTypes;
     private State state;
+    private MasterSquirrel masterSquirrel;
+    private Board board;
 
     public ConsoleUI() {
         this.outputStream = System.out;
@@ -25,21 +26,11 @@ public class ConsoleUI implements UI {
     }
 
     @Override
-    public MoveCommand getCommand() {
-
-
+    public MoveCommand getCommand() throws IOException, ScanException {
         CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream);
-        while (true) { // the loop over all commands with one input line for every command
-
-            Command command = null;
-            try {
-                command = commandScanner.next();
-            } catch (ScanException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        while (true) {
+            Command command;
+            command = commandScanner.next();
             if (command != null) {
                 switch ((GameCommandType) command.getCommandType()) {
                     case EXIT:
@@ -49,19 +40,21 @@ public class ConsoleUI implements UI {
                         help();
                         break;
                     case ALL:
-                        return all();
+                         all();
                     case LEFT:
-                        return new MoveCommand(new XY(-1,0));
+                        return new MoveCommand(new XY(-1, 0));
                     case UP:
-                        return new MoveCommand(new XY(0,-1));
+                        return new MoveCommand(new XY(0, -1));
                     case DOWN:
-                        return new MoveCommand(new XY(0,1));
+                        return new MoveCommand(new XY(0, 1));
                     case RIGHT:
-                        return new MoveCommand(new XY(1,0));
+                        return new MoveCommand(new XY(1, 0));
                     case MASTER_ENERGY:
-                        return master_energy();
+                        //return master_energy();
                     case SPAWN_MINI:
-                        //TODO
+                        spawnMiniSquirrel();
+                        default:
+                            return null;
                 }
             }
         }
@@ -112,19 +105,22 @@ public class ConsoleUI implements UI {
         System.out.println("Number of Entities: " + view.getEntityCount());
 
     }
-    private void help(){
-        for(GameCommandType commandType: GameCommandType.values()){
-            outputStream.println("<" +commandType.getName() + "> - " + commandType.getHelpText());
+
+    private void help() {
+        for (GameCommandType commandType : GameCommandType.values()) {
+            outputStream.println("<" + commandType.getName() + "> - " + commandType.getHelpText());
         }
     }
-    private void exit(){
+
+    private void exit() {
+        System.out.println("Bye bye");
         System.exit(0);
     }
+    public void spawnMiniSquirrel() {
 
-    private MoveCommand all(){
-        return new MoveCommand(new XY(0,0));
     }
-    private MoveCommand master_energy(){
-        return master_energy();
+
+    public void all(){
+
     }
 }

@@ -18,7 +18,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
         if (isStunned())
             return;
 
-        //context.tryMove(this, moveCommand.getMoveDirection());
+        context.tryMove(this, moveCommand.getMoveDirection());
 
     }
 

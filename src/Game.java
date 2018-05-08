@@ -23,7 +23,7 @@ public abstract class Game {
 
     protected abstract void render();
 
-    protected abstract void processInput() throws ScanException, IOException;
+    protected abstract void processInput() throws IOException, ScanException;
 
     protected void update() {
         state.update();

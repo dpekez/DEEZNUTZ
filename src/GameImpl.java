@@ -26,19 +26,18 @@ public class GameImpl extends Game {
 
 
     @Override
-    protected void processInput()   {
+    protected void processInput() throws IOException, ScanException {
         CommandScanner commandScanner = new CommandScanner(GameCommandType.values(), new BufferedReader(new InputStreamReader(System.in)));
-
-        MoveCommand moveCommand = consoleUI.getCommand();
-
+        MoveCommand moveCommand;
+        moveCommand = ui.getCommand();
         masterSquirrel.setMoveCommand(moveCommand);
 
     }
 
-    public void spawnMiniSquirrel(){
+    public void spawnMiniSquirrel() {
         System.out.println("Spawn MiniSquirrel");
         int energy = 200;
-        MiniSquirrel miniSquirrel = new MiniSquirrel(energy, (XY.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities())),masterSquirrel);
+        MiniSquirrel miniSquirrel = new MiniSquirrel(energy, (XY.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities())), masterSquirrel);
         board.insert(miniSquirrel);
     }
 
