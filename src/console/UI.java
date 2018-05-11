@@ -5,8 +5,9 @@ import core.MoveCommand;
 
 import java.io.IOException;
 
+
 public interface UI {
 
-    public abstract MoveCommand getCommand() throws IOException, ScanException;
-    public void render(BoardView view);
+    MoveCommand getCommand() throws IOException, ScanException;
+    void render(BoardView view);
 }

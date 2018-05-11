@@ -9,16 +9,18 @@ public abstract class Game {
     protected State state;
     private Board board;
 
-    public Game(State state) {
+    Game(State state) {
         this.state = state;
     }
 
     public void run() throws IOException, ScanException {
+
         while (true) {
             render();
             processInput();
             update();
         }
+
     }
 
     protected abstract void render();
@@ -26,7 +28,9 @@ public abstract class Game {
     protected abstract void processInput() throws IOException, ScanException;
 
     protected void update() {
+
         state.update();
+
     }
 
 }

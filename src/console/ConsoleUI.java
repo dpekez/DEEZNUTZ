@@ -13,9 +13,7 @@ public class ConsoleUI implements UI {
 
     private PrintStream outputStream;
     private BufferedReader inputStream;
-    private Command command;
     private GameCommandType[] gameCommandTypes;
-    private State state;
     private MasterSquirrel masterSquirrel;
     private Board board;
 
@@ -27,11 +25,17 @@ public class ConsoleUI implements UI {
 
     @Override
     public MoveCommand getCommand() throws IOException, ScanException {
+
         CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream);
+
+
         while (true) {
+
             Command command;
             command = commandScanner.next();
+
             if (command != null) {
+
                 switch ((GameCommandType) command.getCommandType()) {
                     case EXIT:
                         exit();
@@ -40,8 +44,8 @@ public class ConsoleUI implements UI {
                         help();
                         break;
                     case ALL:
-                         all();
-                         break;
+                        all();
+                        break;
                     case LEFT:
                         return new MoveCommand(new XY(-1, 0));
                     case UP:
@@ -51,9 +55,12 @@ public class ConsoleUI implements UI {
                     case RIGHT:
                         return new MoveCommand(new XY(1, 0));
                     case MASTER_ENERGY:
-                        //return master_energy();
+                        //todo: master_energy();
                         break;
                     case SPAWN_MINI:
+                        //todo: parameter rausfiltern
+                        //todo: parameter uebergeben
+                        //todo: wo minisquirrel sinnigerweise instanziieren, hier!?
                         spawnMiniSquirrel();
                         break;
                         default:
@@ -105,12 +112,11 @@ public class ConsoleUI implements UI {
             System.out.println();
         }
 
-        System.out.println("Number of Entities: " + view.getEntityCount());
-
     }
 
+
     private void help() {
-        for (GameCommandType commandType : GameCommandType.values()) {
+        for (GameCommandType commandType: GameCommandType.values()) {
             outputStream.println("<" + commandType.getName() + "> - " + commandType.getHelpText());
         }
     }
@@ -119,12 +125,13 @@ public class ConsoleUI implements UI {
         System.out.println("Bye bye");
         System.exit(0);
     }
+
     public void spawnMiniSquirrel() {
 
     }
 
     public void all(){
-        //System.out.println("lol");
         System.out.println(board.getEntitySet());
     }
+
 }

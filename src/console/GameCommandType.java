@@ -1,21 +1,21 @@
 package console;
 
 public enum GameCommandType implements CommandTypeInfo {
-    HELP("help"," * list all commands"),
-    EXIT("exit"," * exit program"),
-    ALL("all"," * hilfetext zu all"),
-    LEFT("a"," * hilfetext zu left"),
-    UP("w"," * hilfetext zu up"),
-    DOWN("s"," * hilfetext zu down"),
-    RIGHT("d"," * hilfetext zu right"),
-    MASTER_ENERGY("master_energy"," * hilfetext zu master_energy"),
-    SPAWN_MINI("spawn_mini"," * hilfetext zu spawn_mini");
+    HELP("help", "print this help"),
+    EXIT("exit", "quit this program"),
+    ALL("all", "print all entities"),
+    LEFT("a", "move left"),
+    UP("w", "move up"),
+    DOWN("s", "move down"),
+    RIGHT("d", "move right"),
+    MASTER_ENERGY("master_energy", "print master energy"),
+    SPAWN_MINI("spawn_mini", "<energy> <x-direction> <y-direction> spawn mini squirrel", int.class, int.class, int.class);
 
     private String command;
     private String info;
     private Class<?>[] paramTypes;
 
-    GameCommandType(String command, String info, Class<?>... paramTypes) {
+    GameCommandType(String command, String info, Class<?>... paramTypes) { //... zero or more Class objects may be passed
         this.command = command;
         this.info = info;
         this.paramTypes = paramTypes;
@@ -35,7 +35,5 @@ public enum GameCommandType implements CommandTypeInfo {
     public Class<?>[] getParamTypes() {
         return this.paramTypes;
     }
+
 }
-
-
-

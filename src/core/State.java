@@ -23,20 +23,18 @@ public class State {
         return highScore;
     }
 
-    public void setHighScore(int highScore) {
-        this.highScore = highScore;
-    }
-
     public Board getBoard() {
         return board;
     }
 
     public void update() {
         board.update(flattenedBoard());
+
         if (masterSquirrel != null) {
             if (masterSquirrel.getEnergy() > highScore)
                 highScore = masterSquirrel.getEnergy();
         }
+
     }
 
     public FlattenedBoard flattenedBoard() {

@@ -1,21 +1,24 @@
 package console;
 
+
 public class Command {
+
     private CommandTypeInfo commandType;
-    private Object[] params;
+    private Object[] parameters;
 
-    public Command(CommandTypeInfo commandType, Object[] params) {
+
+    Command(CommandTypeInfo commandType, Object[] parameters) {
         this.commandType = commandType;
-        this.params = params;
+        this.parameters = parameters;
     }
 
-    public Object[] getParams() {
-        return params;
-    }
 
     public CommandTypeInfo getCommandType() {
         return commandType;
     }
+
+    public Object[] getParameters() {
+        return parameters;
+    }
+
 }
-
-
