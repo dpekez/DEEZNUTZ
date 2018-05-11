@@ -1,6 +1,7 @@
 package console;
 
 import core.*;
+import entities.MasterSquirrel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,7 +63,7 @@ public class ConsoleUI implements UI {
                         break;
                     case SPAWN_MINI:
                         //todo: parameter uebergeben!!!
-                        //spawnMiniSquirrel(command.getParameters());
+                        spawnMiniSquirrel(command.getParameters());
                         break;
                         default:
                             return null;
@@ -132,16 +133,25 @@ public class ConsoleUI implements UI {
     }
 
     public void masterEnergy() {
-        System.out.println(state.getMasterSquirrel().getEnergy());
+        System.out.println(state.getBoard().getMasterSquirrel().getEnergy());
     }
 
-    public void spawnMiniSquirrel(Command command) {
-        //todo: folgende parameter aufdroeseln und an new MS uebergeben
-        //energy
-        //location
-        //daddy
+    public void spawnMiniSquirrel(Object[] parameters) {
 
-        //state.getBoard().insert(new MiniSquirrel(/* parameter!! */));
+        /* todo
+
+        NotEnoughEnergyException
+
+        ... implementieren, siehe Aufgabe 4, Teil 2 letzter Absatz.
+        Ich denke hier waere es geeignet muss aber nicht.
+        Dann aber auch in Board.insertMiniSquirrel() den Check rausmachen.
+         */
+
+        int energy = (Integer)parameters[0];
+        XY direction = new XY((Integer)parameters[1], (Integer)parameters[2]);
+        MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
+
+        state.getBoard().insertMiniSquirrel(energy, direction, daddy);
     }
 
 }

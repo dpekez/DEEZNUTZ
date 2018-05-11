@@ -1,11 +1,14 @@
 package core;
 
+
 import entities.*;
+
 
 public class Board {
 
     private EntitySet entitySet;
     private BoardConfig boardConfig;
+    private MasterSquirrel masterSquirrel;
 
 
     public Board(BoardConfig boardConfig) {
@@ -74,6 +77,26 @@ public class Board {
 
     public EntitySet getEntitySet() {
         return entitySet;
+    }
+
+    public void insertMasterSquirrel(MasterSquirrel masterSquirrel) {
+        this.masterSquirrel = masterSquirrel;
+        insert(masterSquirrel);
+    }
+
+    public MasterSquirrel getMasterSquirrel() {
+        return masterSquirrel;
+    }
+
+    public void insertMiniSquirrel(int energy, XY direction, MasterSquirrel daddy) {
+
+        XY location = masterSquirrel.getLocation().addVector(direction);
+
+        if(masterSquirrel.getEnergy() >= energy) {
+            masterSquirrel.updateEnergy(-energy);
+            insert(new MiniSquirrel(energy, location, daddy));
+        }
+
     }
 
     @Override

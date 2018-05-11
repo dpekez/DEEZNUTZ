@@ -1,6 +1,8 @@
 package console;
 
 
+import java.util.Arrays;
+
 public class Command {
 
     private CommandTypeInfo commandType;
@@ -19,6 +21,15 @@ public class Command {
 
     public Object[] getParameters() {
         return parameters;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Command{" +
+                "commandType=" + commandType +
+                ", parameters=" + (parameters == null ? null : Arrays.asList(parameters)) +
+                '}';
     }
 
 }
