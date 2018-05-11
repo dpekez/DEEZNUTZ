@@ -1,33 +1,34 @@
-import console.ConsoleUI;
-import console.UI;
-import core.MoveCommand;
-import core.State;
-import core.XY;
+import console.*;
+import core.*;
 import entities.HandOperatedMasterSquirrel;
 import entities.MasterSquirrel;
+
+import java.io.IOException;
+
 
 public class GameImpl extends Game {
 
     private UI ui;
     private MasterSquirrel masterSquirrel;
 
-    public GameImpl() {
+
+    GameImpl() {
         super(new State());
-        ui = new ConsoleUI();
+        ui = new ConsoleUI(state);
+
         masterSquirrel = new HandOperatedMasterSquirrel(XY.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
-        state.insertMaster(masterSquirrel);
+
+        state.getBoard().insertMasterSquirrel(masterSquirrel);
     }
 
 
     @Override
-    protected void processInput() {
-        MoveCommand cmd;
+    protected void processInput() throws IOException, ScanException {
 
-        do {
-            cmd = ui.getMoveCommand();
-        } while (cmd == null);
+        MoveCommand moveCommand;
 
-        masterSquirrel.setMoveCommand(cmd);
+        moveCommand = ui.getCommand();
+        masterSquirrel.setMoveCommand(moveCommand);
 
     }
 
@@ -35,4 +36,5 @@ public class GameImpl extends Game {
     protected void render() {
         ui.render(state.flattenedBoard());
     }
+
 }

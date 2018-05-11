@@ -1,28 +1,21 @@
 package core;
 
 import entities.MasterSquirrel;
+import entities.MiniSquirrel;
 
 public class State {
 
     private int highScore;
     private Board board;
-    private MasterSquirrel masterSquirrel;
+
 
     public State() {
         board = new Board(new BoardConfig());
     }
 
-    public void insertMaster(MasterSquirrel masterSquirrel) {
-        this.masterSquirrel = masterSquirrel;
-        board.insert(masterSquirrel);
-    }
 
     public int getHighScore() {
         return highScore;
-    }
-
-    public void setHighScore(int highScore) {
-        this.highScore = highScore;
     }
 
     public Board getBoard() {
@@ -31,10 +24,12 @@ public class State {
 
     public void update() {
         board.update(flattenedBoard());
-        if (masterSquirrel != null) {
-            if (masterSquirrel.getEnergy() > highScore)
-                highScore = masterSquirrel.getEnergy();
+
+        if (board.getMasterSquirrel() != null) {
+            if (board.getMasterSquirrel().getEnergy() > highScore)
+                highScore = board.getMasterSquirrel().getEnergy();
         }
+
     }
 
     public FlattenedBoard flattenedBoard() {

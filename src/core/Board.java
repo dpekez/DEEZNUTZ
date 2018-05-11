@@ -1,12 +1,14 @@
 package core;
 
+
 import entities.*;
+
 
 public class Board {
 
-    private int entityCount;
     private EntitySet entitySet;
     private BoardConfig boardConfig;
+    private MasterSquirrel masterSquirrel;
 
 
     public Board(BoardConfig boardConfig) {
@@ -53,18 +55,16 @@ public class Board {
         entitySet.moveEntities(context);
     }
 
-    public FlattenedBoard flatten() {
+    public FlattenedBoard flatten() { //todo: wozu brauchen wir das?
         return new FlattenedBoard(this);
     }
 
     public void remove(Entity e) {
         entitySet.remove(e);
-        entityCount--;
     }
 
     public void insert(Entity e) {
         entitySet.add(e);
-        entityCount++;
     }
 
     public Entity[] getEntities() {
@@ -75,14 +75,34 @@ public class Board {
         return boardConfig;
     }
 
-    public int getEntityCount() {
-        return entityCount;
+    public EntitySet getEntitySet() {
+        return entitySet;
+    }
+
+    public void insertMasterSquirrel(MasterSquirrel masterSquirrel) {
+        this.masterSquirrel = masterSquirrel;
+        insert(masterSquirrel);
+    }
+
+    public MasterSquirrel getMasterSquirrel() {
+        return masterSquirrel;
+    }
+
+    public void insertMiniSquirrel(int energy, XY direction, MasterSquirrel daddy) {
+
+        XY location = masterSquirrel.getLocation().addVector(direction);
+
+        if(masterSquirrel.getEnergy() >= energy) {
+            masterSquirrel.updateEnergy(-energy);
+            insert(new MiniSquirrel(energy, location, daddy));
+        }
+
     }
 
     @Override
     public String toString() {
         return "Board{" +
-                "entityCount=" + entityCount +
+                + //todo: print entitySet and boardConfig?!
                 '}';
     }
 

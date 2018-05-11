@@ -1,30 +1,77 @@
 package console;
 
-import core.BoardView;
-import core.MoveCommand;
-import core.XY;
+import core.*;
+import entities.MasterSquirrel;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+
 
 public class ConsoleUI implements UI {
 
-    private Scanner userInput = new Scanner(System.in);
+    private PrintStream outputStream;
+    private BufferedReader inputStream;
+    private GameCommandType[] gameCommandTypes;
+    private State state;
+
+
+    public ConsoleUI(State state) {
+
+        this.state = state;
+        this.outputStream = System.out;
+        this.inputStream = new BufferedReader(new InputStreamReader(System.in));
+        this.gameCommandTypes = GameCommandType.values();
+
+    }
+
 
     @Override
-    public MoveCommand getMoveCommand() {
-        switch (userInput.next()) {
-            case "w":
-                return new MoveCommand(new XY(0, -1));
-            case "a":
-                return new MoveCommand(new XY(-1, 0));
-            case "s":
-                return new MoveCommand(new XY(0, 1));
-            case "d":
-                return new MoveCommand(new XY(1, 0));
-            default:
-                return null;
+    public MoveCommand getCommand() throws IOException, ScanException {
+
+        CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream);
+
+
+        while (true) {
+
+            Command command;
+            command = commandScanner.next();
+
+            if (command != null) {
+
+                switch ((GameCommandType) command.getCommandType()) {
+                    case EXIT:
+                        exit();
+                        break;
+                    case HELP:
+                        help();
+                        break;
+                    case ALL:
+                        all();
+                        break;
+                    case LEFT:
+                        return new MoveCommand(new XY(-1, 0));
+                    case UP:
+                        return new MoveCommand(new XY(0, -1));
+                    case DOWN:
+                        return new MoveCommand(new XY(0, 1));
+                    case RIGHT:
+                        return new MoveCommand(new XY(1, 0));
+                    case MASTER_ENERGY:
+                        masterEnergy();
+                        break;
+                    case SPAWN_MINI:
+                        //todo: parameter uebergeben!!!
+                        spawnMiniSquirrel(command.getParameters());
+                        break;
+                        default:
+                            return null;
+                }
+            }
         }
     }
+
 
     @Override
     public void render(BoardView view) {
@@ -33,7 +80,7 @@ public class ConsoleUI implements UI {
 
                 char c;
 
-                switch(view.getEntityType(x, y)) {
+                switch (view.getEntityType(x, y)) {
                     case BAD_BEAST:
                         c = 'B';
                         break;
@@ -67,8 +114,44 @@ public class ConsoleUI implements UI {
             System.out.println();
         }
 
-        System.out.println("Number of Entities: " + view.getEntityCount());
+    }
 
+
+    private void help() {
+        for (GameCommandType commandType: GameCommandType.values()) {
+            outputStream.println("<" + commandType.getName() + "> - " + commandType.getHelpText());
+        }
+    }
+
+    private void exit() {
+        System.out.println("Bye bye");
+        System.exit(0);
+    }
+
+    public void all() {
+        System.out.println(state.getBoard().getEntitySet());
+    }
+
+    public void masterEnergy() {
+        System.out.println(state.getBoard().getMasterSquirrel().getEnergy());
+    }
+
+    public void spawnMiniSquirrel(Object[] parameters) {
+
+        /* todo
+
+        NotEnoughEnergyException
+
+        ... implementieren, siehe Aufgabe 4, Teil 2 letzter Absatz.
+        Ich denke hier waere es geeignet muss aber nicht.
+        Dann aber auch in Board.insertMiniSquirrel() den Check rausmachen.
+         */
+
+        int energy = (Integer)parameters[0];
+        XY direction = new XY((Integer)parameters[1], (Integer)parameters[2]);
+        MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
+
+        state.getBoard().insertMiniSquirrel(energy, direction, daddy);
     }
 
 }
