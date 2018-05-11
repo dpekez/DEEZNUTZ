@@ -62,7 +62,6 @@ public class ConsoleUI implements UI {
                         masterEnergy();
                         break;
                     case SPAWN_MINI:
-                        //todo: parameter uebergeben!!!
                         spawnMiniSquirrel(command.getParameters());
                         break;
                         default:
