@@ -18,6 +18,9 @@ public class State {
         board.insert(masterSquirrel);
     }
 
+    public MasterSquirrel getMasterSquirrel() {
+        return masterSquirrel;
+    }
 
     public int getHighScore() {
         return highScore;

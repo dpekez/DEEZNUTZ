@@ -79,7 +79,7 @@ public class Board {
     @Override
     public String toString() {
         return "Board{" +
-                + //todo: print entities
+                + //todo: print entitySet and boardConfig?!
                 '}';
     }
 

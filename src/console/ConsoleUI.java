@@ -1,7 +1,6 @@
 package console;
 
 import core.*;
-import entities.MasterSquirrel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,14 +13,16 @@ public class ConsoleUI implements UI {
     private PrintStream outputStream;
     private BufferedReader inputStream;
     private GameCommandType[] gameCommandTypes;
-    private MasterSquirrel masterSquirrel;
-    private Board board;
+    private State state;
 
 
-    public ConsoleUI() {
+    public ConsoleUI(State state) {
+
+        this.state = state;
         this.outputStream = System.out;
         this.inputStream = new BufferedReader(new InputStreamReader(System.in));
         this.gameCommandTypes = GameCommandType.values();
+
     }
 
 
@@ -57,14 +58,11 @@ public class ConsoleUI implements UI {
                     case RIGHT:
                         return new MoveCommand(new XY(1, 0));
                     case MASTER_ENERGY:
-                        //todo
                         masterEnergy();
                         break;
                     case SPAWN_MINI:
-                        //todo: parameter rausfiltern
-                        //todo: parameter uebergeben
-                        //todo: wo minisquirrel sinnigerweise instanziieren, hier!?
-                        spawnMiniSquirrel();
+                        //todo: parameter uebergeben!!!
+                        //spawnMiniSquirrel(command.getParameters());
                         break;
                         default:
                             return null;
@@ -130,15 +128,20 @@ public class ConsoleUI implements UI {
     }
 
     public void all() {
-        //todo
+        System.out.println(state.getBoard().getEntitySet());
     }
 
     public void masterEnergy() {
-        //todo
+        System.out.println(state.getMasterSquirrel().getEnergy());
     }
 
-    public void spawnMiniSquirrel() {
-        //todo
+    public void spawnMiniSquirrel(Command command) {
+        //todo: folgende parameter aufdroeseln und an new MS uebergeben
+        //energy
+        //location
+        //daddy
+
+        //state.getBoard().insert(new MiniSquirrel(/* parameter!! */));
     }
 
 }
