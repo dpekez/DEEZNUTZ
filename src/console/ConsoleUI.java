@@ -2,12 +2,12 @@ package console;
 
 import core.*;
 import entities.MasterSquirrel;
-import entities.MiniSquirrel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+
 
 public class ConsoleUI implements UI {
 
@@ -17,11 +17,13 @@ public class ConsoleUI implements UI {
     private MasterSquirrel masterSquirrel;
     private Board board;
 
+
     public ConsoleUI() {
         this.outputStream = System.out;
         this.inputStream = new BufferedReader(new InputStreamReader(System.in));
         this.gameCommandTypes = GameCommandType.values();
     }
+
 
     @Override
     public MoveCommand getCommand() throws IOException, ScanException {
@@ -55,7 +57,8 @@ public class ConsoleUI implements UI {
                     case RIGHT:
                         return new MoveCommand(new XY(1, 0));
                     case MASTER_ENERGY:
-                        //todo: master_energy();
+                        //todo
+                        masterEnergy();
                         break;
                     case SPAWN_MINI:
                         //todo: parameter rausfiltern
@@ -126,12 +129,16 @@ public class ConsoleUI implements UI {
         System.exit(0);
     }
 
-    public void spawnMiniSquirrel() {
-
+    public void all() {
+        //todo
     }
 
-    public void all(){
-        System.out.println(board.getEntitySet());
+    public void masterEnergy() {
+        //todo
+    }
+
+    public void spawnMiniSquirrel() {
+        //todo
     }
 
 }

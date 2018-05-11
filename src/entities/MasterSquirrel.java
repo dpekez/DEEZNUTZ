@@ -1,7 +1,6 @@
 package entities;
 
 import core.MoveCommand;
-import core.State;
 import core.XY;
 
 public abstract class MasterSquirrel extends Player {

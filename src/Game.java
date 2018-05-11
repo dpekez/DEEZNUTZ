@@ -7,11 +7,12 @@ import java.io.IOException;
 public abstract class Game {
 
     protected State state;
-    private Board board;
+
 
     Game(State state) {
         this.state = state;
     }
+
 
     public void run() throws IOException, ScanException {
 
