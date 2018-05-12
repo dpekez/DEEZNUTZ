@@ -1,7 +1,5 @@
 package core;
 
-import entities.MasterSquirrel;
-import entities.MiniSquirrel;
 
 public class State {
 

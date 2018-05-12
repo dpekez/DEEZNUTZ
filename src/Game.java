@@ -7,10 +7,13 @@ import java.io.IOException;
 public abstract class Game {
 
     protected State state;
+    public static final int FPS = 10;
+    private boolean threaded;
 
 
-    Game(State state) {
+    Game(State state, boolean threaded) {
         this.state = state;
+        this.threaded = threaded;
     }
 
 
@@ -20,6 +23,14 @@ public abstract class Game {
             render();
             processInput();
             update();
+
+            if(threaded) {
+                try {
+                    Thread.sleep(1000 / FPS);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
     }

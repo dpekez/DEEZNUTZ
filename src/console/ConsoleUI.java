@@ -15,16 +15,21 @@ public class ConsoleUI implements UI {
     private BufferedReader inputStream;
     private GameCommandType[] gameCommandTypes;
     private State state;
+    private boolean threaded;
 
 
-    public ConsoleUI(State state) {
+    public ConsoleUI(State state, boolean threaded) {
 
         this.state = state;
         this.outputStream = System.out;
         this.inputStream = new BufferedReader(new InputStreamReader(System.in));
         this.gameCommandTypes = GameCommandType.values();
+        this.threaded = threaded;
 
     }
+
+
+
 
 
     @Override
