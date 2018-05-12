@@ -17,6 +17,28 @@ public class CommandScanner {
         this.outputStream = outputStream;
     }
 
+    public boolean validateParams(Class<?>[] paramTypes, Object[] params, String[] splitCommand) {
+
+        for(int i=0; i<paramTypes.length; i++) {
+            if(paramTypes[i].equals(int.class)) {
+                //Versuch als int zu casten
+                params[i]=Integer.parseInt(splitCommand[i+1]);
+            }
+            else if(paramTypes[i].equals(float.class)) {
+                //Versuch als float zu casten
+                params[i]=Float.parseFloat(splitCommand[i+1]);
+            }
+            else if(paramTypes[i].equals(String.class)) {
+                //Versuch als String zu casten
+                params[i]=splitCommand[i+1];
+            }
+            else {
+                //wenn keins der Versuche klappt wird Kommando nicht angenommen
+                return false;
+            }
+        }
+        return true;
+    }
 
     public Command next() throws ScanException {
 
@@ -54,10 +76,13 @@ public class CommandScanner {
 
 
         // Validate parameters
-        Object[] parameters = null;
-        if(command.getParamTypes().length == splitInput.length - 1)
-            parameters = new Object[splitInput.length];
-        else
+        Object[] parameters = new Object[splitInput.length];
+
+
+
+        if(command.getParamTypes().length == splitInput.length - 1) {
+            validateParams(command.getParamTypes(), parameters, splitInput);
+        } else
             throw new ScanException("Error: Parameters wrong!");
 
 
