@@ -25,7 +25,7 @@ public class Launcher {
     }
 
 
-    private static void startGameMultiThreaded(Game game) {
+    private static void startGameMultiThreaded(Game game) throws ScanException {
         System.out.println("multi");
 
         Timer timer = new Timer();
@@ -41,6 +41,8 @@ public class Launcher {
         };
 
         timer.schedule(timerTask, 1000);
+
+        game.ui.multiThreadCommandProcess();
 
     }
 

@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class GameImpl extends Game {
 
-    private UI ui;
+    protected UI ui;
     private MasterSquirrel masterSquirrel;
 
 
