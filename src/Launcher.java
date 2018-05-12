@@ -40,10 +40,9 @@ public class Launcher {
             }
         };
 
-        timer.schedule(timerTask, 1000);
+        timer.schedule(timerTask, 0);
 
         game.ui.multiThreadCommandProcess();
-
     }
 
 }

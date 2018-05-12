@@ -31,12 +31,18 @@ public class ConsoleUI implements UI {
 
     @Override
     public MoveCommand getCommand() throws ScanException {
+        // alles beim Alten wenn nicht multithreaded
         if(!threaded)
             return getCommandSingleThread();
 
-        MoveCommand tmp = command;
-        command = null;
-        return tmp;
+
+        if(command == null)
+            return new MoveCommand(new XY(0, 0));
+        else {
+            MoveCommand temp = command;
+            command = null;
+            return temp;
+        }
     }
 
 
