@@ -1,6 +1,9 @@
 package console;
 
-import core.*;
+import core.BoardView;
+import core.MoveCommand;
+import core.State;
+import core.XY;
 import entities.MasterSquirrel;
 
 import java.io.BufferedReader;
@@ -27,9 +30,6 @@ public class ConsoleUI implements UI {
         this.threaded = threaded;
 
     }
-
-
-
 
 
     @Override
@@ -67,10 +67,14 @@ public class ConsoleUI implements UI {
                         masterEnergy();
                         break;
                     case SPAWN_MINI:
-                        spawnMiniSquirrel(command.getParameters());
+                        try {
+                            spawnMiniSquirrel(command.getParameters());
+                        } catch (NotEnoughEnergyException e) {
+                            e.printStackTrace();
+                        }
                         break;
-                        default:
-                            return null;
+                    default:
+                        return null;
                 }
             }
         }
@@ -122,7 +126,7 @@ public class ConsoleUI implements UI {
 
 
     private void help() {
-        for (GameCommandType commandType: GameCommandType.values()) {
+        for (GameCommandType commandType : GameCommandType.values()) {
             outputStream.println("<" + commandType.getName() + "> - " + commandType.getHelpText());
         }
     }
@@ -132,30 +136,24 @@ public class ConsoleUI implements UI {
         System.exit(0);
     }
 
-    public void all() {
+    private void all() {
         System.out.println(state.getBoard().getEntitySet());
     }
 
-    public void masterEnergy() {
+    private void masterEnergy() {
         System.out.println(state.getBoard().getMasterSquirrel().getEnergy());
     }
 
-    public void spawnMiniSquirrel(Object[] parameters) {
-
-        /* todo
-
-        NotEnoughEnergyException
-
-        ... implementieren, siehe Aufgabe 4, Teil 2 letzter Absatz.
-        Ich denke hier waere es geeignet muss aber nicht.
-        Dann aber auch in Board.insertMiniSquirrel() den Check rausmachen.
-         */
-
-        int energy = (Integer)parameters[0];
-        XY direction = new XY((Integer)parameters[1], (Integer)parameters[2]);
+    private void spawnMiniSquirrel(Object[] parameters) throws NotEnoughEnergyException {
+        int energy = (Integer) parameters[0];
+        XY direction = new XY((Integer) parameters[1], (Integer) parameters[2]);
         MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
 
-        state.getBoard().insertMiniSquirrel(energy, direction, daddy);
+        if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
+            state.getBoard().insertMiniSquirrel(energy, direction, daddy);
+        } else {
+            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+        }
     }
 
 }
