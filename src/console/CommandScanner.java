@@ -41,16 +41,24 @@ public class CommandScanner {
     }
 
 
-    public Command next() throws ScanException, IOException {
+    public Command next() throws ScanException {
 
         System.out.println("Enter a command please: ");
 
         String command;
-        //remove any pending and trailing whitespace
-        command = (inputReader.readLine().trim());
 
-        //split string after every whitespace
+        try {
+            command = inputReader.readLine();
+        } catch (IOException e) {
+            throw new ScanException("IOException");
+        }
+
+        command = command.trim();
         String[] splitCommand = command.split(" ");
+
+
+
+
 
         for(CommandTypeInfo i: commandTypeInfo) {
 
