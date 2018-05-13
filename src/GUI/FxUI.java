@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
 public class FxUI extends Scene implements UI {
 
     private static Command command = new Command(GameCommandType.NOTHING, new Object[0]);
-    private static int CELL_SIZE = 1;
+    private static int CELL_SIZE = 5;
     private static int miniSuirrelEnergy = 200;
     private final Canvas boardCanvas;
     private final Label msgLabel;
@@ -37,7 +37,7 @@ public class FxUI extends Scene implements UI {
         VBox top = new VBox();
         top.getChildren().add(boardCanvas);
         top.getChildren().add(statusLabel);
-        statusLabel.setText("Hallo Welt");
+        statusLabel.setText("Info Anzeige");
         final FxUI fxUI = new FxUI(top, boardCanvas, statusLabel, CELL_SIZE);
         fxUI.setOnKeyPressed(
                 keyEvent -> {
@@ -81,20 +81,43 @@ public class FxUI extends Scene implements UI {
         XY viewSize = view.getSize();
 
         // dummy for rendering a board snapshot, TODO: change it!
-        gc.fillText("Where are the beasts?", 100, 100);
-        gc.setFill(Color.RED);
-        gc.fillOval(150, 150, 50, 50);
+        //gc.fillText("Where are the beasts?", 100, 100);
+        //gc.setFill(Color.RED);
+        //gc.fillOval(150, 150, 50, 50);
         //TODO
     }
 
-    /*private void printAllEntity(GraphicsContext gc){
-        for (int x = 0; x < boardCanvas.getWidth(); x++){
-            for (int y = 0; y < boardCanvas.getHeight(); y++){
-                if()
+    private void printAllEntity(GraphicsContext gc, BoardView view) {
+        for (int x = 0; x < boardCanvas.getWidth(); x++) {
+            for (int y = 0; y < boardCanvas.getHeight(); y++) {
+                if (view.getEntityType(x, y) != null) {
+                    switch (view.getEntityType(x, y)) {
+                        case MASTER_SQUIRREL:
+                            gc.setFill(Color.BLACK);
+                            gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        case MINI_SQUIRREL:
+                            gc.setFill(Color.BLACK);
+                            gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        case GOOD_PLANT:
+                            gc.setFill(Color.FORESTGREEN);
+                            gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        case BAD_PLANT:
+                            gc.setFill(Color.DARKGREEN);
+                            gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        case BAD_BEAST:
+                            gc.setFill(Color.SADDLEBROWN);
+                            gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        case GOOD_BEAST:
+                            gc.setFill(Color.ROSYBROWN);
+                            gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        case WALL:
+                            gc.setFill(Color.GRAY);
+                            gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                    }
+                }
             }
         }
-
-    }*/
+    }
 
 
     public void message(final String msg) {
