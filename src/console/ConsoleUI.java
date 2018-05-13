@@ -7,7 +7,6 @@ import core.XY;
 import entities.MasterSquirrel;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 
@@ -33,7 +32,7 @@ public class ConsoleUI implements UI {
 
 
     @Override
-    public MoveCommand getCommand() throws IOException, ScanException {
+    public MoveCommand getCommand() throws ScanException {
 
         CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream);
 

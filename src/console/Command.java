@@ -9,17 +9,17 @@ public class Command {
     private Object[] parameters;
 
 
-    Command(CommandTypeInfo commandType, Object[] parameters) {
+    public Command(CommandTypeInfo commandType, Object[] parameters) {
         this.commandType = commandType;
         this.parameters = parameters;
     }
 
 
-    public CommandTypeInfo getCommandType() {
+    CommandTypeInfo getCommandType() {
         return commandType;
     }
 
-    public Object[] getParameters() {
+    Object[] getParameters() {
         return parameters;
     }
 
