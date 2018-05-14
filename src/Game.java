@@ -1,4 +1,5 @@
 import console.ScanException;
+import console.UI;
 import core.Board;
 import core.State;
 
@@ -7,7 +8,8 @@ import java.io.IOException;
 public abstract class Game {
 
     protected State state;
-    public static final int FPS = 10;
+    protected UI ui;
+    public static final int FPS = 1;
     private boolean threaded;
 
 
@@ -22,8 +24,6 @@ public abstract class Game {
         while (true) {
             render();
             processInput();
-            update();
-
             if(threaded) {
                 try {
                     Thread.sleep(1000 / FPS);
@@ -31,6 +31,7 @@ public abstract class Game {
                     e.printStackTrace();
                 }
             }
+            update();
         }
 
     }

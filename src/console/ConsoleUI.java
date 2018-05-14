@@ -17,66 +17,79 @@ public class ConsoleUI implements UI {
     private BufferedReader inputStream;
     private GameCommandType[] gameCommandTypes;
     private State state;
+    private MoveCommand command;
     private boolean threaded;
 
 
     public ConsoleUI(State state, boolean threaded) {
-
         this.state = state;
         this.outputStream = System.out;
         this.inputStream = new BufferedReader(new InputStreamReader(System.in));
         this.gameCommandTypes = GameCommandType.values();
         this.threaded = threaded;
+    }
 
+    @Override
+    public MoveCommand getCommand() throws ScanException {
+        // alles beim Alten wenn nicht multithreaded
+        if(!threaded)
+            return getCommandSingleThread();
+
+
+        if(command == null)
+            return new MoveCommand(new XY(0, 0));
+        else {
+            MoveCommand temp = command;
+            command = null;
+            return temp;
+        }
     }
 
 
     @Override
-    public MoveCommand getCommand() throws ScanException {
+    public void multiThreadCommandProcess() throws ScanException {
+        while(true)
+            this.command = getCommandSingleThread();
+    }
 
-        CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream);
 
+    public MoveCommand getCommandSingleThread() throws ScanException {
+        CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream, outputStream);
+        Command command;
+        command = commandScanner.next();
 
-        while (true) {
-
-            Command command;
-            command = commandScanner.next();
-
-            if (command != null) {
-
-                switch ((GameCommandType) command.getCommandType()) {
-                    case EXIT:
-                        exit();
-                        break;
-                    case HELP:
-                        help();
-                        break;
-                    case ALL:
-                        all();
-                        break;
-                    case LEFT:
-                        return new MoveCommand(new XY(-1, 0));
-                    case UP:
-                        return new MoveCommand(new XY(0, -1));
-                    case DOWN:
-                        return new MoveCommand(new XY(0, 1));
-                    case RIGHT:
-                        return new MoveCommand(new XY(1, 0));
-                    case MASTER_ENERGY:
-                        masterEnergy();
-                        break;
-                    case SPAWN_MINI:
-                        try {
-                            spawnMiniSquirrel(command.getParameters());
-                        } catch (NotEnoughEnergyException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    default:
-                        return null;
+        switch ((GameCommandType) command.getCommandType()) {
+            case EXIT:
+                exit();
+                break;
+            case HELP:
+                help();
+                break;
+            case ALL:
+                all();
+                break;
+            case LEFT:
+                return new MoveCommand(new XY(-1, 0));
+            case UP:
+                return new MoveCommand(new XY(0, -1));
+            case DOWN:
+                return new MoveCommand(new XY(0, 1));
+            case RIGHT:
+                return new MoveCommand(new XY(1, 0));
+            case MASTER_ENERGY:
+                masterEnergy();
+                break;
+            case SPAWN_MINI:
+                try {
+                    spawnMiniSquirrel(command.getParameters());
+                } catch (NotEnoughEnergyException e) {
+                    e.printStackTrace();
                 }
-            }
+                break;
+            default:
+                return new MoveCommand(new XY(0, 0));
         }
+        return new MoveCommand(new XY(0, 0));
     }
 
 
