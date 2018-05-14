@@ -1,5 +1,8 @@
-import console.*;
-import core.*;
+import console.ConsoleUI;
+import console.ScanException;
+import core.MoveCommand;
+import core.State;
+import core.XY;
 import entities.HandOperatedMasterSquirrel;
 import entities.MasterSquirrel;
 

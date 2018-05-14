@@ -1,15 +1,14 @@
 import console.ScanException;
 import console.UI;
-import core.Board;
 import core.State;
 
 import java.io.IOException;
 
 public abstract class Game {
 
-    protected State state;
-    protected UI ui;
-    public static final int FPS = 1;
+    private static final int FPS = 1;
+    State state;
+    UI ui;
     private boolean threaded;
 
 
@@ -18,8 +17,7 @@ public abstract class Game {
         this.threaded = threaded;
     }
 
-
-    public void run() throws IOException, ScanException {
+    void run() throws IOException, ScanException {
 
         while (true) {
             render();
@@ -33,17 +31,13 @@ public abstract class Game {
             }
             update();
         }
-
     }
 
     protected abstract void render();
 
     protected abstract void processInput() throws IOException, ScanException;
 
-    protected void update() {
-
+    private void update() {
         state.update();
-
     }
-
 }

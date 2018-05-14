@@ -13,9 +13,7 @@ public class Launcher {
                 startGameMultiThreaded(new GameImpl(true));
                 return;
             }
-
         startGameSingleThreaded(new GameImpl(false));
-
     }
 
 
@@ -44,5 +42,4 @@ public class Launcher {
 
         game.ui.multiThreadCommandProcess();
     }
-
 }

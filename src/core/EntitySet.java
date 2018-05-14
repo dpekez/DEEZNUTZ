@@ -9,12 +9,12 @@ public class EntitySet {
     private int h;
 
 
-    public EntitySet(int size) {
+    EntitySet(int size) {
         this.entities = new Entity[size];
     }
 
 
-    public void add(Entity entity) {
+    void add(Entity entity) {
         if(h < entities.length) {
             entities[h++] = entity;
         } else {
@@ -22,7 +22,7 @@ public class EntitySet {
         }
     }
 
-    public void remove(Entity entity) {
+    void remove(Entity entity) {
         for(int i = 0; i < entities.length; i++)
             if(entity.equals(entities[i])) {
                 entities[i] = null;
@@ -36,7 +36,7 @@ public class EntitySet {
      * Checking if entity is a character since only characters have a nextStep() implementation.
      */
 
-    public void moveEntities(EntityContext entityContext) {
+    void moveEntities(EntityContext entityContext) {
         for(Entity entity: entities) {
             if(entity instanceof Character)
                 ((Character)entity).nextStep(entityContext);
@@ -51,7 +51,7 @@ public class EntitySet {
      * @return  the newly generated array set instead of the reference
      */
 
-    public Entity[] getEntitySetArray() {
+    Entity[] getEntitySetArray() {
         Entity[] newArray = new Entity[entities.length];
 
         int index = 0;
@@ -67,15 +67,15 @@ public class EntitySet {
 
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
 
-        for(int i=0; i<entities.length; i++) {
-            if(entities[i] != null) {
-                s += entities[i] + "\n";
+        for (Entity entity : entities) {
+            if (entity != null) {
+                s.append(entity).append("\n");
             }
         }
 
-        return s;
+        return s.toString();
     }
 
 }
