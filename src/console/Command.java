@@ -8,12 +8,10 @@ public class Command {
     private CommandTypeInfo commandType;
     private Object[] parameters;
 
-
     public Command(CommandTypeInfo commandType, Object[] parameters) {
         this.commandType = commandType;
         this.parameters = parameters;
     }
-
 
     CommandTypeInfo getCommandType() {
         return commandType;
@@ -23,7 +21,6 @@ public class Command {
         return parameters;
     }
 
-
     @Override
     public String toString() {
         return "Command{" +
@@ -31,5 +28,4 @@ public class Command {
                 ", parameters=" + (parameters == null ? null : Arrays.asList(parameters)) +
                 '}';
     }
-
 }

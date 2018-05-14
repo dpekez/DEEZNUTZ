@@ -35,7 +35,6 @@ public class ConsoleUI implements UI {
         if(!threaded)
             return getCommandSingleThread();
 
-
         if(command == null)
             return new MoveCommand(new XY(0, 0));
         else {
@@ -53,7 +52,7 @@ public class ConsoleUI implements UI {
     }
 
 
-    public MoveCommand getCommandSingleThread() throws ScanException {
+    private MoveCommand getCommandSingleThread() throws ScanException {
         CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream, outputStream);
         Command command;
         command = commandScanner.next();

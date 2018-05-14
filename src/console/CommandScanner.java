@@ -4,22 +4,22 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 
-public class CommandScanner {
+class CommandScanner {
 
     private CommandTypeInfo[] commandTypeInfo;
     private BufferedReader inputReader;
     private PrintStream outputStream;
 
 
-    public CommandScanner(CommandTypeInfo[] commandTypeInfo, BufferedReader inputReader, PrintStream outputStream) {
+    CommandScanner(CommandTypeInfo[] commandTypeInfo, BufferedReader inputReader, PrintStream outputStream) {
         this.commandTypeInfo = commandTypeInfo;
         this.inputReader = inputReader;
         this.outputStream = outputStream;
     }
 
-    public boolean validateParams(Class<?>[] paramTypes, Object[] params, String[] splitCommand) {
+    private boolean validateParams(Class<?>[] paramTypes, Object[] params, String[] splitCommand) {
 
-        for(int i=0; i<paramTypes.length; i++) {
+        for (int i = 0; i < paramTypes.length; i++) {
             if(paramTypes[i].equals(int.class)) {
                 //Versuch als int zu casten
                 params[i]=Integer.parseInt(splitCommand[i+1]);
@@ -40,7 +40,7 @@ public class CommandScanner {
         return true;
     }
 
-    public Command next() throws ScanException {
+    Command next() throws ScanException {
 
         System.out.println("Enter a command please: ");
 
@@ -64,14 +64,14 @@ public class CommandScanner {
 
         // Search for matching command type
         CommandTypeInfo command = null;
-        for(CommandTypeInfo cti: commandTypeInfo) {
-            if(cti.getName().equals(splitInput[0]))
+        for (CommandTypeInfo cti : commandTypeInfo) {
+            if (cti.getName().equals(splitInput[0]))
                 command = cti;
         }
 
 
         // Throw exception if command is not available
-        if(command == null)
+        if (command == null)
             throw new ScanException("Error: Command <" + splitInput[0] + "> doesn't exist!");
 
 
@@ -79,12 +79,10 @@ public class CommandScanner {
         Object[] parameters = new Object[splitInput.length];
 
 
-
-        if(command.getParamTypes().length == splitInput.length - 1) {
+        if (command.getParamTypes().length == splitInput.length - 1) {
             validateParams(command.getParamTypes(), parameters, splitInput);
         } else
             throw new ScanException("Error: Parameters wrong!");
-
 
         return new Command(command, parameters);
     }

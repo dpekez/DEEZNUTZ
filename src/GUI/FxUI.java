@@ -75,16 +75,15 @@ public class FxUI extends Scene implements UI {
         Platform.runLater(() -> repaintBoardCanvas(view));
     }
 
+    @Override
+    public void multiThreadCommandProcess() {
+
+    }
+
     private void repaintBoardCanvas(BoardView view) {
         GraphicsContext gc = boardCanvas.getGraphicsContext2D();
         gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
         XY viewSize = view.getSize();
-
-        // dummy for rendering a board snapshot, TODO: change it!
-        //gc.fillText("Where are the beasts?", 100, 100);
-        //gc.setFill(Color.RED);
-        //gc.fillOval(150, 150, 50, 50);
-        //TODO
     }
 
     private void printAllEntity(GraphicsContext gc, BoardView view) {
@@ -118,7 +117,6 @@ public class FxUI extends Scene implements UI {
             }
         }
     }
-
 
     public void message(final String msg) {
         Platform.runLater(() -> msgLabel.setText(msg));

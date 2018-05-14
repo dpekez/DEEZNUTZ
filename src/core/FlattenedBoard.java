@@ -122,7 +122,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
         }
     }
 
-
+    //TODO cleanup & sitch Case
     @Override
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
         XY nextPosition = goodBeast.getLocation().addVector(moveDirection);
