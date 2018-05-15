@@ -1,20 +1,19 @@
 package console;
+
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintStream;
 
 
-class CommandScanner {
+public class CommandScanner {
 
     private CommandTypeInfo[] commandTypeInfo;
     private BufferedReader inputReader;
-    private PrintStream outputStream;
 
 
-    CommandScanner(CommandTypeInfo[] commandTypeInfo, BufferedReader inputReader, PrintStream outputStream) {
+    public CommandScanner(CommandTypeInfo[] commandTypeInfo, BufferedReader inputReader) {
         this.commandTypeInfo = commandTypeInfo;
         this.inputReader = inputReader;
-        this.outputStream = outputStream;
+
     }
 
     private boolean validateParams(Class<?>[] paramTypes, Object[] params, String[] splitCommand) {
@@ -40,7 +39,7 @@ class CommandScanner {
         return true;
     }
 
-    Command next() throws ScanException {
+    public Command next() throws ScanException {
 
         System.out.println("Enter a command please: ");
 

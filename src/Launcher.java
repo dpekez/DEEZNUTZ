@@ -1,12 +1,10 @@
 import GUI.FxUI;
-import console.ConsoleUI;
 import console.ScanException;
 import core.BoardConfig;
-import core.State;
+import core.Game;
+import core.GameImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.event.EventHandler;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -14,47 +12,23 @@ import java.util.TimerTask;
 
 
 public class Launcher extends Application {
-
-    private static BoardConfig boardConfig = new BoardConfig();
+    private static Launcher launcher = new Launcher();
+    private Timer timer = new Timer();
 
     public static void main(String[] args) throws Exception {
 
-        if(args.length >= 1) {
+        if (args.length >= 1)
             if (args[0].equalsIgnoreCase("multi")) {
-                Application.launch(args);
-                //startGameMultiThreaded(new GameImpl (new ConsoleUI( new State(), true ), new State(), true) );
+                startGameMultiThreaded(new GameImpl(true));
                 return;
             }
-        }
-
-        //(new GameImpl(new ConsoleUI(true), boardConfig, true)).run();
-        //startGameSingleThreaded(new GameImpl(false));
-    }
-
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
-        final Game game = new GameImpl(fxUI, new State(), true);
-
-        primaryStage.setScene(fxUI);
-        primaryStage.setTitle("DEEZ NUTS");
-        fxUI.getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent evt) {
-                System.exit(-1);
-            }
-        });
-        primaryStage.show();
-
-        startGameMultiThreaded(game);
+        //startGameSingleThreaded(new GameImpl(true));
+        launcher.startGUIGame(args);
     }
 
 
     private static void startGameSingleThreaded(Game game) throws Exception {
         System.out.println("single");
-        //(new GameImpl(new ConsoleUI(true), boardConfig, true)).run();
         game.run();
     }
 
@@ -73,9 +47,31 @@ public class Launcher extends Application {
                 }
             }
         };
-
-        timer.schedule(timerTask, 0);
-
+        timer.schedule(timerTask, 1000);
         game.ui.multiThreadCommandProcess();
+    }
+
+    private void startGUIGame(String[] args) {
+        Application.launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        BoardConfig boardConfig = new BoardConfig();
+        FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
+        final Game game = new GameImpl(true);
+        game.setUi(fxUI);
+        fxUI.setGameImpl((GameImpl) game);
+        primaryStage.setScene(fxUI);
+        primaryStage.setTitle("DEEZNUTZ");
+        primaryStage.setAlwaysOnTop(true);
+        fxUI.getWindow().setOnCloseRequest(evt -> System.exit(-1));
+        primaryStage.show();
+        try {
+            startGameMultiThreaded(game);
+        } catch (ScanException e) {
+            e.printStackTrace();
+        }
+
     }
 }

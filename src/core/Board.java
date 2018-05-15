@@ -11,7 +11,7 @@ public class Board {
     private MasterSquirrel masterSquirrel;
 
 
-    public Board(BoardConfig boardConfig) {
+    Board(BoardConfig boardConfig) {
         this.boardConfig = boardConfig;
         entitySet = new EntitySet(boardConfig.getHeight() * boardConfig.getWidth());
 
@@ -51,7 +51,7 @@ public class Board {
     }
 
 
-    public void update(EntityContext context) {
+    void update(EntityContext context) {
         entitySet.moveEntities(context);
     }
 
@@ -59,11 +59,11 @@ public class Board {
         return new FlattenedBoard(this);
     }
 
-    public void remove(Entity e) {
+    void remove(Entity e) {
         entitySet.remove(e);
     }
 
-    public void insert(Entity e) {
+    void insert(Entity e) {
         entitySet.add(e);
     }
 
@@ -71,7 +71,7 @@ public class Board {
         return entitySet.getEntitySetArray();
     }
 
-    public BoardConfig getConfig() {
+    BoardConfig getConfig() {
         return boardConfig;
     }
 
@@ -79,7 +79,7 @@ public class Board {
         return entitySet;
     }
 
-    public void insertMasterSquirrel(MasterSquirrel masterSquirrel) {
+    void insertMasterSquirrel(MasterSquirrel masterSquirrel) {
         this.masterSquirrel = masterSquirrel;
         insert(masterSquirrel);
     }

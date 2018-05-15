@@ -1,8 +1,8 @@
 package console;
 
-class NotEnoughEnergyException extends Exception {
+public class NotEnoughEnergyException extends Exception {
 
-    NotEnoughEnergyException(String message) {
+    public NotEnoughEnergyException(String message) {
         super(message);
     }
 

@@ -2,8 +2,8 @@ package core;
 
 public class BoardConfig {
 
-    private final int width = 60;
-    private final int height = 10;
+    private final int width = 30;
+    private final int height = 30;
     private final XY boardSize = new XY(width, height);
     private final int badBeastQuant = 5;
     private final int goodBeastQuant = 5;
