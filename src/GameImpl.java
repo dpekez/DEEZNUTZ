@@ -1,5 +1,7 @@
+import GUI.FxUI;
 import console.ConsoleUI;
 import console.ScanException;
+import core.BoardConfig;
 import core.MoveCommand;
 import core.State;
 import core.XY;
@@ -14,9 +16,13 @@ public class GameImpl extends Game {
     private MasterSquirrel masterSquirrel;
 
 
-    GameImpl(boolean threaded) {
+    GameImpl(boolean threaded, boolean gui) {
         super(new State(), threaded);
-        ui = new ConsoleUI(state, threaded);
+        if(gui) {
+            FxUI fxUI = FxUI.createInstance(state.getBoard().getConfig().getBoardSize());
+
+        } else
+            ui = new ConsoleUI(state, threaded);
 
         masterSquirrel = new HandOperatedMasterSquirrel(XY.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
 
