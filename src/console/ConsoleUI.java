@@ -1,10 +1,6 @@
 package console;
 
-import core.BoardView;
-import core.MoveCommand;
-import core.State;
-import core.XY;
-import entities.MasterSquirrel;
+import core.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,6 +15,7 @@ public class ConsoleUI implements UI {
     private State state;
     private MoveCommand command;
     private boolean threaded;
+    private GameImpl gameImpl;
 
 
     public ConsoleUI(State state, boolean threaded) {
@@ -47,40 +44,41 @@ public class ConsoleUI implements UI {
 
     @Override
     public void multiThreadCommandProcess() throws ScanException {
-        while(true)
+        while (true) {
             this.command = getCommandSingleThread();
+        }
     }
 
 
     private MoveCommand getCommandSingleThread() throws ScanException {
-        CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream, outputStream);
+        CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream);
         Command command;
         command = commandScanner.next();
 
         switch ((GameCommandType) command.getCommandType()) {
             case EXIT:
-                exit();
+                gameImpl.exit();
                 break;
             case HELP:
-                help();
+                gameImpl.help();
                 break;
             case ALL:
-                all();
+                gameImpl.all();
                 break;
             case LEFT:
-                return new MoveCommand(new XY(-1, 0));
+                gameImpl.left();
             case UP:
-                return new MoveCommand(new XY(0, -1));
+                gameImpl.up();
             case DOWN:
-                return new MoveCommand(new XY(0, 1));
+                gameImpl.down();
             case RIGHT:
-                return new MoveCommand(new XY(1, 0));
+                gameImpl.right();
             case MASTER_ENERGY:
-                masterEnergy();
+                gameImpl.masterEnergy();
                 break;
             case SPAWN_MINI:
                 try {
-                    spawnMiniSquirrel(command.getParameters());
+                    gameImpl.spawnMiniSquirrel(command.getParameters());
                 } catch (NotEnoughEnergyException e) {
                     e.printStackTrace();
                 }
@@ -96,9 +94,7 @@ public class ConsoleUI implements UI {
     public void render(BoardView view) {
         for (int y = 0; y < view.getSize().getY(); y++) {
             for (int x = 0; x < view.getSize().getX(); x++) {
-
                 char c;
-
                 switch (view.getEntityType(x, y)) {
                     case BAD_BEAST:
                         c = 'B';
@@ -126,45 +122,9 @@ public class ConsoleUI implements UI {
                         c = ' ';
                         break;
                 }
-
-                System.out.print(c);
+                outputStream.print(c);
             }
-
-            System.out.println();
-        }
-
-    }
-
-
-    private void help() {
-        for (GameCommandType commandType : GameCommandType.values()) {
-            outputStream.println("<" + commandType.getName() + "> - " + commandType.getHelpText());
+            outputStream.println();
         }
     }
-
-    private void exit() {
-        System.out.println("Bye bye");
-        System.exit(0);
-    }
-
-    private void all() {
-        System.out.println(state.getBoard().getEntitySet());
-    }
-
-    private void masterEnergy() {
-        System.out.println(state.getBoard().getMasterSquirrel().getEnergy());
-    }
-
-    private void spawnMiniSquirrel(Object[] parameters) throws NotEnoughEnergyException {
-        int energy = (Integer) parameters[0];
-        XY direction = new XY((Integer) parameters[1], (Integer) parameters[2]);
-        MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
-
-        if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
-            state.getBoard().insertMiniSquirrel(energy, direction, daddy);
-        } else {
-            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
-        }
-    }
-
 }

@@ -17,7 +17,7 @@ public class Command {
         return commandType;
     }
 
-    Object[] getParameters() {
+    public Object[] getParameters() {
         return parameters;
     }
 
