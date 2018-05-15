@@ -22,7 +22,7 @@ public class FxUI extends Scene implements UI {
     private final Canvas boardCanvas;
     private final Label msgLabel;
     private GameImpl gameimpl;
-    private MoveCommand command;
+    private static MoveCommand command;
 
     private FxUI(Parent parent, Canvas boardCanvas, Label msgLabel) {
         super(parent);
@@ -43,19 +43,19 @@ public class FxUI extends Scene implements UI {
                     switch (keyEvent.getCode()) {
                         case W:
                         case UP:
-                            fxUI.gameimpl.up();
+                            command = new MoveCommand(new XY(0, -1));
                             break;
                         case D:
                         case RIGHT:
-                            fxUI.gameimpl.right();
+                            command = new MoveCommand(new XY(1, 0));
                             break;
                         case S:
                         case DOWN:
-                            fxUI.gameimpl.down();
+                            command = new MoveCommand(new XY(0, 1));
                             break;
                         case A:
                         case LEFT:
-                            fxUI.gameimpl.left();
+                            command = new MoveCommand(new XY(-1, 0));
                             break;
                         case SPACE:
                             fxUI.gameimpl.masterEnergy();
