@@ -64,6 +64,12 @@ public class FxUI extends Scene implements UI {
                         case ESCAPE:
                             fxUI.gameimpl.exit();
                             break;
+                        case X:
+                            fxUI.gameimpl.all();
+                            break;
+                        case H:
+                            fxUI.gameimpl.help();
+                            break;
                     }
                 }
         );
