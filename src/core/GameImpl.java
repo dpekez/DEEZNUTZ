@@ -7,31 +7,20 @@ import console.ScanException;
 import entities.HandOperatedMasterSquirrel;
 import entities.MasterSquirrel;
 
-import java.io.IOException;
-
 public class GameImpl extends Game {
-
     private MasterSquirrel masterSquirrel;
 
     public GameImpl(boolean threaded) {
-
         super(new State(), threaded);
         ui = new ConsoleUI(state, threaded);
-
         masterSquirrel = new HandOperatedMasterSquirrel(XY.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
-
         state.getBoard().insertMasterSquirrel(masterSquirrel);
     }
 
-
     @Override
-    protected void processInput() throws IOException, ScanException {
-
-        MoveCommand moveCommand;
-
-        moveCommand = ui.getCommand();
+    protected void processInput() throws ScanException {
+        MoveCommand moveCommand = ui.getCommand();
         masterSquirrel.setMoveCommand(moveCommand);
-
     }
 
     @Override
@@ -62,7 +51,6 @@ public class GameImpl extends Game {
         int energy = (Integer) parameters[0];
         XY direction = new XY((Integer) parameters[1], (Integer) parameters[2]);
         MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
-
         if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
             state.getBoard().insertMiniSquirrel(energy, direction, daddy);
         } else {
@@ -85,5 +73,4 @@ public class GameImpl extends Game {
     public void down() {
         new MoveCommand(new XY(0, 1));
     }
-
 }
