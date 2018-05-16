@@ -17,17 +17,17 @@ import javafx.scene.paint.Color;
 
 public class FxUI extends Scene implements UI {
 
-    private static final int CELL_SIZE = 20;
-    private static int miniSuirrelEnergy = 200;
-    private final Canvas boardCanvas;
+    private static final int CELL_SIZE = 8;
     private final Label msgLabel;
-    private GameImpl gameimpl;
+    private final Canvas boardCanvas;
     private static MoveCommand command;
+    private GameImpl gameimpl;
+
 
     private FxUI(Parent parent, Canvas boardCanvas, Label msgLabel) {
         super(parent);
-        this.boardCanvas = boardCanvas;
         this.msgLabel = msgLabel;
+        this.boardCanvas = boardCanvas;
     }
 
     public static FxUI createInstance(XY boardSize) {

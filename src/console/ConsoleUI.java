@@ -9,13 +9,13 @@ import java.io.PrintStream;
 
 public class ConsoleUI implements UI {
 
+    private State state;
+    private boolean threaded;
+    private GameImpl gameImpl;
+    private MoveCommand command;
     private PrintStream outputStream;
     private BufferedReader inputStream;
     private GameCommandType[] gameCommandTypes;
-    private State state;
-    private MoveCommand command;
-    private boolean threaded;
-    private GameImpl gameImpl;
 
 
     public ConsoleUI(State state, boolean threaded) {
@@ -32,15 +32,14 @@ public class ConsoleUI implements UI {
         if(!threaded)
             return getCommandSingleThread();
 
-        if(command == null)
+        if (command == null) {
             return new MoveCommand(new XY(0, 0));
-        else {
+        } else {
             MoveCommand temp = command;
             command = null;
             return temp;
         }
     }
-
 
     @Override
     public void multiThreadCommandProcess() throws ScanException {
@@ -48,7 +47,6 @@ public class ConsoleUI implements UI {
             this.command = getCommandSingleThread();
         }
     }
-
 
     private MoveCommand getCommandSingleThread() throws ScanException {
         CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream);
@@ -67,12 +65,16 @@ public class ConsoleUI implements UI {
                 break;
             case LEFT:
                 gameImpl.left();
+                break;
             case UP:
                 gameImpl.up();
+                break;
             case DOWN:
                 gameImpl.down();
+                break;
             case RIGHT:
                 gameImpl.right();
+                break;
             case MASTER_ENERGY:
                 gameImpl.masterEnergy();
                 break;
