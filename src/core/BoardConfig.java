@@ -11,7 +11,7 @@ public class BoardConfig {
     private final int goodPlantQuant = 28;
     private final int wallQuant = 41;
     private final int pointsOfBadMiniSquirrel = 150;
-    private final int waitingTimeBeast = 4;
+    private final int waitingTimeBeast = 80;
     private final int goodBeastViewDistance = 6;
     private final int badBestViewDistance = 6;
     private final int playerEnityViewDistance = 6;

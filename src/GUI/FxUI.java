@@ -11,8 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 
 public class FxUI extends Scene implements UI {
@@ -36,7 +38,7 @@ public class FxUI extends Scene implements UI {
         VBox top = new VBox();
         top.getChildren().add(boardCanvas);
         top.getChildren().add(statusLabel);
-        statusLabel.setText("Info Anzeige");
+        statusLabel.setText("");
         final FxUI fxUI = new FxUI(top, boardCanvas, statusLabel);
         fxUI.setOnKeyPressed(
                 keyEvent -> {
@@ -58,6 +60,16 @@ public class FxUI extends Scene implements UI {
                             command = new MoveCommand(new XY(-1, 0));
                             break;
                         case SPACE:
+                            GridPane creditsPane = new GridPane();
+                            creditsPane.getChildren().add(new Label("" + fxUI.gameimpl.masterEnergy()));
+                            creditsPane.setMinSize(200, 400);
+                            Scene creditsScene = new Scene(creditsPane);
+                            Stage creditsStage = new Stage();
+                            creditsStage.setScene(creditsScene);
+                            creditsStage.setX(1300);
+                            creditsStage.setY(300);
+                            creditsStage.setResizable(false);
+                            creditsStage.show();
                             fxUI.gameimpl.masterEnergy();
                             break;
                         case Q:

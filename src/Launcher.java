@@ -1,4 +1,5 @@
 import GUI.FxUI;
+import Music.BackgroundMusic;
 import core.BoardConfig;
 import core.Game;
 import core.GameImpl;
@@ -82,6 +83,7 @@ public class Launcher extends Application {
         BoardConfig boardConfig = new BoardConfig();
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
         final Game game = new GameImpl(true);
+        BackgroundMusic.sound1.loop();
         game.setUi(fxUI);
         fxUI.setGameImpl((GameImpl) game);
         primaryStage.setScene(fxUI);

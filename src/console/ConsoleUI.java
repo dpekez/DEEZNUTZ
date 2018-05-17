@@ -64,17 +64,13 @@ public class ConsoleUI implements UI {
                 gameImpl.all();
                 break;
             case LEFT:
-                gameImpl.left();
-                break;
+                return new MoveCommand(new XY(-1, 0));
             case UP:
-                gameImpl.up();
-                break;
+                return new MoveCommand(new XY(0, -1));
             case DOWN:
-                gameImpl.down();
-                break;
+                return new MoveCommand(new XY(0, 1));
             case RIGHT:
-                gameImpl.right();
-                break;
+                return new MoveCommand(new XY(1, 0));
             case MASTER_ENERGY:
                 gameImpl.masterEnergy();
                 break;
