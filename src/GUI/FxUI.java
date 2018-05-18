@@ -64,9 +64,6 @@ public class FxUI extends Scene implements UI {
                             } catch (NotEnoughEnergyException e) {
                                 e.printStackTrace();
                             }
-                        case SPACE:
-                            fxUI.gameimpl.masterEnergy();
-                            break;
                         case Q:
                         case ESCAPE:
                             fxUI.gameimpl.exit();
@@ -97,6 +94,7 @@ public class FxUI extends Scene implements UI {
     }
 
     private void repaintBoardCanvas(BoardView view) {
+        message("");
         GraphicsContext gc = boardCanvas.getGraphicsContext2D();
         gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
         XY viewSize = view.getSize();
@@ -139,7 +137,7 @@ public class FxUI extends Scene implements UI {
     }
 
     public void message(String msg) {
-        String message = msg + "MasterSquirrel-Enrgey: " + gameimpl.update();
+        String message = msg + gameimpl.update();
         Platform.runLater(() -> msgLabel.setText(message));
     }
 
