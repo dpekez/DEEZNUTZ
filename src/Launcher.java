@@ -1,4 +1,6 @@
 import GUI.FxUI;
+import Music.BackgroundMusic;
+import console.ScanException;
 import core.BoardConfig;
 import core.Game;
 import core.GameImpl;
@@ -14,7 +16,7 @@ public class Launcher extends Application {
     private Scanner scanner = new Scanner(System.in);
     private static Launcher launcher = new Launcher();
 
-    private static void startGameMultiThreaded(Game game) throws Exception {
+    private static void startGameMultiThreaded(Game game) throws ScanException {
         System.out.println("multi");
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -40,7 +42,7 @@ public class Launcher extends Application {
         launcher.menu(args, launcher);
     }
 
-    private static void startGameSingleThreaded(Game game) throws Exception {
+    private static void startGameSingleThreaded(Game game) throws ScanException {
         System.out.println("single");
         game.run();
     }
@@ -49,7 +51,7 @@ public class Launcher extends Application {
         System.out.println("Wählen sie einen Spielmodus: [1] Spiel auf der Konsole [2] Spiel mit GUI [3] Verlassen");
         switch (scanner.nextInt()) {
             case 1:
-                launcher.gameModi(args);
+                launcher.gameMode(args);
                 break;
             case 2:
                 launcher.startGUIGame(args);
@@ -63,7 +65,7 @@ public class Launcher extends Application {
         Application.launch(args);
     }
 
-    private void gameModi(String[] args) throws Exception {
+    private void gameMode(String[] args) throws Exception {
         System.out.println("Wählen sie zwischen den Spielmodi: [1] Multithreaded [2] Siglethreaded [3] Verlassen ");
         switch (scanner.nextInt()) {
             case 1:
@@ -78,15 +80,16 @@ public class Launcher extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws ScanException {
         BoardConfig boardConfig = new BoardConfig();
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
         final Game game = new GameImpl(true);
+        BackgroundMusic.sound1.loop();
         game.setUi(fxUI);
         fxUI.setGameImpl((GameImpl) game);
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("DEEZNUTZ");
-        primaryStage.setAlwaysOnTop(true);
+        primaryStage.setAlwaysOnTop(false);
         fxUI.getWindow().setOnCloseRequest(evt -> System.exit(-1));
         primaryStage.show();
         startGameMultiThreaded(game);

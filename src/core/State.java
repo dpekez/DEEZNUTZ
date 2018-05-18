@@ -17,7 +17,7 @@ public class State {
         return highScore;
     }
 
-    public Board getBoard() {
+    Board getBoard() {
         return board;
     }
 

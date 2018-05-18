@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 
 public class FxUI extends Scene implements UI {
 
-    private static final int CELL_SIZE = 8;
+    private static final double CELL_SIZE = 7.5;
     private final Label msgLabel;
     private final Canvas boardCanvas;
     private static MoveCommand command;
@@ -36,8 +36,8 @@ public class FxUI extends Scene implements UI {
         VBox top = new VBox();
         top.getChildren().add(boardCanvas);
         top.getChildren().add(statusLabel);
-        statusLabel.setText("Info Anzeige");
         final FxUI fxUI = new FxUI(top, boardCanvas, statusLabel);
+        statusLabel.setText("");
         fxUI.setOnKeyPressed(
                 keyEvent -> {
                     switch (keyEvent.getCode()) {
@@ -76,7 +76,6 @@ public class FxUI extends Scene implements UI {
         return fxUI;
     }
 
-
     @Override
     public void render(final BoardView view) {
         Platform.runLater(() -> repaintBoardCanvas(view));
@@ -85,7 +84,6 @@ public class FxUI extends Scene implements UI {
     @Override
     public void multiThreadCommandProcess() {
     }
-
 
     public void setGameImpl(GameImpl game) {
         this.gameimpl = game;
@@ -133,8 +131,9 @@ public class FxUI extends Scene implements UI {
         }
     }
 
-    public void message(final String msg) {
-        Platform.runLater(() -> msgLabel.setText(msg));
+    public void message(String msg) {
+        String message = msg + "MasterSquirrel-Enrgey: " + gameimpl.update();
+        Platform.runLater(() -> msgLabel.setText(message));
     }
 
     @Override
