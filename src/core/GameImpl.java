@@ -57,4 +57,8 @@ public class GameImpl extends Game {
             throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
         }
     }
+
+    public String update() {
+        return "MasterSquirrel Energy: " + state.getBoard().getMasterSquirrel().getEnergy();
+    }
 }
