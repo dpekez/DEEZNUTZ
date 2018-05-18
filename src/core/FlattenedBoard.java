@@ -34,10 +34,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
         cells = newFlatBoard;
     }
 
-    @Override
-    public EntityType getEntityType(XY xy) {
-        return getEntityType(xy.getX(), xy.getY());
-    }
 
     @Override
     public int getWaitingTimeBeast() {
@@ -60,9 +56,14 @@ public class FlattenedBoard implements BoardView, EntityContext {
     }
 
     @Override
+    public EntityType getEntityType(XY xy) {
+        return getEntityType(xy.getX(), xy.getY());
+    }
+
+    @Override
     public EntityType getEntityType(int x, int y) {
 
-        if (cells[x][y] == null)
+        if(cells[x][y] == null)
             return EntityType.NOTHING;
 
         return EntityType.getType(cells[x][y]);
@@ -78,66 +79,69 @@ public class FlattenedBoard implements BoardView, EntityContext {
         XY nextPosition = miniSquirrel.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
 
-        if (nextEntity == null) {
-            miniSquirrel.move(moveDirection);
-            updateFlattenedBoard();
-        }
-
-        if (nextEntity instanceof Wall) {
-            miniSquirrel.updateEnergy(nextEntity.getEnergy());
-            miniSquirrel.isStunnedNextRound();
-
-        } else if (nextEntity instanceof GoodPlant || nextEntity instanceof BadPlant) {
-            miniSquirrel.updateEnergy(nextEntity.getEnergy());
-            killAndReplace(nextEntity);
-
-            if (miniSquirrel.getEnergy() <= 0)
-                kill(miniSquirrel);
-
-        } else if (nextEntity instanceof BadBeast || nextEntity instanceof GoodBeast) {
-            miniSquirrel.updateEnergy(nextEntity.getEnergy());
-            if (miniSquirrel.getEnergy() <= 0) {
-                kill(miniSquirrel);
-            } else {
+        switch (getEntityType(nextPosition)) {
+            case NOTHING:
                 miniSquirrel.move(moveDirection);
                 updateFlattenedBoard();
-            }
+                break;
+            case WALL:
+                miniSquirrel.updateEnergy(nextEntity.getEnergy());
+                miniSquirrel.isStunnedNextRound();
+                break;
+            case GOOD_PLANT:
+            case BAD_PLANT:
+                miniSquirrel.updateEnergy(nextEntity.getEnergy());
+                killAndReplace(nextEntity);
 
-        } else if (nextEntity instanceof MasterSquirrel) {
-            MasterSquirrel masterSquirrel = (MasterSquirrel) nextEntity;
+                if (miniSquirrel.getEnergy() <= 0)
+                    kill(miniSquirrel);
+                break;
+            case BAD_BEAST:
+            case GOOD_BEAST:
+                miniSquirrel.updateEnergy(nextEntity.getEnergy());
+                if (miniSquirrel.getEnergy() <= 0) {
+                    kill(miniSquirrel);
+                } else {
+                    miniSquirrel.move(moveDirection);
+                    updateFlattenedBoard();
+                }
+                break;
+            case MASTER_SQUIRREL:
+                MasterSquirrel masterSquirrel = (MasterSquirrel) nextEntity;
 
-            if (masterSquirrel.isMyChild(miniSquirrel)) {
-                masterSquirrel.updateEnergy(miniSquirrel.getEnergy());
-                kill(miniSquirrel);
-            } else {
-                kill(miniSquirrel);
-            }
-
-        } else if (nextEntity instanceof MiniSquirrel) {
-
-            if (miniSquirrel.getDaddy() != ((MiniSquirrel) nextEntity).getDaddy()) {
-                kill(miniSquirrel);
-                kill(nextEntity);
-            }
+                if (masterSquirrel.isMyChild(miniSquirrel)) {
+                    masterSquirrel.updateEnergy(miniSquirrel.getEnergy());
+                    kill(miniSquirrel);
+                } else {
+                    kill(miniSquirrel);
+                }
+                break;
+            case MINI_SQUIRREL:
+                if (miniSquirrel.getDaddy() != ((MiniSquirrel) nextEntity).getDaddy()) {
+                    kill(miniSquirrel);
+                    kill(nextEntity);
+                }
+                break;
         }
+
     }
 
-    //TODO cleanup & switch Case
     @Override
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
         XY nextPosition = goodBeast.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
 
-        if (nextEntity == null) {
-            goodBeast.move(moveDirection);
-            updateFlattenedBoard();
+        switch (getEntityType(nextPosition)) {
+            case NOTHING:
+                goodBeast.move(moveDirection);
+                updateFlattenedBoard();
+                break;
+            case MASTER_SQUIRREL:
+            case MINI_SQUIRREL:
+                nextEntity.updateEnergy(goodBeast.getEnergy());
+                killAndReplace(goodBeast);
+                break;
         }
-
-        if (nextEntity instanceof Player) {
-            nextEntity.updateEnergy(goodBeast.getEnergy());
-            killAndReplace(goodBeast);
-        }
-
     }
 
     @Override
@@ -145,32 +149,31 @@ public class FlattenedBoard implements BoardView, EntityContext {
         XY nextPosition = badBeast.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
 
-        if (nextEntity == null) {
-            badBeast.move(moveDirection);
-            updateFlattenedBoard();
-            return;
+        switch (getEntityType(nextPosition)) {
+            case NOTHING:
+                badBeast.move(moveDirection);
+                updateFlattenedBoard();
+                break;
+            case MINI_SQUIRREL:
+                nextEntity.updateEnergy(badBeast.getEnergy());
+
+                if (nextEntity.getEnergy() <= 0)
+                    kill(nextEntity);
+
+                badBeast.bite();
+
+                if (badBeast.getBitesLeft() == 0)
+                    killAndReplace(badBeast);
+                break;
+            case MASTER_SQUIRREL:
+                nextEntity.updateEnergy(badBeast.getEnergy());
+
+                badBeast.bite();
+
+                if (badBeast.getBitesLeft() == 0)
+                    killAndReplace(badBeast);
+                break;
         }
-
-        if (nextEntity instanceof MiniSquirrel) {
-            nextEntity.updateEnergy(badBeast.getEnergy());
-
-            if (nextEntity.getEnergy() <= 0)
-                kill(nextEntity);
-
-            badBeast.bite();
-
-            if (badBeast.getBitesLeft() == 0)
-                killAndReplace(badBeast);
-
-        } else if (nextEntity instanceof MasterSquirrel) {
-            nextEntity.updateEnergy(badBeast.getEnergy());
-
-            badBeast.bite();
-
-            if (badBeast.getBitesLeft() == 0)
-                killAndReplace(badBeast);
-        }
-
     }
 
     @Override
@@ -178,49 +181,48 @@ public class FlattenedBoard implements BoardView, EntityContext {
         XY nextPosition = masterSquirrel.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
 
+        switch (getEntityType(nextPosition)) {
+            case NOTHING:
+                masterSquirrel.move(moveDirection);
+                updateFlattenedBoard();
+                break;
+            case WALL:
+                masterSquirrel.updateEnergy(nextEntity.getEnergy());
+                masterSquirrel.stun();
+                break;
+            case BAD_BEAST:
+                masterSquirrel.updateEnergy(nextEntity.getEnergy());
+                ((BadBeast) nextEntity).bite();
 
-        if (nextEntity == null) {
-            masterSquirrel.move(moveDirection);
-            updateFlattenedBoard();
-            return;
-        }
-
-        if (nextEntity instanceof Wall) {
-            masterSquirrel.updateEnergy(nextEntity.getEnergy());
-            masterSquirrel.stun();
-
-        } else if (nextEntity instanceof BadBeast) {
-            masterSquirrel.updateEnergy(nextEntity.getEnergy());
-            ((BadBeast) nextEntity).bite();
-
-            if (((BadBeast) nextEntity).getBitesLeft() == 0)
+                if (((BadBeast) nextEntity).getBitesLeft() == 0)
+                    killAndReplace(nextEntity);
+                break;
+            case GOOD_PLANT:
+            case BAD_PLANT:
+                masterSquirrel.updateEnergy(nextEntity.getEnergy());
                 killAndReplace(nextEntity);
+                break;
+            case MINI_SQUIRREL:
+                MiniSquirrel miniSquirrel = (MiniSquirrel) nextEntity;
+                int energy;
 
-        } else if (nextEntity instanceof GoodPlant || nextEntity instanceof BadPlant) {
-            masterSquirrel.updateEnergy(nextEntity.getEnergy());
-            killAndReplace(nextEntity);
+                if (masterSquirrel.isMyChild(miniSquirrel)) {
+                    energy = miniSquirrel.getEnergy();
+                } else {
+                    energy = board.getConfig().getPointsOfBadMiniSquirrel();
+                }
 
-        } else if (nextEntity instanceof MiniSquirrel) {
-            MiniSquirrel miniSquirrel = (MiniSquirrel) nextEntity;
-            int energy;
-
-            if (masterSquirrel.isMyChild(miniSquirrel)) {
-                energy = miniSquirrel.getEnergy();
-            } else {
-                energy = board.getConfig().getPointsOfBadMiniSquirrel();
-            }
-
-            masterSquirrel.updateEnergy(energy);
-            masterSquirrel.move(moveDirection);
-            updateFlattenedBoard();
-
-        } else if (nextEntity instanceof GoodBeast) {
-            masterSquirrel.updateEnergy(nextEntity.getEnergy());
-            killAndReplace(nextEntity);
-            masterSquirrel.move(moveDirection);
-            updateFlattenedBoard();
+                masterSquirrel.updateEnergy(energy);
+                masterSquirrel.move(moveDirection);
+                updateFlattenedBoard();
+                break;
+            case GOOD_BEAST:
+                masterSquirrel.updateEnergy(nextEntity.getEnergy());
+                killAndReplace(nextEntity);
+                masterSquirrel.move(moveDirection);
+                updateFlattenedBoard();
+                break;
         }
-
     }
 
 
