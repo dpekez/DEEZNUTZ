@@ -1,6 +1,7 @@
 package core;
 
 
+import console.ScanException;
 import console.UI;
 
 public abstract class Game {
@@ -15,7 +16,7 @@ public abstract class Game {
         this.threaded = threaded;
     }
 
-    public void run() throws Exception {
+    public void run() throws ScanException {
         while (true) {
             render();
             processInput();
@@ -48,5 +49,9 @@ public abstract class Game {
         return this.state;
     }
 
-    protected abstract void processInput() throws Exception;
+    protected void setState(State state) {
+        this.state = state;
+    }
+
+    protected abstract void processInput() throws ScanException;
 }
