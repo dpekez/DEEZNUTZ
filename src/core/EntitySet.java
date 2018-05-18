@@ -68,14 +68,11 @@ public class EntitySet {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-
         for (Entity entity : entities) {
             if (entity != null) {
                 s.append(entity).append("\n");
             }
         }
-
         return s.toString();
     }
-
 }
