@@ -122,7 +122,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
         }
     }
 
-    //TODO cleanup & sitch Case
+    //TODO cleanup & switch Case
     @Override
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
         XY nextPosition = goodBeast.getLocation().addVector(moveDirection);
@@ -177,6 +177,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
     public void tryMove(MasterSquirrel masterSquirrel, XY moveDirection) {
         XY nextPosition = masterSquirrel.getLocation().addVector(moveDirection);
         Entity nextEntity = cells[nextPosition.getX()][nextPosition.getY()];
+
 
         if (nextEntity == null) {
             masterSquirrel.move(moveDirection);
@@ -257,12 +258,12 @@ public class FlattenedBoard implements BoardView, EntityContext {
         for (int x = startX; x <= endX; x++) {
             for (int y = startY; y <= endY; y++) {
                 Entity entity = cells[x][y];
-                if (entity instanceof Player) {
-                    if (nearestPlayer == null) {
-                        nearestPlayer = (Player) entity;
-                    } else if (pos.distanceFrom(entity.getLocation()) < pos.distanceFrom(nearestPlayer.getLocation())) {
-                        nearestPlayer = (Player) entity;
-                    }
+                if (!(entity instanceof Player))
+                    continue;
+                if (nearestPlayer == null) {
+                    nearestPlayer = (Player) entity;
+                } else if (pos.distanceFrom(entity.getLocation()) < pos.distanceFrom(nearestPlayer.getLocation())) {
+                    nearestPlayer = (Player) entity;
                 }
             }
         }
