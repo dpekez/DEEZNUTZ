@@ -8,7 +8,7 @@ public class Command {
     private CommandTypeInfo commandType;
     private Object[] parameters;
 
-    public Command(CommandTypeInfo commandType, Object[] parameters) {
+    Command(CommandTypeInfo commandType, Object[] parameters) {
         this.commandType = commandType;
         this.parameters = parameters;
     }
@@ -17,7 +17,7 @@ public class Command {
         return commandType;
     }
 
-    public Object[] getParameters() {
+    Object[] getParameters() {
         return parameters;
     }
 

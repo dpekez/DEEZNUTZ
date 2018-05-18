@@ -17,26 +17,19 @@ public class GoodBeast extends Character {
     public void nextStep(EntityContext entityContext) {
         stepCount++;
 
-        if(stepCount == 4) {
+        if (stepCount == entityContext.getWaitingTimeBeast()) {
             stepCount = 0;
-
             Player nearestPlayer = entityContext.nearestPlayerEntity(getLocation());
-
             if(nearestPlayer == null) {
                 entityContext.tryMove(this, XY.generateRandomMoveVector());
                 return;
             }
-
             int xDiff = nearestPlayer.getLocation().getX() - getLocation().getX();
             int yDiff = nearestPlayer.getLocation().getY() - getLocation().getY();
-
             int moveX, moveY;
-
             moveX = Integer.compare(0, xDiff);
             moveY = Integer.compare(0, yDiff);
-
             entityContext.tryMove(this, new XY(moveX, moveY));
-
         }
     }
 
@@ -46,4 +39,3 @@ public class GoodBeast extends Character {
     }
 
 }
-

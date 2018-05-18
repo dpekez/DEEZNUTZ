@@ -24,7 +24,7 @@ public class Launcher extends Application {
             public void run() {
                 try {
                     game.run();
-                } catch (Exception e) {
+                } catch (ScanException e) {
                     e.printStackTrace();
                 }
             }
@@ -61,10 +61,6 @@ public class Launcher extends Application {
         }
     }
 
-    private void startGUIGame(String[] args) {
-        Application.launch(args);
-    }
-
     private void gameMode(String[] args) throws Exception {
         System.out.println("Wählen sie zwischen den Spielmodi: [1] Multithreaded [2] Siglethreaded [3] Verlassen ");
         switch (scanner.nextInt()) {
@@ -77,6 +73,10 @@ public class Launcher extends Application {
             case 3:
                 System.exit(0);
         }
+    }
+
+    private void startGUIGame(String[] args) {
+        Application.launch(args);
     }
 
     @Override

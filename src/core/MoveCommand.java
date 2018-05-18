@@ -12,5 +12,4 @@ public class MoveCommand {
         return moveDirection;
     }
 
-
 }

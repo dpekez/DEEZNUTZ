@@ -7,7 +7,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
     private Board board;
     private Entity[][] cells;
 
-
     FlattenedBoard(Board board) {
         this.board = board;
         updateFlattenedBoard();
@@ -38,16 +37,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
     @Override
     public int getWaitingTimeBeast() {
         return board.getConfig().getWaitingTimeBeast();
-    }
-
-    @Override
-    public int getGoodBeastViewDistance() {
-        return board.getConfig().getGoodBeastViewDistance();
-    }
-
-    @Override
-    public int getBadBeastViewDistance() {
-        return board.getConfig().getBadBestViewDistance();
     }
 
     @Override
@@ -123,7 +112,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 }
                 break;
         }
-
     }
 
     @Override
@@ -156,20 +144,15 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 break;
             case MINI_SQUIRREL:
                 nextEntity.updateEnergy(badBeast.getEnergy());
-
                 if (nextEntity.getEnergy() <= 0)
                     kill(nextEntity);
-
                 badBeast.bite();
-
                 if (badBeast.getBitesLeft() == 0)
                     killAndReplace(badBeast);
                 break;
             case MASTER_SQUIRREL:
                 nextEntity.updateEnergy(badBeast.getEnergy());
-
                 badBeast.bite();
-
                 if (badBeast.getBitesLeft() == 0)
                     killAndReplace(badBeast);
                 break;
@@ -193,7 +176,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
             case BAD_BEAST:
                 masterSquirrel.updateEnergy(nextEntity.getEnergy());
                 ((BadBeast) nextEntity).bite();
-
                 if (((BadBeast) nextEntity).getBitesLeft() == 0)
                     killAndReplace(nextEntity);
                 break;
@@ -205,13 +187,11 @@ public class FlattenedBoard implements BoardView, EntityContext {
             case MINI_SQUIRREL:
                 MiniSquirrel miniSquirrel = (MiniSquirrel) nextEntity;
                 int energy;
-
                 if (masterSquirrel.isMyChild(miniSquirrel)) {
                     energy = miniSquirrel.getEnergy();
                 } else {
                     energy = board.getConfig().getPointsOfBadMiniSquirrel();
                 }
-
                 masterSquirrel.updateEnergy(energy);
                 masterSquirrel.move(moveDirection);
                 updateFlattenedBoard();
@@ -225,18 +205,16 @@ public class FlattenedBoard implements BoardView, EntityContext {
         }
     }
 
-
     /**
      * Scans area with an offset of +-6 for the nearest player entity.
      *
      * @param pos the start position for the offset
      * @return the nearest player
      */
-
     @Override
     public Player nearestPlayerEntity(XY pos) {
         //define scan area
-        int viewDistance = board.getConfig().getGoodBeastViewDistance();
+        int viewDistance = getPlayerViewDistance();
 
         int startX = pos.getX() - viewDistance;
         if (startX < 0)

@@ -9,13 +9,11 @@ public abstract class Entity {
     private int energy;
     private XY location;
 
-
     public Entity(int energy, XY location) {
         this.id = ++lastID;
         this.energy = energy;
         this.location = location;
     }
-
 
     public int getId() {
         return id;

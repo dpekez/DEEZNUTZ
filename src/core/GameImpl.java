@@ -35,16 +35,12 @@ public class GameImpl extends Game {
     }
 
     public void exit() {
-        System.out.println("Bye bye");
+        System.out.println("I hope you enjoy the Game ");
         System.exit(0);
     }
 
     public void all() {
         System.out.println(state.getBoard().getEntitySet());
-    }
-
-    public int masterEnergy() {
-        return state.getBoard().getMasterSquirrel().getEnergy();
     }
 
     public void spawnMiniSquirrel(Object[] parameters) throws NotEnoughEnergyException {

@@ -17,7 +17,6 @@ public class ConsoleUI implements UI {
     private BufferedReader inputStream;
     private GameCommandType[] gameCommandTypes;
 
-
     public ConsoleUI(State state, boolean threaded) {
         this.state = state;
         this.outputStream = System.out;
@@ -41,6 +40,7 @@ public class ConsoleUI implements UI {
         }
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     @Override
     public void multiThreadCommandProcess() throws ScanException {
         while (true) {
@@ -72,7 +72,7 @@ public class ConsoleUI implements UI {
             case RIGHT:
                 return new MoveCommand(new XY(1, 0));
             case MASTER_ENERGY:
-                gameImpl.masterEnergy();
+                outputStream.print(state.getBoard().getMasterSquirrel().getEnergy());
                 break;
             case SPAWN_MINI:
                 try {
@@ -86,7 +86,6 @@ public class ConsoleUI implements UI {
         }
         return new MoveCommand(new XY(0, 0));
     }
-
 
     @Override
     public void render(BoardView view) {
