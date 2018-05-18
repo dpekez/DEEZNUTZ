@@ -7,8 +7,9 @@ public class State {
     private Board board;
 
 
-    public State() {
+    State() {
         board = new Board(new BoardConfig());
+        update();
     }
 
 
@@ -16,11 +17,11 @@ public class State {
         return highScore;
     }
 
-    public Board getBoard() {
+    Board getBoard() {
         return board;
     }
 
-    public void update() {
+    void update() {
         board.update(flattenedBoard());
 
         if (board.getMasterSquirrel() != null) {
@@ -30,7 +31,7 @@ public class State {
 
     }
 
-    public FlattenedBoard flattenedBoard() {
+    FlattenedBoard flattenedBoard() {
         return new FlattenedBoard(board);
     }
 }

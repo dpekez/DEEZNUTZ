@@ -45,8 +45,8 @@ public final class XY {
 
         do {
 
-            x = random.nextInt(2) - 1;
-            y = random.nextInt(2) - 1;
+            x = random.nextInt(3) - 1;
+            y = random.nextInt(3) - 1;
 
         } while(x == 0 && y == 0);
 

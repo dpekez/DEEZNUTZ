@@ -1,9 +1,9 @@
 package GUI;
 
-import console.Command;
-import console.GameCommandType;
+import console.NotEnoughEnergyException;
 import console.UI;
 import core.BoardView;
+import core.GameImpl;
 import core.MoveCommand;
 import core.XY;
 import javafx.application.Platform;
@@ -18,17 +18,17 @@ import javafx.scene.paint.Color;
 
 public class FxUI extends Scene implements UI {
 
-    private static Command command = new Command(GameCommandType.NOTHING, new Object[0]);
-    private static int CELL_SIZE = 5;
-    private static int miniSuirrelEnergy = 200;
-    private final Canvas boardCanvas;
+    private static final double CELL_SIZE = 15;
     private final Label msgLabel;
+    private final Canvas boardCanvas;
+    private static MoveCommand command;
+    private GameImpl gameimpl;
 
-    private FxUI(Parent parent, Canvas boardCanvas, Label msgLabel, int CELL_SIZE) {
+
+    private FxUI(Parent parent, Canvas boardCanvas, Label msgLabel) {
         super(parent);
-        this.boardCanvas = boardCanvas;
         this.msgLabel = msgLabel;
-        FxUI.CELL_SIZE = CELL_SIZE;
+        this.boardCanvas = boardCanvas;
     }
 
     public static FxUI createInstance(XY boardSize) {
@@ -37,38 +37,48 @@ public class FxUI extends Scene implements UI {
         VBox top = new VBox();
         top.getChildren().add(boardCanvas);
         top.getChildren().add(statusLabel);
-        statusLabel.setText("Info Anzeige");
-        final FxUI fxUI = new FxUI(top, boardCanvas, statusLabel, CELL_SIZE);
+        final FxUI fxUI = new FxUI(top, boardCanvas, statusLabel);
+        statusLabel.setText("");
         fxUI.setOnKeyPressed(
                 keyEvent -> {
                     switch (keyEvent.getCode()) {
                         case W:
                         case UP:
-                            command = new Command(GameCommandType.UP, new Object[0]);
+                            command = new MoveCommand(new XY(0, -1));
                             break;
                         case D:
                         case RIGHT:
-                            command = new Command(GameCommandType.RIGHT, new Object[0]);
+                            command = new MoveCommand(new XY(1, 0));
                             break;
                         case S:
                         case DOWN:
-                            command = new Command(GameCommandType.DOWN, new Object[0]);
+                            command = new MoveCommand(new XY(0, 1));
                             break;
                         case A:
                         case LEFT:
-                            command = new Command(GameCommandType.LEFT, new Object[0]);
+                            command = new MoveCommand(new XY(-1, 0));
                             break;
-                        case SPACE:
-                            command = new Command(GameCommandType.SPAWN_MINI, new Object[]{miniSuirrelEnergy});
+                        case M:
+                            try {
+                                fxUI.gameimpl.spawnMiniSquirrel(100, 1, 0);
+                            } catch (NotEnoughEnergyException e) {
+                                e.printStackTrace();
+                            }
+                        case Q:
+                        case ESCAPE:
+                            fxUI.gameimpl.exit();
                             break;
-                        default:
-                            command = new Command(GameCommandType.NOTHING, new Object[0]);
+                        case X:
+                            fxUI.gameimpl.all();
+                            break;
+                        case H:
+                            fxUI.gameimpl.help();
+                            break;
                     }
                 }
         );
         return fxUI;
     }
-
 
     @Override
     public void render(final BoardView view) {
@@ -77,53 +87,68 @@ public class FxUI extends Scene implements UI {
 
     @Override
     public void multiThreadCommandProcess() {
+    }
 
+    public void setGameImpl(GameImpl game) {
+        this.gameimpl = game;
     }
 
     private void repaintBoardCanvas(BoardView view) {
+        message("");
         GraphicsContext gc = boardCanvas.getGraphicsContext2D();
         gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
         XY viewSize = view.getSize();
-    }
-
-    private void printAllEntity(GraphicsContext gc, BoardView view) {
-        for (int x = 0; x < boardCanvas.getWidth(); x++) {
-            for (int y = 0; y < boardCanvas.getHeight(); y++) {
+        for (int x = 0; x < viewSize.getX(); x++) {
+            for (int y = 0; y < viewSize.getY(); y++) {
                 if (view.getEntityType(x, y) != null) {
                     switch (view.getEntityType(x, y)) {
                         case MASTER_SQUIRREL:
                             gc.setFill(Color.BLACK);
                             gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                            break;
                         case MINI_SQUIRREL:
                             gc.setFill(Color.BLACK);
                             gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                            break;
                         case GOOD_PLANT:
                             gc.setFill(Color.FORESTGREEN);
                             gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                            break;
                         case BAD_PLANT:
                             gc.setFill(Color.DARKGREEN);
                             gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                            break;
                         case BAD_BEAST:
                             gc.setFill(Color.SADDLEBROWN);
                             gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                            break;
                         case GOOD_BEAST:
                             gc.setFill(Color.ROSYBROWN);
                             gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                            break;
                         case WALL:
                             gc.setFill(Color.GRAY);
                             gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                            break;
                     }
                 }
             }
         }
     }
 
-    public void message(final String msg) {
-        Platform.runLater(() -> msgLabel.setText(msg));
+    public void message(String msg) {
+        String message = msg + gameimpl.update();
+        Platform.runLater(() -> msgLabel.setText(message));
     }
 
     @Override
     public MoveCommand getCommand() {
-        return null;
+        if (command == null)
+            return new MoveCommand(new XY(0, 0));
+        else {
+            MoveCommand temp = command;
+            command = null;
+            return temp;
+        }
     }
 }
