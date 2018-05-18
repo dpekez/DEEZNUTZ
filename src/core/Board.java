@@ -75,7 +75,7 @@ public class Board {
         return boardConfig;
     }
 
-    public EntitySet getEntitySet() {
+    EntitySet getEntitySet() {
         return entitySet;
     }
 
@@ -84,11 +84,11 @@ public class Board {
         insert(masterSquirrel);
     }
 
-    public MasterSquirrel getMasterSquirrel() {
+    MasterSquirrel getMasterSquirrel() {
         return masterSquirrel;
     }
 
-    public void insertMiniSquirrel(int energy, XY direction, MasterSquirrel daddy) {
+    void insertMiniSquirrel(int energy, XY direction, MasterSquirrel daddy) {
 
         XY location = masterSquirrel.getLocation().addVector(direction);
 

@@ -25,5 +25,4 @@ public enum EntityType {
         else
             return NOTHING;
     }
-
 }

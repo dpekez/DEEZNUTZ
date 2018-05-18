@@ -12,7 +12,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
     @Override
     public void nextStep(EntityContext context) {
-        System.out.println(this);
+        System.out.print("\r" + this);
         super.nextStep(context);
 
         if (isStunned())
