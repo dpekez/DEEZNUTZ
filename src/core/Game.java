@@ -6,7 +6,7 @@ import console.UI;
 
 public abstract class Game {
 
-    private static final int FPS = 60;
+    private static final int FPS = 10;
     State state;
     public UI ui;
     private boolean threaded;

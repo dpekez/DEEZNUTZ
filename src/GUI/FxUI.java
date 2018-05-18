@@ -1,5 +1,6 @@
 package GUI;
 
+import console.NotEnoughEnergyException;
 import console.UI;
 import core.BoardView;
 import core.GameImpl;
@@ -17,7 +18,7 @@ import javafx.scene.paint.Color;
 
 public class FxUI extends Scene implements UI {
 
-    private static final double CELL_SIZE = 7.5;
+    private static final double CELL_SIZE = 15;
     private final Label msgLabel;
     private final Canvas boardCanvas;
     private static MoveCommand command;
@@ -57,6 +58,12 @@ public class FxUI extends Scene implements UI {
                         case LEFT:
                             command = new MoveCommand(new XY(-1, 0));
                             break;
+                        case M:
+                            try {
+                                fxUI.gameimpl.spawnMiniSquirrel(100, 1, 0);
+                            } catch (NotEnoughEnergyException e) {
+                                e.printStackTrace();
+                            }
                         case SPACE:
                             fxUI.gameimpl.masterEnergy();
                             break;

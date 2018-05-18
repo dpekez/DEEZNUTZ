@@ -58,6 +58,16 @@ public class GameImpl extends Game {
         }
     }
 
+    public void spawnMiniSquirrel(int energy, int x, int y) throws NotEnoughEnergyException {
+        MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
+        XY direction = new XY(x, y);
+        if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
+            state.getBoard().insertMiniSquirrel(energy, direction, daddy);
+        } else {
+            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+        }
+    }
+
     public String update() {
         return "MasterSquirrel Energy: " + state.getBoard().getMasterSquirrel().getEnergy();
     }

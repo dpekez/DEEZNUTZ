@@ -2,14 +2,14 @@ package core;
 
 public class BoardConfig {
 
-    private final int width = 80;
-    private final int height = 80;
+    private final int width = 40;
+    private final int height = 40;
     private final XY boardSize = new XY(width, height);
-    private final int badBeastQuant = 30;
-    private final int goodBeastQuant = 25;
-    private final int badPlantQuant = 25;
-    private final int goodPlantQuant = 28;
-    private final int wallQuant = 41;
+    private final int badBeastQuant = 5;
+    private final int goodBeastQuant = 5;
+    private final int badPlantQuant = 5;
+    private final int goodPlantQuant = 5;
+    private final int wallQuant = 10;
     private final int pointsOfBadMiniSquirrel = 150;
     private final int waitingTimeBeast = 80;
     private final int goodBeastViewDistance = 6;
