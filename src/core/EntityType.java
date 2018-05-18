@@ -4,7 +4,7 @@ import entities.*;
 
 public enum EntityType {
 
-    BAD_BEAST, GOOD_BEAST, BAD_PLANT, GOOD_PLANT, MASTER_SQUIRREL, MINI_SQUIRREL, WALL, NOTHING;
+    BAD_BEAST, GOOD_BEAST, BAD_PLANT, GOOD_PLANT, MASTER_SQUIRREL, MINI_SQUIRREL, WALL, NOTHING, MINI_SQUIRREL_BOT, MASTER_SQUIRREL_BOT;
 
     public static EntityType getType(Entity entity) {
 
@@ -22,6 +22,10 @@ public enum EntityType {
             return EntityType.MINI_SQUIRREL;
         else if (entity instanceof Wall)
             return  EntityType.WALL;
+        else if (entity instanceof MiniSquirrelBot)
+            return EntityType.MINI_SQUIRREL_BOT;
+        else if (entity instanceof MasterSquirrelBot)
+            return EntityType.MASTER_SQUIRREL_BOT;
         else
             return NOTHING;
     }
