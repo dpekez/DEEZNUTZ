@@ -6,7 +6,6 @@ import core.XY;
 public abstract class MasterSquirrel extends Player {
 
     private static final int DEFAULT_ENERGY = 1000;
-    private MiniSquirrel miniSquirrel;
     MoveCommand moveCommand;
 
 
