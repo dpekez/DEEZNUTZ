@@ -64,6 +64,7 @@ public class FxUI extends Scene implements UI {
                             } catch (NotEnoughEnergyException e) {
                                 e.printStackTrace();
                             }
+                            break;
                         case Q:
                         case ESCAPE:
                             fxUI.gameimpl.exit();
