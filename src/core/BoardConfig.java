@@ -4,15 +4,16 @@ public class BoardConfig {
 
     private final int width = 40;
     private final int height = 40;
-    private final XY boardSize = new XY(width, height);
+    private final int wallQuant = 10;
+    private final int numberOfBots = 1;
+    private final int badPlantQuant = 5;
     private final int badBeastQuant = 5;
     private final int goodBeastQuant = 5;
-    private final int badPlantQuant = 5;
     private final int goodPlantQuant = 5;
-    private final int wallQuant = 10;
-    private final int pointsOfBadMiniSquirrel = 150;
     private final int waitingTimeBeast = 4;
     private final int playerEnityViewDistance = 6;
+    private final int pointsOfBadMiniSquirrel = 150;
+    private final XY boardSize = new XY(width, height);
 
     int getWidth() {
         return width;
@@ -44,6 +45,10 @@ public class BoardConfig {
 
     int getGoodPlantQuant() {
         return goodPlantQuant;
+    }
+
+    int getNumberOfBots() {
+        return numberOfBots;
     }
 
     int getWaitingTimeBeast() {

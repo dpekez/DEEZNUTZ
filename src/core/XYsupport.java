@@ -21,8 +21,8 @@ public class XYsupport {
         Random random = new Random();
         int x, y;
         do {
-            x = random.nextInt(2) - 1;
-            y = random.nextInt(2) - 1;
+            x = random.nextInt(3) - 1;
+            y = random.nextInt(3) - 1;
         } while (x == 0 && y == 0);
         return new XY(x, y);
     }
@@ -52,5 +52,10 @@ public class XYsupport {
                 }
         } while (isNotEmpty);
         return xy;
+    }
+
+    public static boolean isInRange(XY middle, XY lowerLeftEnd, XY upperRightEnd) {
+        return middle.getX() <= upperRightEnd.getX() && middle.getX() >= lowerLeftEnd.getX()
+                && middle.getY() <= upperRightEnd.getY() && middle.getY() >= lowerLeftEnd.getY();
     }
 }

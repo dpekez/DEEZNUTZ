@@ -1,11 +1,10 @@
 package entities;
 
-import botapi.BotController;
-import botapi.BotControllerFactory;
-import botapi.ControllerContext;
+import botapi.*;
 import core.EntityContext;
 import core.EntityType;
 import core.XY;
+import core.XYsupport;
 
 public class MasterSquirrelBot extends MasterSquirrel {
     private BotControllerFactory botControllerFactory;
@@ -50,26 +49,31 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public XY getViewLowerLeft() {
-            return masterSquirrel.getLocation().addVector(new XY(((int) -viewDistanceMasterBot), ((int) viewDistanceMasterBot)));
+            return getLocation().addVector(new XY((int) (-viewDistanceMasterBot), (int) (viewDistanceMasterBot)));
         }
 
         @Override
         public XY getViewUpperRight() {
-            return masterSquirrel.getLocation().addVector(new XY(((int) viewDistanceMasterBot), ((int) -viewDistanceMasterBot)));
+            return getLocation().addVector(new XY((int) (viewDistanceMasterBot), (int) (-viewDistanceMasterBot)));
+
         }
 
         @Override
         public XY locate() {
-            return null;
+            return masterSquirrel.getLocation();
         }
 
         @Override
-        public EntityType getEntityAt(XY xy) {
+        public EntityType getEntityAt(XY xy) throws OutOfViewException {
+            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
+                throw new OutOfViewException("Kein Entity in Sichtweite");
             return context.getEntityType(xy);
         }
 
         @Override
-        public boolean isMine(XY xy) {
+        public boolean isMine(XY xy) throws OutOfViewException {
+            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
+                throw new OutOfViewException("Kein entity in Sichtweite");
             return false;
         }
 
@@ -80,12 +84,21 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public void spawnMiniBot(XY direction, int energy) {
-            //TODO SPAWN MINI BOT
+
+            if (energy >= masterSquirrel.getEnergy()) {
+                try {
+                    throw new SpawnException("Nicht genug Energie");
+                } catch (SpawnException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                //TODO spawn MiniSquirrelBot
+            }
         }
 
         @Override
         public void implode(int impactRadius) {
-
+            //masterSquirrel kann nicht implodieren
         }
 
         @Override
@@ -95,17 +108,12 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public XY directionOfMaster() {
-            return null;
+            return XY.ZERO_ZERO;
         }
 
         @Override
         public long getRemainingSteps() {
             return 0;
-        }
-
-        @Override
-        public void shout(String text) {
-
         }
     }
 }

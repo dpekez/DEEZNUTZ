@@ -27,8 +27,8 @@ public final class XY {
         return new XY(x - vector.x, y - vector.y);
     }
 
-    public XY times() {
-        return null;
+    public XY times(int factor) {
+        return new XY(x * factor, y * factor);
     }
 
     public double length() {
@@ -42,7 +42,7 @@ public final class XY {
      * @return the length of the XY Object to the other one
      */
 
-    double distanceFrom(XY xy) {
+    public double distanceFrom(XY xy) {
         return Math.sqrt(Math.pow(xy.getX() - x, 2) + Math.pow(xy.getY() - y, 2));
     }
 
@@ -53,6 +53,15 @@ public final class XY {
 
     @Override
     public boolean equals(Object obj) {
+        if (!(obj instanceof XY)) {
+            return false;
+        }
+        try {
+            if (((XY) obj).getX() == x && ((XY) obj).getY() == y)
+                return true;
+        } catch (Exception e) {
+            return false;
+        }
         return false;
     }
 

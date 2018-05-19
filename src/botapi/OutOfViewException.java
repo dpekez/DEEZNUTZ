@@ -2,7 +2,7 @@ package botapi;
 
 public class OutOfViewException extends Exception {
 
-    OutOfViewException(String message) {
+    public OutOfViewException(String message) {
         super(message);
     }
 }

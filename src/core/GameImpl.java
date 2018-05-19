@@ -13,7 +13,7 @@ public class GameImpl extends Game {
     public GameImpl(boolean threaded) {
         super(new State(), threaded);
         ui = new ConsoleUI(state, threaded);
-        masterSquirrel = new HandOperatedMasterSquirrel(XY.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
+        masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
         state.getBoard().insertMasterSquirrel(masterSquirrel);
     }
 
@@ -35,7 +35,7 @@ public class GameImpl extends Game {
     }
 
     public void exit() {
-        System.out.println("I hope you enjoy the Game ");
+        System.out.println("\rI hope you enjoy the Game ");
         System.exit(0);
     }
 
