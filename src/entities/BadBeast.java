@@ -2,6 +2,7 @@ package entities;
 
 import core.EntityContext;
 import core.XY;
+import core.XYsupport;
 
 public class BadBeast extends Character {
 
@@ -26,7 +27,7 @@ public class BadBeast extends Character {
             Player nearestPlayer = entityContext.nearestPlayerEntity(getLocation());
 
             if (nearestPlayer == null) {
-                entityContext.tryMove(this, XY.generateRandomMoveVector());
+                entityContext.tryMove(this, XYsupport.generateRandomMoveVector());
                 return;
             }
 

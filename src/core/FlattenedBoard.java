@@ -279,12 +279,12 @@ public class FlattenedBoard implements BoardView, EntityContext {
         board.remove(entity);
 
         if (entity instanceof BadBeast)
-            board.insert(new BadBeast(XY.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
+            board.insert(new BadBeast(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
         else if (entity instanceof GoodBeast)
-            board.insert(new GoodBeast(XY.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
+            board.insert(new GoodBeast(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
         else if (entity instanceof BadPlant)
-            board.insert(new BadPlant(XY.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
+            board.insert(new BadPlant(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
         else
-            board.insert(new GoodPlant(XY.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
+            board.insert(new GoodPlant(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
     }
 }

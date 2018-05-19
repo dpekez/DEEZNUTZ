@@ -2,7 +2,7 @@ import console.ConsoleUI;
 import console.ScanException;
 import core.MoveCommand;
 import core.State;
-import core.XY;
+import core.XYsupport;
 import entities.HandOperatedMasterSquirrel;
 import entities.MasterSquirrel;
 
@@ -18,7 +18,7 @@ public class GameImpl extends Game {
         super(new State(), threaded);
         ui = new ConsoleUI(state, threaded);
 
-        masterSquirrel = new HandOperatedMasterSquirrel(XY.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
+        masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
 
         state.getBoard().insertMasterSquirrel(masterSquirrel);
     }

@@ -44,11 +44,21 @@ public class MiniSquirrelBot extends MiniSquirrel {
         }
 
         @Override
+        public XY locate() {
+            return null;
+        }
+
+        @Override
         public EntityType getEntityAt(XY xy) {
             if (context.getEntityType(xy) != null) {
                 return context.getEntityType(xy);
             }
             return null;
+        }
+
+        @Override
+        public boolean isMine(XY xy) {
+            return false;
         }
 
         @Override
@@ -61,8 +71,23 @@ public class MiniSquirrelBot extends MiniSquirrel {
         }
 
         @Override
+        public void implode(int impactRadius) {
+
+        }
+
+        @Override
         public int getEnergy() {
             return miniSquirrel.getEnergy();
+        }
+
+        @Override
+        public XY directionOfMaster() {
+            return null;
+        }
+
+        @Override
+        public long getRemainingSteps() {
+            return 0;
         }
     }
 }

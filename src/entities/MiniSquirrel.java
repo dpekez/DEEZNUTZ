@@ -2,6 +2,7 @@ package entities;
 
 import core.EntityContext;
 import core.XY;
+import core.XYsupport;
 
 public class MiniSquirrel extends Player {
     private final MasterSquirrel daddy;
@@ -20,7 +21,7 @@ public class MiniSquirrel extends Player {
     @Override
     public void nextStep(EntityContext entityContext) {
         updateEnergy(-1);
-        entityContext.tryMove(this, XY.generateRandomMoveVector());
+        entityContext.tryMove(this, XYsupport.generateRandomMoveVector());
     }
 
 

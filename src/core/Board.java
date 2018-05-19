@@ -11,7 +11,7 @@ public class Board {
     private MasterSquirrel masterSquirrel;
 
 
-    public Board(BoardConfig boardConfig) {
+    Board(BoardConfig boardConfig) {
         this.boardConfig = boardConfig;
         entitySet = new EntitySet(boardConfig.getHeight() * boardConfig.getWidth());
 
@@ -29,29 +29,29 @@ public class Board {
 
         //and now some random walls inside the walled board
         for(int i=0; i < boardConfig.getWallQuant(); i++) {
-            insert(new Wall(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new Wall(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
         for(int i=0; i < boardConfig.getBadBeastQuant(); i++) {
-            insert(new BadBeast(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new BadBeast(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
         for(int i=0; i < boardConfig.getGoodBeastQuant(); i++) {
-            insert(new GoodBeast(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new GoodBeast(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
         for(int i=0; i < boardConfig.getBadPlantQuant(); i++) {
-            insert(new BadPlant(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new BadPlant(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
         for(int i=0; i < boardConfig.getGoodPlantQuant(); i++) {
-            insert(new GoodPlant(XY.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
+            insert(new GoodPlant(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
 
     }
 
 
-    public void update(EntityContext context) {
+    void update(EntityContext context) {
         entitySet.moveEntities(context);
     }
 
@@ -59,11 +59,11 @@ public class Board {
         return new FlattenedBoard(this);
     }
 
-    public void remove(Entity e) {
+    void remove(Entity e) {
         entitySet.remove(e);
     }
 
-    public void insert(Entity e) {
+    void insert(Entity e) {
         entitySet.add(e);
     }
 
