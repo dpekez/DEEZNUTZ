@@ -9,13 +9,11 @@ public abstract class Entity {
     private int energy;
     private XY location;
 
-
     public Entity(int energy, XY location) {
         this.id = ++lastID;
         this.energy = energy;
         this.location = location;
     }
-
 
     public int getId() {
         return id;
@@ -42,11 +40,7 @@ public abstract class Entity {
     }
 
     public String toString() {
-        return "Entity{ " +
-                "id=" + id +
-                ", energy=" + energy +
-                ", location=" + location +
-                '}';
+        return "Entity{ " + "id=" + id + ", energy=" + energy + ", location=" + location + '}';
     }
 
 }

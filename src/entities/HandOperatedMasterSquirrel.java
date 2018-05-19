@@ -3,7 +3,6 @@ package entities;
 import core.EntityContext;
 import core.XY;
 
-
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
     public HandOperatedMasterSquirrel(XY location) {
@@ -12,19 +11,15 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
     @Override
     public void nextStep(EntityContext context) {
-        System.out.println(this);
+        System.out.print("\r" + this);
         super.nextStep(context);
-
         if (isStunned())
             return;
-
         context.tryMove(this, moveCommand.getMoveDirection());
-
     }
 
     @Override
     public String toString() {
         return "HandOperatedMasterSquirrel{ " + super.toString() + '}';
     }
-
 }

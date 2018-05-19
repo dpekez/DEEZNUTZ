@@ -6,11 +6,10 @@ public class State {
     private int highScore;
     private Board board;
 
-
-    public State() {
+    State() {
         board = new Board(new BoardConfig());
+        update();
     }
-
 
     public int getHighScore() {
         return highScore;
@@ -20,17 +19,16 @@ public class State {
         return board;
     }
 
-    public void update() {
+    void update() {
         board.update(flattenedBoard());
 
         if (board.getMasterSquirrel() != null) {
             if (board.getMasterSquirrel().getEnergy() > highScore)
                 highScore = board.getMasterSquirrel().getEnergy();
         }
-
     }
 
-    public FlattenedBoard flattenedBoard() {
+    FlattenedBoard flattenedBoard() {
         return new FlattenedBoard(board);
     }
 }

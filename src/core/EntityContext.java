@@ -24,10 +24,6 @@ public interface EntityContext {
 
     int getWaitingTimeBeast();
 
-    int getGoodBeastViewDistance();
-
-    int getBadBeastViewDistance();
-
     int getPlayerViewDistance();
 
 }

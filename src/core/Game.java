@@ -1,28 +1,26 @@
+package core;
+
+
 import console.ScanException;
 import console.UI;
-import core.State;
-
-import java.io.IOException;
 
 public abstract class Game {
 
-    private static final int FPS = 1;
+    private static final int FPS = 10;
     State state;
-    UI ui;
+    public UI ui;
     private boolean threaded;
-
 
     Game(State state, boolean threaded) {
         this.state = state;
         this.threaded = threaded;
     }
 
-    void run() throws IOException, ScanException {
-
+    public void run() throws ScanException {
         while (true) {
             render();
             processInput();
-            if(threaded) {
+            if (threaded) {
                 try {
                     Thread.sleep(1000 / FPS);
                 } catch (InterruptedException e) {
@@ -33,11 +31,27 @@ public abstract class Game {
         }
     }
 
-    protected abstract void render();
+    public UI getUi() {
+        return ui;
+    }
 
-    protected abstract void processInput() throws IOException, ScanException;
+    protected abstract void render();
 
     private void update() {
         state.update();
     }
+
+    public void setUi(UI ui) {
+        this.ui = ui;
+    }
+
+    public State getState() {
+        return this.state;
+    }
+
+    protected void setState(State state) {
+        this.state = state;
+    }
+
+    protected abstract void processInput() throws ScanException;
 }

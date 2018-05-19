@@ -36,5 +36,4 @@ public enum GameCommandType implements CommandTypeInfo {
     public Class<?>[] getParamTypes() {
         return this.paramTypes;
     }
-
 }

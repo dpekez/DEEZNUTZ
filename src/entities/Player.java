@@ -7,10 +7,9 @@ public abstract class Player extends Character {
 
     private int stunnedRounds = 0;
 
-    public Player(int energy, XY xy) {
+    Player(int energy, XY xy) {
         super(energy, xy);
     }
-
 
     public void stun() {
         stunnedRounds = 3;
@@ -22,14 +21,13 @@ public abstract class Player extends Character {
             stunnedRounds--;
     }
 
-    public boolean isStunned() {
+    boolean isStunned() {
         return stunnedRounds > 0;
     }
 
     public boolean isStunnedNextRound() {
         return stunnedRounds > 1;
     }
-
 
     @Override
     public String toString() {
