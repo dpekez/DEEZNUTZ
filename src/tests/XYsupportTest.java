@@ -18,9 +18,4 @@ public class XYsupportTest {
         assertFalse(XYsupport.isInRange(falseMiddle, lowerLeftCorner, upperRightCorner));
     }
 
-    @Test
-    public void getRandomMoveVector() {
-        assertTrue(XYsupport.generateRandomMoveVector() == new XY(1 | 0 | -1, 1 | 0 | -1));
-        //TODO richtige test ergebnisse ??
-    }
 }

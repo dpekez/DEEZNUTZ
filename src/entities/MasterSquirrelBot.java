@@ -7,25 +7,27 @@ import core.XY;
 import core.XYsupport;
 
 public class MasterSquirrelBot extends MasterSquirrel {
+
     private BotControllerFactory botControllerFactory;
     private BotController masterBotController;
 
     public MasterSquirrelBot(XY location) {
         super(location);
+
         this.botControllerFactory = new BotControllerFactory() {
             @Override
             public BotController createMiniBotController() {
-                return view -> {
-                    if (!isStunned()) {
-                        XY direction = new XY(getLocation().getX(), getLocation().getY()); //TODO Direction(Glaube das Stimmt nicht)
-                        view.move(direction);
-                    }
-                };
+                return null;
             }
 
             @Override
             public BotController createMasterBotController() {
-                return null;
+                return view -> {
+                    if (!isStunned()) {
+                        XY direction = XYsupport.generateRandomMoveVector();
+                        view.move(direction);
+                    }
+                };
             }
         };
         this.masterBotController = botControllerFactory.createMasterBotController();
@@ -38,7 +40,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
     class ControllerContextImpl implements ControllerContext {
 
-        final double viewDistanceMasterBot = 15.5;
+        final int viewDistanceMasterBot = 15;
         private EntityContext context;
         private MasterSquirrel masterSquirrel;
 
@@ -49,12 +51,12 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public XY getViewLowerLeft() {
-            return getLocation().addVector(new XY((int) (-viewDistanceMasterBot), (int) (viewDistanceMasterBot)));
+            return getLocation().addVector(new XY(-viewDistanceMasterBot, -viewDistanceMasterBot));
         }
 
         @Override
         public XY getViewUpperRight() {
-            return getLocation().addVector(new XY((int) (viewDistanceMasterBot), (int) (-viewDistanceMasterBot)));
+            return getLocation().addVector(new XY(viewDistanceMasterBot, viewDistanceMasterBot));
 
         }
 

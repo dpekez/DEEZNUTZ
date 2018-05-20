@@ -1,6 +1,7 @@
 package core;
 
 
+import botapi.BotControllerFactory;
 import entities.*;
 
 
@@ -10,6 +11,7 @@ public class Board {
     private EntitySet entitySet;
     private BoardConfig boardConfig;
     private MasterSquirrel masterSquirrel;
+    private BotControllerFactory botControllerFactory;
 
 
     Board(BoardConfig boardConfig) {
@@ -96,20 +98,13 @@ public class Board {
         return masterSquirrel;
     }
 
-    void insertMiniSquirrel(int energy, XY direction, MasterSquirrel daddy) {
-        XY location = masterSquirrel.getLocation().addVector(direction);
-        if (masterSquirrel.getEnergy() >= energy) {
-            masterSquirrel.updateEnergy(-energy);
-            insert(new MiniSquirrel(energy, location, daddy));
-        }
-    }
-
-    public void insertMiniSquirrelBot(int energy, XY direction, MasterSquirrel daddy) {
+    public void insertMiniSquirrel(int energy, XY direction, MasterSquirrel daddy) {
         XY location = masterSquirrel.getLocation().addVector(direction);
         if (masterSquirrel.getEnergy() >= energy) {
             masterSquirrel.updateEnergy(-energy);
             insert(new MiniSquirrelBot(energy, location, daddy));
         }
     }
+
 }
 

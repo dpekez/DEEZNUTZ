@@ -1,7 +1,6 @@
 package entities;
 
 import botapi.BotController;
-import botapi.BotControllerFactory;
 import botapi.ControllerContext;
 import botapi.OutOfViewException;
 import core.EntityContext;
@@ -10,14 +9,11 @@ import core.XY;
 import core.XYsupport;
 
 public class MiniSquirrelBot extends MiniSquirrel {
-    private MasterSquirrel daddy;
     private BotController miniBotController;
-    private BotControllerFactory botControllerFactory;
 
     public MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy) {
         super(energy, location, daddy);
-        this.daddy = daddy;
-        this.miniBotController = this.botControllerFactory.createMiniBotController();
+        this.miniBotController = daddy.getFactory().createMiniBotController();
     }
 
     @Override
@@ -25,12 +21,12 @@ public class MiniSquirrelBot extends MiniSquirrel {
         miniBotController.nextStep(new ControllerContextImpl(context, this));
     }
 
-    class ControllerContextImpl implements ControllerContext {
+    public static class ControllerContextImpl implements ControllerContext {
         final double viewDistanceMiniBot = 10.5;
         private EntityContext context;
         private MiniSquirrel miniSquirrel;
 
-        ControllerContextImpl(EntityContext context, MiniSquirrel miniSquirrel) {
+        public ControllerContextImpl(EntityContext context, MiniSquirrel miniSquirrel) {
             this.context = context;
             this.miniSquirrel = miniSquirrel;
         }

@@ -54,8 +54,7 @@ public class XYsupport {
         return xy;
     }
 
-    public static boolean isInRange(XY middle, XY lowerLeftEnd, XY upperRightEnd) {
-        return middle.getX() <= upperRightEnd.getX() && middle.getX() >= lowerLeftEnd.getX()
-                && middle.getY() <= upperRightEnd.getY() && middle.getY() >= lowerLeftEnd.getY();
+    public static boolean isInRange(XY m, XY lL, XY uR) {
+        return (m.getX() <= lL.getX()) && (m.getX() >= uR.getX()) && (m.getY() <= lL.getY()) && (m.getY() >= uR.getY());
     }
 }

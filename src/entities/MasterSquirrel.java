@@ -1,9 +1,12 @@
 package entities;
 
+import botapi.BotControllerFactory;
 import core.MoveCommand;
 import core.XY;
 
 public abstract class MasterSquirrel extends Player {
+
+    private BotControllerFactory factory;
 
     private static final int DEFAULT_ENERGY = 1000;
     MoveCommand moveCommand;
@@ -28,8 +31,16 @@ public abstract class MasterSquirrel extends Player {
         return this == squirrelToCheck.getDaddy();
     }
 
+    BotControllerFactory getFactory() {
+        return factory;
+    }
+
     @Override
     public String toString() {
         return "MasterSquirrel{ " + super.toString() + '}';
+    }
+
+    public void setFactory(BotControllerFactory factory) {
+        this.factory = factory;
     }
 }
