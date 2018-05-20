@@ -46,7 +46,7 @@ public class FindGoodEntities {
                 moveDirection = moveTo(context, nearestBB);
 
             else if ((context.locate().distanceFrom(nearestBP)) < 2)
-                moveDirection = moveTo(context, nearestBP);
+                moveDirection = moveAway(context, nearestBP);
 
             else if ((context.locate().distanceFrom(nearestGB)) < 16)
                 moveDirection = moveTo(context, nearestGB);
@@ -66,6 +66,21 @@ public class FindGoodEntities {
             x = 1;
         }
         if (vector.getY() > 0) {
+            y = 1;
+        }
+        moveDirection = new XY(x, y);
+        return moveDirection;
+    }
+
+    private static XY moveAway(ControllerContext context, XY nearestEntity) {
+        XY moveDirection;
+        int x = 0;
+        int y = 0;
+        XY vector = context.locate().reduceVector(nearestEntity);
+        if (vector.getX() < 0) {
+            x = 1;
+        }
+        if (vector.getY() < 0) {
             y = 1;
         }
         moveDirection = new XY(x, y);
