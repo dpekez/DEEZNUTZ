@@ -6,7 +6,7 @@ import botapi.OutOfViewException;
 import core.EntityType;
 import core.XY;
 
-public class FindGoodEntities {
+public class BotBrain {
 
     private static XY nearestEntity(ControllerContext context, EntityType type) {
         XY position = context.locate();
@@ -36,10 +36,10 @@ public class FindGoodEntities {
 
     static XY moveToNearestGoodEntity(ControllerContext context) {
         XY moveDirection = XY.ZERO_ZERO;
-        XY nearestBP = FindGoodEntities.nearestEntity(context, EntityType.BAD_PLANT);
-        XY nearestBB = FindGoodEntities.nearestEntity(context, EntityType.BAD_BEAST);
-        XY nearestGB = FindGoodEntities.nearestEntity(context, EntityType.GOOD_BEAST);
-        XY nearestGP = FindGoodEntities.nearestEntity(context, EntityType.GOOD_PLANT);
+        XY nearestBP = BotBrain.nearestEntity(context, EntityType.BAD_PLANT);
+        XY nearestBB = BotBrain.nearestEntity(context, EntityType.BAD_BEAST);
+        XY nearestGB = BotBrain.nearestEntity(context, EntityType.GOOD_BEAST);
+        XY nearestGP = BotBrain.nearestEntity(context, EntityType.GOOD_PLANT);
 
         if (context.locate().distanceFrom(nearestBB) < 5)
             if ((context.locate().distanceFrom(nearestGB) > context.locate().distanceFrom(nearestBB)) || (context.locate().distanceFrom(nearestGP) > context.locate().distanceFrom(nearestBB)))
@@ -85,5 +85,27 @@ public class FindGoodEntities {
         }
         moveDirection = new XY(x, y);
         return moveDirection;
+    }
+
+    static boolean freeFieldSpace(ControllerContext context, XY location) {
+        try {
+            EntityType entityType = (context.getEntityAt(location));
+            switch (entityType) {
+                case GOOD_BEAST:
+                case GOOD_PLANT:
+                case NOTHING:
+                    return true;
+                case BAD_PLANT:
+                case BAD_BEAST:
+                case WALL:
+                    return false;
+                case MINI_SQUIRREL:
+                case MASTER_SQUIRREL:
+                    return context.isMine(location);
+            }
+        } catch (OutOfViewException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
