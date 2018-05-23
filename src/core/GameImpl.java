@@ -6,15 +6,18 @@ import console.NotEnoughEnergyException;
 import console.ScanException;
 import entities.HandOperatedMasterSquirrel;
 import entities.MasterSquirrel;
+import entities.MasterSquirrelBot;
 
 public class GameImpl extends Game {
-    private MasterSquirrel masterSquirrel;
+    private HandOperatedMasterSquirrel masterSquirrel;
+    private MasterSquirrelBot masterSquirrelBot;
 
     public GameImpl(boolean threaded) {
         super(new State(), threaded);
         ui = new ConsoleUI(state, threaded);
         masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
         state.getBoard().insertMasterSquirrel(masterSquirrel);
+        state.getBoard().createBots(masterSquirrelBot);
     }
 
     @Override

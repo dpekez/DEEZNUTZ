@@ -21,7 +21,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         miniBotController.nextStep(new ControllerContextImpl(context, this));
     }
 
-    public static class ControllerContextImpl implements ControllerContext {
+    public class ControllerContextImpl implements ControllerContext {
         final double viewDistanceMiniBot = 10.5;
         private EntityContext context;
         private MiniSquirrel miniSquirrel;
@@ -86,20 +86,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public XY directionOfMaster() {
-            int x = 0;
-            int y = 0;
-            XY vector = miniSquirrel.getLocation().reduceVector(miniSquirrel.getDaddy().getLocation());
-            if (vector.getY() > 0) {
-                y = 1;
-            } else if (vector.getY() < 0) {
-                y = -1;
-            }
-            if (vector.getX() > 0) {
-                x = 1;
-            } else if (vector.getX() < 0) {
-                x = -1;
-            }
-            return new XY(x, y);
+            return XYsupport.assignMoveVector(miniSquirrel.getDaddy().getLocation().reduceVector(miniSquirrel.getLocation()));
         }
 
         @Override

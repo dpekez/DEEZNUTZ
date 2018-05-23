@@ -7,6 +7,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
     public HandOperatedMasterSquirrel(XY location) {
         super(location);
+
     }
 
     @Override

@@ -3,7 +3,8 @@ package tests;
 import core.XY;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class XYTest {
     private final XY test1 = new XY(10, 10);
@@ -36,7 +37,7 @@ public class XYTest {
 
     @Test
     public void equals() {
-        assertTrue(test1.equals(new XY(10, 10)));
+        assertEquals(test1, new XY(10, 10));
         assertFalse(test1.equals(new XY(15, 10)));
 
     }

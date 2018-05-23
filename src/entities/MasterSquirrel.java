@@ -13,6 +13,7 @@ public abstract class MasterSquirrel extends Player {
 
     MasterSquirrel(XY location) {
         super(DEFAULT_ENERGY, location);
+
     }
 
     @Override
@@ -40,7 +41,7 @@ public abstract class MasterSquirrel extends Player {
         return "MasterSquirrel{ " + super.toString() + '}';
     }
 
-    public void setFactory(BotControllerFactory factory) {
+    void setFactory(BotControllerFactory factory) {
         this.factory = factory;
     }
 }

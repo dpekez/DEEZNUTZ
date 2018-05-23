@@ -10,8 +10,9 @@ public class Board {
     private XYsupport xYsupport;
     private EntitySet entitySet;
     private BoardConfig boardConfig;
-    private MasterSquirrel masterSquirrel;
-    private BotControllerFactory botControllerFactory;
+    private HandOperatedMasterSquirrel masterSquirrel;
+    private MasterSquirrelBot masterSquirrelBot;
+    private BotControllerFactory factory;
 
 
     Board(BoardConfig boardConfig) {
@@ -82,15 +83,18 @@ public class Board {
         return entitySet;
     }
 
-    void insertMasterSquirrel(MasterSquirrel masterSquirrel) {
+    void insertMasterSquirrel(HandOperatedMasterSquirrel masterSquirrel) {
         this.masterSquirrel = masterSquirrel;
         insert(masterSquirrel);
     }
 
-    private void createBots() {
+    public void createBots(MasterSquirrelBot masterSquirrelBot) {
         for (int botsCount = 0; botsCount < boardConfig.getNumberOfBots(); botsCount++) {
-            MasterSquirrel toAdd = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()));
-            insert(toAdd);
+            this.masterSquirrelBot = masterSquirrelBot;
+
+            masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
+            insert(masterSquirrelBot);
+
         }
     }
 
@@ -102,7 +106,7 @@ public class Board {
         XY location = masterSquirrel.getLocation().addVector(direction);
         if (masterSquirrel.getEnergy() >= energy) {
             masterSquirrel.updateEnergy(-energy);
-            insert(new MiniSquirrelBot(energy, location, daddy));
+            insert(new MiniSquirrel(energy, location, daddy));
         }
     }
 

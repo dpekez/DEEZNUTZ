@@ -8,56 +8,44 @@ import core.XYsupport;
 
 public class MasterSquirrelBot extends MasterSquirrel {
 
-    private BotControllerFactory botControllerFactory;
-    private BotController masterBotController;
+    private final BotController controller;
 
-    public MasterSquirrelBot(XY location) {
+    public MasterSquirrelBot(XY location, BotControllerFactory factory) {
         super(location);
-
-        this.botControllerFactory = new BotControllerFactory() {
-            @Override
-            public BotController createMiniBotController() {
-                return null;
-            }
-
-            @Override
-            public BotController createMasterBotController() {
-                return view -> {
-                    if (!isStunned()) {
-                        XY direction = XYsupport.generateRandomMoveVector();
-                        view.move(direction);
-                    }
-                };
-            }
-        };
-        this.masterBotController = botControllerFactory.createMasterBotController();
+        setFactory(factory);
+        this.controller = factory.createMasterBotController();
     }
 
     @Override
     public void nextStep(EntityContext context) {
-        masterBotController.nextStep(new ControllerContextImpl(context, this));
+        ControllerContextImpl view = new ControllerContextImpl(context, this);
+        if (!isStunned())
+            controller.nextStep(view);
     }
 
-    class ControllerContextImpl implements ControllerContext {
+    public class ControllerContextImpl implements ControllerContext {
 
         final int viewDistanceMasterBot = 15;
         private EntityContext context;
         private MasterSquirrel masterSquirrel;
 
-        ControllerContextImpl(EntityContext context, MasterSquirrel masterSquirrel) {
+        public ControllerContextImpl(EntityContext context, MasterSquirrel masterSquirrel) {
             this.context = context;
             this.masterSquirrel = masterSquirrel;
         }
 
         @Override
         public XY getViewLowerLeft() {
-            return getLocation().addVector(new XY(-viewDistanceMasterBot, -viewDistanceMasterBot));
+            int x = (locate().getX() - viewDistanceMasterBot) < 0 ? 0 : locate().getX() - viewDistanceMasterBot;
+            int y = locate().getY() - viewDistanceMasterBot < 0 ? 0 : locate().getY() - viewDistanceMasterBot;
+            return new XY(x, y);
         }
 
         @Override
         public XY getViewUpperRight() {
-            return getLocation().addVector(new XY(viewDistanceMasterBot, viewDistanceMasterBot));
-
+            int x = locate().getX() + viewDistanceMasterBot > context.getSize().getX() ? context.getSize().getX() : locate().getX() + viewDistanceMasterBot;
+            int y = locate().getY() + viewDistanceMasterBot > context.getSize().getY() ? context.getSize().getY() : locate().getY();
+            return new XY(x, y);
         }
 
         @Override

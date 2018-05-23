@@ -66,7 +66,7 @@ public class FxUI extends Scene implements UI {
                     break;
                 case M:
                     try {
-                        fxUI.gameimpl.spawnMiniSquirrel(100, 1, 0);
+                        fxUI.gameimpl.spawnMiniSquirrel(1000, 1, 0);
                     } catch (NotEnoughEnergyException e) {
                         e.printStackTrace();
                     }
@@ -140,6 +140,10 @@ public class FxUI extends Scene implements UI {
                 case WALL:
                     gc.setFill(Color.GRAY);
                     gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                    break;
+                case MASTER_SQUIRREL_BOT:
+                    gc.setFill(Color.RED);
+                    gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                     break;
             }
         }

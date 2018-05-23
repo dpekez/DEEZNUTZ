@@ -36,7 +36,7 @@ public class XYsupport {
      * @return the random location
      */
 
-    public static XY generateRandomLocation(XY boardSize, Entity[] entities) {
+    static XY generateRandomLocation(XY boardSize, Entity[] entities) {
         Random random = new Random();
         boolean isNotEmpty;
         XY xy;
@@ -55,6 +55,54 @@ public class XYsupport {
     }
 
     public static boolean isInRange(XY m, XY lL, XY uR) {
-        return (m.getX() <= lL.getX()) && (m.getX() >= uR.getX()) && (m.getY() <= lL.getY()) && (m.getY() >= uR.getY());
+        return (m.getX() >= lL.getX()) && (m.getX() <= uR.getX()) && (m.getY() >= lL.getY()) && (m.getY() <= uR.getY());
+    }
+
+    public static XY assignMoveVector(XY xy) {
+        XY moveVector = XY.ZERO_ZERO;
+        int oldX = xy.getX();
+        int oldY = xy.getY();
+
+        switch (oldX) {
+            case 0:
+                switch (oldY) {
+                    case 0:
+                        break;
+                    case 1:
+                        moveVector = XY.UP;
+                        break;
+                    case -1:
+                        moveVector = XY.DOWN;
+                        break;
+                }
+                break;
+            case 1:
+                switch (oldY) {
+                    case 0:
+                        moveVector = XY.RIGHT;
+                        break;
+                    case 1:
+                        moveVector = XY.RIGHT_UP;
+                        break;
+                    case -1:
+                        moveVector = XY.RIGHT_DOWN;
+                        break;
+                }
+                break;
+            case -1:
+                switch (oldY) {
+                    case 0:
+                        moveVector = XY.LEFT;
+                        break;
+                    case 1:
+                        moveVector = XY.LEFT_UP;
+                        break;
+                    case -1:
+                        moveVector = XY.LEFT_DOWN;
+                        break;
+                }
+                break;
+        }
+        return moveVector;
     }
 }

@@ -1,6 +1,7 @@
 package tests;
 
 import botapi.BotControllerFactory;
+import botapi.botimpl.player.PlayerFactory;
 import core.Board;
 import core.EntityContext;
 import core.XY;
@@ -21,24 +22,25 @@ public class ControllerContextTest {
     XY spawnPositionMasterBot = new XY(40, 30);
     XY spawnPositionMiniBot = new XY(42, 35);
     Board board;
-    MiniSquirrelBot.ControllerContextImpl viewMini;
+    MasterSquirrelBot.ControllerContextImpl viewMaster;
     BotControllerFactory botControllerFactory;
+    PlayerFactory factory;
 
     @Before
     public void init() {
-        miniBot = new MiniSquirrelBot(0, spawnPositionMiniBot, master);
+        masterBot = new MasterSquirrelBot(spawnPositionMasterBot, factory);
 
-        board.insertMiniSquirrel(0, spawnPositionMiniBot, master);
+        board.createBots(masterBot);
     }
 
     public void tearDown() {
-        viewMini = null;
+        viewMaster = null;
     }
 
     @Test
     public void locate() {
-        viewMini = new MiniSquirrelBot.ControllerContextImpl(context, miniBot);
-        assertEquals(spawnPositionMiniBot, viewMini.locate());
+        //viewMaster = new MasterSquirrelBot.ControllerContextImpl(context,masterBot);
+        assertEquals(spawnPositionMasterBot, viewMaster.locate());
     }
 
 
