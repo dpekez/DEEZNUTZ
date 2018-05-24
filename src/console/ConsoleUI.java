@@ -64,13 +64,13 @@ public class ConsoleUI implements UI {
                 gameImpl.all();
                 break;
             case LEFT:
-                return new MoveCommand(new XY(-1, 0));
+                return new MoveCommand(XY.LEFT);
             case UP:
-                return new MoveCommand(new XY(0, -1));
+                return new MoveCommand(XY.UP);
             case DOWN:
-                return new MoveCommand(new XY(0, 1));
+                return new MoveCommand(XY.DOWN);
             case RIGHT:
-                return new MoveCommand(new XY(1, 0));
+                return new MoveCommand(XY.RIGHT);
             case MASTER_ENERGY:
                 outputStream.print(state.getBoard().getMasterSquirrel().getEnergy());
                 break;
