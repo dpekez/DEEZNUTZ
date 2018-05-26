@@ -1,6 +1,9 @@
 package entities;
 
-import botapi.*;
+import botapi.BotControllerFactory;
+import botapi.ControllerContext;
+import botapi.OutOfViewException;
+import botapi.SpawnException;
 import core.EntityContext;
 import core.EntityType;
 import core.XY;
@@ -37,14 +40,14 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public XY getViewLowerLeft() {
             int x = (locate().getX() - viewDistanceMasterBot) < 0 ? 0 : locate().getX() - viewDistanceMasterBot;
-            int y = locate().getY() - viewDistanceMasterBot < 0 ? 0 : locate().getY() - viewDistanceMasterBot;
+            int y = (locate().getY() - viewDistanceMasterBot) < 0 ? 0 : locate().getY() - viewDistanceMasterBot;
             return new XY(x, y);
         }
 
         @Override
         public XY getViewUpperRight() {
-            int x = locate().getX() + viewDistanceMasterBot > context.getSize().getX() ? context.getSize().getX() : locate().getX() + viewDistanceMasterBot;
-            int y = locate().getY() + viewDistanceMasterBot > context.getSize().getY() ? context.getSize().getY() : locate().getY();
+            int x = (locate().getX() + viewDistanceMasterBot) > (context.getSize().getX()) ? context.getSize().getX() : locate().getX() + viewDistanceMasterBot;
+            int y = (locate().getY() + viewDistanceMasterBot) > (context.getSize().getY()) ? context.getSize().getY() : locate().getY();
             return new XY(x, y);
         }
 

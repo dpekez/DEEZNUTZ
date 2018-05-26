@@ -91,7 +91,6 @@ public class Board {
     public void createBots(MasterSquirrelBot masterSquirrelBot) {
         for (int botsCount = 0; botsCount < boardConfig.getNumberOfBots(); botsCount++) {
             this.masterSquirrelBot = masterSquirrelBot;
-
             masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
             insert(masterSquirrelBot);
 
