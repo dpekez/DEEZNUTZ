@@ -8,19 +8,19 @@ import core.XYsupport;
 
 public class MasterSquirrelBot extends MasterSquirrel {
 
-    private final BotController controller;
+    //private final BotController controller;
 
     public MasterSquirrelBot(XY location, BotControllerFactory factory) {
         super(location);
         setFactory(factory);
-        this.controller = factory.createMasterBotController();
+        //this.controller = factory.createMasterBotController();
     }
 
     @Override
     public void nextStep(EntityContext context) {
         ControllerContextImpl view = new ControllerContextImpl(context, this);
-        if (!isStunned())
-            controller.nextStep(view);
+        //if (!isStunned())
+            //controller.nextStep(view);
     }
 
     public class ControllerContextImpl implements ControllerContext {

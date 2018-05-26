@@ -1,6 +1,5 @@
 package console;
 
-
 import java.util.Arrays;
 
 public class Command {
@@ -28,4 +27,5 @@ public class Command {
                 ", parameters=" + (parameters == null ? null : Arrays.asList(parameters)) +
                 '}';
     }
+
 }

@@ -1,11 +1,10 @@
 package console;
 
 import core.*;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-
+import java.lang.reflect.InvocationTargetException;
 
 public class ConsoleUI implements UI {
 
@@ -16,6 +15,8 @@ public class ConsoleUI implements UI {
     private PrintStream outputStream;
     private BufferedReader inputStream;
     private GameCommandType[] gameCommandTypes;
+
+    private MoveCommand returnCommand;
 
     public ConsoleUI(State state, boolean threaded) {
         this.state = state;
@@ -28,63 +29,94 @@ public class ConsoleUI implements UI {
     @Override
     public MoveCommand getCommand() throws ScanException {
         // alles beim Alten wenn nicht multithreaded
-        if(!threaded)
-            return getCommandSingleThread();
+        if(!threaded) {
+            getCommandSingleThread();
+            return worstHackEver();
+        }
+        return worstHackEver();
+    }
 
-        if (command == null) {
+    private MoveCommand worstHackEver() {
+        if (returnCommand == null) {
             return new MoveCommand(new XY(0, 0));
         } else {
-            MoveCommand temp = command;
-            command = null;
+            MoveCommand temp = returnCommand;
+            returnCommand = null;
             return temp;
         }
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
     @Override
-    public void multiThreadCommandProcess() throws ScanException {
+    public void multiThreadCommandProcess() {
         while (true) {
-            this.command = getCommandSingleThread();
+            getCommandSingleThread();
         }
     }
 
-    private MoveCommand getCommandSingleThread() throws ScanException {
+    private void getCommandSingleThread() {
         CommandScanner commandScanner = new CommandScanner(gameCommandTypes, inputStream);
-        Command command;
-        command = commandScanner.next();
+        Command command = commandScanner.next();
 
-        switch ((GameCommandType) command.getCommandType()) {
-            case EXIT:
-                gameImpl.exit();
-                break;
-            case HELP:
-                gameImpl.help();
-                break;
-            case ALL:
-                gameImpl.all();
-                break;
-            case LEFT:
-                return new MoveCommand(XY.LEFT);
-            case UP:
-                return new MoveCommand(XY.UP);
-            case DOWN:
-                return new MoveCommand(XY.DOWN);
-            case RIGHT:
-                return new MoveCommand(XY.RIGHT);
-            case MASTER_ENERGY:
-                outputStream.print(state.getBoard().getMasterSquirrel().getEnergy());
-                break;
-            case SPAWN_MINI:
-                try {
-                    gameImpl.spawnMiniSquirrel(command.getParameters());
-                } catch (NotEnoughEnergyException e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
-                return new MoveCommand(new XY(0, 0));
+        Object[] params = command.getParameters();
+        GameCommandType commandType = (GameCommandType) command.getCommandType();
+        try {
+            this.getClass().getMethod(commandType.getName(), commandType.getParamTypes()).invoke(this, params);
+
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
         }
-        return new MoveCommand(new XY(0, 0));
+    }
+
+    @SuppressWarnings("unused")
+    public void exit() {
+        System.exit(0);
+    }
+
+    @SuppressWarnings("unused")
+    public void help() {
+        for(CommandTypeInfo cmdti: GameCommandType.values()) {
+            System.out.println(cmdti.getName() + " " + cmdti.getHelpText());
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public void all() {
+        gameImpl.all();
+    }
+
+    @SuppressWarnings("unused")
+    public void a() {
+        returnCommand = new MoveCommand(XY.LEFT);
+    }
+
+    @SuppressWarnings("unused")
+    public void w() {
+        returnCommand = new MoveCommand(XY.UP);
+    }
+
+    @SuppressWarnings("unused")
+    public void d() {
+        returnCommand = new MoveCommand(XY.RIGHT);
+    }
+
+    @SuppressWarnings("unused")
+    public void s() {
+        returnCommand = new MoveCommand(XY.DOWN);
+    }
+
+    @SuppressWarnings("unused")
+    public void master_energy() {
+        outputStream.print(state.getBoard().getMasterSquirrel().getEnergy());
+    }
+
+    @SuppressWarnings("unused")
+    public void spawn_mini(int energy, int x, int y) {
+        try {
+            gameImpl.spawnMiniSquirrel(energy, x, y);
+        } catch (NotEnoughEnergyException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -124,4 +156,5 @@ public class ConsoleUI implements UI {
             outputStream.println();
         }
     }
+
 }

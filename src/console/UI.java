@@ -10,4 +10,5 @@ public interface UI {
     void render(BoardView view);
 
     void multiThreadCommandProcess() throws ScanException;
+
 }
