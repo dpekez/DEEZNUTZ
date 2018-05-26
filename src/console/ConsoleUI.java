@@ -1,6 +1,8 @@
 package console;
 
 import core.*;
+import entities.MasterSquirrel;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -9,13 +11,10 @@ import java.lang.reflect.InvocationTargetException;
 public class ConsoleUI implements UI {
 
     private State state;
-    private boolean threaded;
-    private GameImpl gameImpl;
-    private MoveCommand command;
     private PrintStream outputStream;
     private BufferedReader inputStream;
     private GameCommandType[] gameCommandTypes;
-
+    private boolean threaded;
     private MoveCommand returnCommand;
 
     public ConsoleUI(State state, boolean threaded) {
@@ -64,7 +63,7 @@ public class ConsoleUI implements UI {
             this.getClass().getMethod(commandType.getName(), commandType.getParamTypes()).invoke(this, params);
 
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
+            outputStream.println("No such command, try again: " + command);
         }
     }
 
@@ -82,7 +81,7 @@ public class ConsoleUI implements UI {
 
     @SuppressWarnings("unused")
     public void all() {
-        gameImpl.all();
+        System.out.println(state.getBoard().getEntitySet());
     }
 
     @SuppressWarnings("unused")
@@ -112,10 +111,24 @@ public class ConsoleUI implements UI {
 
     @SuppressWarnings("unused")
     public void spawn_mini(int energy, int x, int y) {
-        try {
-            gameImpl.spawnMiniSquirrel(energy, x, y);
-        } catch (NotEnoughEnergyException e) {
-            e.printStackTrace();
+        MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
+        XY direction = new XY(x, y);
+        if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
+            state.getBoard().insertMiniSquirrel(energy, direction, daddy);
+        } else {
+            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+        }
+    }
+
+    @Deprecated
+    public void spawnMiniSquirrel(Object[] parameters) {
+        int energy = (Integer) parameters[0];
+        XY direction = new XY((Integer) parameters[1], (Integer) parameters[2]);
+        MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
+        if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
+            state.getBoard().insertMiniSquirrel(energy, direction, daddy);
+        } else {
+            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
         }
     }
 

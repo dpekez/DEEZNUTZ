@@ -6,6 +6,7 @@ import core.BoardView;
 import core.GameImpl;
 import core.MoveCommand;
 import core.XY;
+import entities.MasterSquirrel;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -17,14 +18,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-
 public class FxUI extends Scene implements UI {
 
     private static final double CELL_SIZE = 15;
     private final Label msgLabel;
     private final Canvas boardCanvas;
     private static MoveCommand command;
-    private GameImpl gameimpl;
+    private GameImpl gameImpl;
 
 
     private FxUI(Parent parent, Canvas boardCanvas, Label msgLabel) {
@@ -65,21 +65,30 @@ public class FxUI extends Scene implements UI {
                     command = new MoveCommand(new XY(-1, 0));
                     break;
                 case M:
-                    try {
-                        fxUI.gameimpl.spawnMiniSquirrel(1000, 1, 0);
-                    } catch (NotEnoughEnergyException e) {
-                        e.printStackTrace();
+                    int energy = 100;
+                    int x = 1;
+                    int y = 0;
+
+                    MasterSquirrel daddy = fxUI.gameImpl.getState().getBoard().getMasterSquirrel();
+                    XY direction = new XY(x, y);
+
+                    if (fxUI.gameImpl.getState().getBoard().getMasterSquirrel().getEnergy() >= energy) {
+                        fxUI.gameImpl.getState().getBoard().insertMiniSquirrel(energy, direction, daddy);
+                    } else {
+                        throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.gameImpl.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
                     }
                     break;
                 case Q:
                 case ESCAPE:
-                    fxUI.gameimpl.exit();
+                    System.exit(0);
                     break;
                 case X:
-                    fxUI.gameimpl.all();
+                    // todo: graphical entity window
+                    // or simple console print out
                     break;
                 case H:
-                    fxUI.gameimpl.help();
+                    // todo: graphical help window
+                    // or simple console print out
                     break;
             }
         };
@@ -95,7 +104,7 @@ public class FxUI extends Scene implements UI {
     }
 
     public void setGameImpl(GameImpl game) {
-        this.gameimpl = game;
+        this.gameImpl = game;
     }
 
     private void repaintBoardCanvas(BoardView view) {
@@ -150,7 +159,7 @@ public class FxUI extends Scene implements UI {
     }
 
     private void message(final String msg) {
-        String message = msg + gameimpl.update();
+        String message = msg + gameImpl.update();
         Platform.runLater(() -> msgLabel.setText(message));
     }
 
@@ -164,4 +173,5 @@ public class FxUI extends Scene implements UI {
             return temp;
         }
     }
+
 }

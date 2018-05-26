@@ -75,11 +75,11 @@ public class Board {
         return entitySet.getEntitySetArray();
     }
 
-    BoardConfig getConfig() {
+    public BoardConfig getConfig() {
         return boardConfig;
     }
 
-    EntitySet getEntitySet() {
+    public EntitySet getEntitySet() {
         return entitySet;
     }
 

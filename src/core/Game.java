@@ -1,6 +1,5 @@
 package core;
 
-
 import console.ScanException;
 import console.UI;
 
@@ -54,4 +53,5 @@ public abstract class Game {
     }
 
     protected abstract void processInput() throws ScanException;
+
 }
