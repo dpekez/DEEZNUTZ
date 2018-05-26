@@ -18,12 +18,12 @@ public enum EntityType {
             return EntityType.GOOD_PLANT;
         else if (entity instanceof HandOperatedMasterSquirrel)
             return EntityType.MASTER_SQUIRREL;
+        else if (entity instanceof MiniSquirrelBot)
+            return EntityType.MINI_SQUIRREL_BOT;
         else if (entity instanceof MiniSquirrel)
             return EntityType.MINI_SQUIRREL;
         else if (entity instanceof Wall)
             return  EntityType.WALL;
-        else if (entity instanceof MiniSquirrelBot)
-            return EntityType.MINI_SQUIRREL_BOT;
         else if (entity instanceof MasterSquirrelBot)
             return EntityType.MASTER_SQUIRREL_BOT;
         else

@@ -50,19 +50,19 @@ public class FxUI extends Scene implements UI {
             switch (keyEvent.getCode()) {
                 case W:
                 case UP:
-                    command = new MoveCommand(new XY(0, -1));
+                    command = new MoveCommand(XY.UP);
                     break;
                 case D:
                 case RIGHT:
-                    command = new MoveCommand(new XY(1, 0));
+                    command = new MoveCommand(XY.RIGHT);
                     break;
                 case S:
                 case DOWN:
-                    command = new MoveCommand(new XY(0, 1));
+                    command = new MoveCommand(XY.DOWN);
                     break;
                 case A:
                 case LEFT:
-                    command = new MoveCommand(new XY(-1, 0));
+                    command = new MoveCommand(XY.LEFT);
                     break;
                 case M:
                     int energy = 100;
@@ -153,6 +153,10 @@ public class FxUI extends Scene implements UI {
                 case MASTER_SQUIRREL_BOT:
                     gc.setFill(Color.RED);
                     gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                    break;
+                case MINI_SQUIRREL_BOT:
+                    gc.setFill(Color.RED);
+                    gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                     break;
             }
         }
