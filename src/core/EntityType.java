@@ -16,7 +16,7 @@ public enum EntityType {
             return EntityType.BAD_PLANT;
         else if (entity instanceof GoodPlant)
             return EntityType.GOOD_PLANT;
-        else if (entity instanceof MasterSquirrel)
+        else if (entity instanceof HandOperatedMasterSquirrel)
             return EntityType.MASTER_SQUIRREL;
         else if (entity instanceof MiniSquirrel)
             return EntityType.MINI_SQUIRREL;

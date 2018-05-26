@@ -152,7 +152,7 @@ public class FxUI extends Scene implements UI {
                     break;
                 case MASTER_SQUIRREL_BOT:
                     gc.setFill(Color.RED);
-                    gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                    gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                     break;
             }
         }
