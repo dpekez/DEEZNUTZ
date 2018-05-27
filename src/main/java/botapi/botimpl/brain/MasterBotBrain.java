@@ -8,6 +8,7 @@ import core.XYsupport;
 
 public class MasterBotBrain implements BotController {
     private int energyToReachForSpawn = 3000;
+    private XY lastPosition = XY.ZERO_ZERO;
 
     @Override
     public void nextStep(ControllerContext view) {
@@ -15,6 +16,7 @@ public class MasterBotBrain implements BotController {
         XY move = BotBrain.moveToNearestGoodEntity(view, maxSize);
         if (view.getEnergy() < energyToReachForSpawn) {
             move = BotBrain.stuck(view, move);
+            lastPosition = view.locate().addVector(move);
             view.move(move);
         } else {
             XY spawndirection = XYsupport.generateRandomMoveVector();

@@ -2,6 +2,9 @@ package core;
 
 import entities.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class FlattenedBoard implements BoardView, EntityContext {
 
     private Board board;
@@ -257,6 +260,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
     @Override
     public void killAndReplace(Entity entity) {
+        Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+        logger.log(Level.FINER, "remove Entity", entity);
         board.remove(entity);
 
         if (entity instanceof BadBeast)
@@ -267,5 +272,10 @@ public class FlattenedBoard implements BoardView, EntityContext {
             board.insert(new BadPlant(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
         else
             board.insert(new GoodPlant(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
+    }
+
+    @Override
+    public Entity getEntiy(XY xy) {
+        return null;
     }
 }

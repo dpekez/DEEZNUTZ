@@ -14,11 +14,11 @@ public class GameImpl extends Game {
         ui = new ConsoleUI(state, threaded);
         masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
         state.getBoard().insertMasterSquirrel(masterSquirrel);
-        state.getBoard().createBots(masterSquirrelBot);
+        state.getBoard().createBots();
     }
 
     @Override
-    protected void processInput() throws ScanException {
+    public void processInput() throws ScanException {
         MoveCommand moveCommand = ui.getCommand();
         masterSquirrel.setMoveCommand(moveCommand);
     }

@@ -1,12 +1,13 @@
 package Music;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BackgroundMusic {
-    public static BackgroundMusic sound1 = new BackgroundMusic("bolt.wav");
+    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static BackgroundMusic backgroundMusic = new BackgroundMusic("bolt.wav");
     private Clip clip;
 
     private BackgroundMusic(String fileName) {
@@ -14,13 +15,12 @@ public class BackgroundMusic {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic.class.getResource(fileName));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+            logger.log(Level.SEVERE, "A exception was thrown", e);
         }
     }
 
     public void loop() {
-        try {
             if (clip != null) {
                 new Thread(() -> {
                     synchronized (clip) {
@@ -32,8 +32,5 @@ public class BackgroundMusic {
                     }
                 }).start();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

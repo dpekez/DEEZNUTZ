@@ -1,36 +1,38 @@
 package entities;
 
-import botapi.BotControllerFactory;
-import botapi.ControllerContext;
-import botapi.OutOfViewException;
-import botapi.SpawnException;
-import core.EntityContext;
-import core.EntityType;
-import core.XY;
-import core.XYsupport;
+import botapi.*;
+import core.*;
+
+import java.lang.reflect.Proxy;
 
 public class MasterSquirrelBot extends MasterSquirrel {
 
-    //private final BotController controller;
+    private final BotController controller;
 
     public MasterSquirrelBot(XY location, BotControllerFactory factory) {
         super(location);
         setFactory(factory);
-        //this.controller = factory.createMasterBotController();
+        this.controller = factory.createMasterBotController();
     }
 
     @Override
     public void nextStep(EntityContext context) {
         ControllerContextImpl view = new ControllerContextImpl(context, this);
-        //if (!isStunned())
-        //controller.nextStep(view);
+        DebugHandler handler = new DebugHandler(view);
+        ControllerContext proxyView = (ControllerContext) Proxy.newProxyInstance(
+                ControllerContext.class.getClassLoader(),
+                new Class[]{ControllerContext.class},
+                handler);
+
+        if (!isStunned())
+            controller.nextStep(proxyView);
     }
 
-    public class ControllerContextImpl implements ControllerContext {
+    public static class ControllerContextImpl implements ControllerContext {
 
-        final int viewDistanceMasterBot = 15;
         private EntityContext context;
         private MasterSquirrel masterSquirrel;
+        final int viewDistanceMasterBot = 15;
 
         public ControllerContextImpl(EntityContext context, MasterSquirrel masterSquirrel) {
             this.context = context;
@@ -61,12 +63,19 @@ public class MasterSquirrelBot extends MasterSquirrel {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
                 throw new OutOfViewException("Kein Entity in Sichtweite");
             return context.getEntityType(xy);
+
         }
 
         @Override
         public boolean isMine(XY xy) throws OutOfViewException {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
                 throw new OutOfViewException("Kein entity in Sichtweite");
+            try {
+                if (masterSquirrel.isMyChild((MiniSquirrel) context.getEntiy(xy)))
+                    return true;
+            } catch (Exception e) {
+                return false;
+            }
             return false;
         }
 

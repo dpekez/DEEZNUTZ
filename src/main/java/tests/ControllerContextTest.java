@@ -1,5 +1,5 @@
 import botapi.BotControllerFactory;
-import botapi.botimpl.player.PlayerFactory;
+import botapi.botimpl.BrainFactory;
 import core.Board;
 import core.EntityContext;
 import core.XY;
@@ -22,13 +22,13 @@ public class ControllerContextTest {
     Board board;
     MasterSquirrelBot.ControllerContextImpl viewMaster;
     BotControllerFactory botControllerFactory;
-    PlayerFactory factory;
+    BrainFactory factory;
 
     @Before
     public void init() {
         masterBot = new MasterSquirrelBot(spawnPositionMasterBot, factory);
 
-        board.createBots(masterBot);
+        board.createBots();
     }
 
     public void tearDown() {
@@ -37,7 +37,7 @@ public class ControllerContextTest {
 
     @Test
     public void locate() {
-        //viewMaster = new MasterSquirrelBot.ControllerContextImpl(context,masterBot);
+        viewMaster = new MasterSquirrelBot.ControllerContextImpl(context, masterBot);
         assertEquals(spawnPositionMasterBot, viewMaster.locate());
     }
 

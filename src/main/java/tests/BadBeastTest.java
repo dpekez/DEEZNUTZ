@@ -7,7 +7,7 @@ public class BadBeastTest {
 
     @Test
     public void entityTypeTest() {
-        BadBeast badBeast = new BadBeast(new XY(1, 1));
+        BadBeast badBeast = new BadBeast(new XY(15, 33));
         System.out.println(badBeast.toString());
     }
 }

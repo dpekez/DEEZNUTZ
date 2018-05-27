@@ -15,18 +15,19 @@ import java.util.logging.*;
 
 public class Launcher extends Application {
     private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final Level logLevel = Level.ALL;
+    private static final Level logLevel = Level.FINE;
     private static Launcher launcher = new Launcher();
     private Scanner scanner = new Scanner(System.in);
 
     private static void startGameMultiThreaded(Game game) throws ScanException {
-        logger.info("Start Game MultiThreaded");
+        logger.log(Level.INFO, "Start Game MultiThreaded");
         System.out.println("multi");
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 try {
+                    game.processInput();
                     game.run();
                 } catch (ScanException e) {
                     e.printStackTrace();
@@ -42,7 +43,7 @@ public class Launcher extends Application {
         logger.setLevel(logLevel);
         SimpleFormatter simpleFormatter = new SimpleFormatter();
         handler.setFormatter(simpleFormatter);
-        handler.setLevel(Level.ALL);
+        handler.setLevel(Level.FINE);
         logger.addHandler(handler);
 
         if (args.length >= 1)
@@ -54,20 +55,20 @@ public class Launcher extends Application {
     }
 
     private static void startGameSingleThreaded(Game game) throws ScanException {
-        logger.info("Start Game SingleThreaded");
+        logger.log(Level.INFO, "Start Game SingleThreaded");
         System.out.println("single");
         game.run();
     }
 
-    private void menu(String[] args, Launcher launcher) throws Exception {
+    private void menu(String[] args, Launcher launcher) {
         System.out.println("Wählen sie einen Spielmodus: [1] Spiel auf der Konsole [2] Spiel mit GUI [3] Verlassen");
         switch (scanner.nextInt()) {
             case 1:
-                logger.info("Game type: Console");
+                logger.log(Level.INFO, "Game type: Console");
                 launcher.gameMode(args);
                 break;
             case 2:
-                logger.info("Game type: in Gui");
+                logger.log(Level.INFO, "Game type: in Gui");
                 launcher.startGUIGame(args);
                 break;
             case 3:
@@ -79,11 +80,11 @@ public class Launcher extends Application {
         System.out.println("Wählen sie zwischen den Spielmodi: [1] Multithreaded [2] Siglethreaded [3] Verlassen ");
         switch (scanner.nextInt()) {
             case 1:
-                logger.info("Game type: Console + MultiThreaded");
+                logger.log(Level.INFO, "Game type: Console + MultiThreaded");
                 startGameSingleThreaded(new GameImpl(true));
                 break;
             case 2:
-                logger.info("Game type: Console + SingleThreaded");
+                logger.log(Level.INFO, "Game type: Console + SingleThreaded");
                 startGameSingleThreaded(new GameImpl(false));
                 break;
             case 3:
@@ -97,11 +98,11 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) throws ScanException {
-        logger.info("Start Gui Game");
+        logger.log(Level.INFO, "Start Gui Game");
         BoardConfig boardConfig = new BoardConfig();
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
         final Game game = new GameImpl(true);
-        BackgroundMusic.sound1.loop();
+        BackgroundMusic.backgroundMusic.loop();
         game.setUi(fxUI);
         fxUI.setGameImpl((GameImpl) game);
         primaryStage.setScene(fxUI);

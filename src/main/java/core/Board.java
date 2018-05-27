@@ -4,6 +4,9 @@ package core;
 import botapi.BotControllerFactory;
 import entities.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Board {
 
@@ -11,11 +14,11 @@ public class Board {
     private EntitySet entitySet;
     private BoardConfig boardConfig;
     private HandOperatedMasterSquirrel masterSquirrel;
-    private MasterSquirrelBot masterSquirrelBot;
     private BotControllerFactory factory;
+    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    public Board(BoardConfig boardConfig) {
 
-    Board(BoardConfig boardConfig) {
         this.boardConfig = boardConfig;
         entitySet = new EntitySet(boardConfig.getHeight() * boardConfig.getWidth());
 
@@ -67,7 +70,7 @@ public class Board {
         entitySet.remove(e);
     }
 
-    void insert(Entity e) {
+    public void insert(Entity e) {
         entitySet.add(e);
     }
 
@@ -88,11 +91,17 @@ public class Board {
         insert(masterSquirrel);
     }
 
-    public void createBots(MasterSquirrelBot masterSquirrelBot) {
+    public void createBots() {
         for (int botsCount = 0; botsCount < boardConfig.getNumberOfBots(); botsCount++) {
-            this.masterSquirrelBot = masterSquirrelBot;
-            masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
-            insert(masterSquirrelBot);
+            try {
+                BotControllerFactory factory = (BotControllerFactory) Class.forName("botapi.botimpl.BrainFactory").newInstance();
+                MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
+                insert(masterSquirrelBot);
+            } catch (ClassNotFoundException e) {
+                logger.log(Level.WARNING, "factory wurde nicht gefunden");
+            } catch (IllegalAccessException | InstantiationException e) {
+                e.printStackTrace();
+            }
 
         }
     }

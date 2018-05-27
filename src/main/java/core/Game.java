@@ -3,6 +3,7 @@ package core;
 import console.ScanException;
 import console.UI;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class Game {
@@ -22,9 +23,9 @@ public abstract class Game {
     public void run() throws ScanException {
 
         while (true) {
-            logger.info("Start to render");
+            logger.log(Level.FINER, "start render()");
             render();
-            logger.info("Start processInput");
+            logger.log(Level.FINER, "start processInput()");
             processInput();
             if (threaded) {
                 try {
@@ -33,7 +34,7 @@ public abstract class Game {
                     e.printStackTrace();
                 }
             }
-            logger.info("Start to update");
+            logger.log(Level.FINER, "start update()");
             update();
         }
     }
@@ -60,6 +61,6 @@ public abstract class Game {
         this.state = state;
     }
 
-    protected abstract void processInput() throws ScanException;
+    public abstract void processInput() throws ScanException;
 
 }

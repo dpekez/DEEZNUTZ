@@ -1,6 +1,9 @@
 package core;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class State {
 
     private int highScore;
@@ -20,7 +23,10 @@ public class State {
     }
 
     void update() {
+        Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+        logger.log(Level.FINER, "start update() from State");
         board.update(flattenedBoard());
+
 
         if (board.getMasterSquirrel() != null) {
             if (board.getMasterSquirrel().getEnergy() > highScore)

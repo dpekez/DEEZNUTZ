@@ -3,7 +3,7 @@ package core;
 public class BoardConfig {
 
     private final int width = 40;
-    private final int height = 40;
+    private final int height = 30;
     private final int wallQuant = 10;
     private final int numberOfBots = 1;
     private final int badPlantQuant = 5;
@@ -62,4 +62,6 @@ public class BoardConfig {
     int getPlayerEnityViewDistance() {
         return playerEnityViewDistance;
     }
+
+
 }

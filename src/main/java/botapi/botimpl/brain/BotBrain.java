@@ -9,7 +9,7 @@ import core.XYsupport;
 
 import static java.lang.Math.PI;
 
-class BotBrain {
+public class BotBrain {
 
     static XY stuck(ControllerContext context, XY direction) {
         int numberOfRotation = 1;
@@ -44,7 +44,7 @@ class BotBrain {
         return new XY(x, y);
     }
 
-    private static XY nearestEntity(ControllerContext context, EntityType type) {
+    public static XY nearestEntity(ControllerContext context, EntityType type) {
         XY position = context.locate();
         int minX = context.getViewLowerLeft().getX();
         int minY = context.getViewLowerLeft().getY();
@@ -84,6 +84,10 @@ class BotBrain {
             moveDirection = XYsupport.assignMoveVector(nearestGB.reduceVector(context.locate()));
         } else if ((context.locate().distanceFrom(nearestGP)) < 31) {
             moveDirection = XYsupport.assignMoveVector(nearestGP.reduceVector(context.locate()));
+        } else {
+            if (!context.locate().equals(new XY(maxSize.getX() / 2, maxSize.getY() / 2))) {
+                moveDirection = XYsupport.assignMoveVector(new XY(maxSize.getX() / 2, maxSize.getY() / 2).reduceVector(context.locate()));
+            }
         }
         return moveDirection;
     }
