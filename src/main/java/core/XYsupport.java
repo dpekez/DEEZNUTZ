@@ -59,50 +59,36 @@ public class XYsupport {
     }
 
     public static XY assignMoveVector(XY xy) {
-        XY moveVector = XY.ZERO_ZERO;
         int oldX = xy.getX();
         int oldY = xy.getY();
-
-        switch (oldX) {
-            case 0:
-                switch (oldY) {
-                    case 0:
-                        break;
-                    case 1:
-                        moveVector = XY.UP;
-                        break;
-                    case -1:
-                        moveVector = XY.DOWN;
-                        break;
+        if (oldX == 0) {
+            if (oldY == 0)
+                return XY.ZERO_ZERO;
+            else if (oldY < 0) {
+                return XY.UP;
+            } else {
+                return XY.DOWN;
+            }
+        } else if (oldY == 0) {
+            if (oldX < 0) {
+                return XY.LEFT;
+            } else {
+                return XY.RIGHT;
+            }
+        } else {
+            if (oldX < 0) {
+                if (oldY < 0)
+                    return XY.RIGHT_UP;
+                else {
+                    return XY.RIGHT_DOWN;
                 }
-                break;
-            case 1:
-                switch (oldY) {
-                    case 0:
-                        moveVector = XY.RIGHT;
-                        break;
-                    case 1:
-                        moveVector = XY.RIGHT_UP;
-                        break;
-                    case -1:
-                        moveVector = XY.RIGHT_DOWN;
-                        break;
+            } else {
+                if (oldY < 0)
+                    return XY.LEFT_UP;
+                else {
+                    return XY.LEFT_DOWN;
                 }
-                break;
-            case -1:
-                switch (oldY) {
-                    case 0:
-                        moveVector = XY.LEFT;
-                        break;
-                    case 1:
-                        moveVector = XY.LEFT_UP;
-                        break;
-                    case -1:
-                        moveVector = XY.LEFT_DOWN;
-                        break;
-                }
-                break;
+            }
         }
-        return moveVector;
     }
 }

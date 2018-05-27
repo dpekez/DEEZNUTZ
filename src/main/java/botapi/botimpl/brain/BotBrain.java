@@ -11,19 +11,18 @@ import static java.lang.Math.PI;
 
 public class BotBrain {
 
-    static XY stuck(ControllerContext context, XY direction) {
+    static XY stuck(ControllerContext context, XY direction, freeFieldSpaceMode ffsm) {
         int numberOfRotation = 1;
-        XY checkPosition = context.locate().addVector(direction);
-
         boolean stuck = true;
-        if ((freeFieldSpace(context, checkPosition))) {
+        XY checkPosition = context.locate().addVector(direction);
+        if ((freeFieldSpace(context, checkPosition, ffsm))) {
             return direction;
         }
         XY newVector;
-        while (!stuck) {
+        while (stuck) {
             newVector = BotBrain.rotation(direction, numberOfRotation);
             checkPosition = context.locate().addVector(newVector);
-            if (freeFieldSpace(context, checkPosition)) {
+            if (freeFieldSpace(context, checkPosition, ffsm)) {
                 return newVector;
             } else {
                 numberOfRotation++;
@@ -34,6 +33,29 @@ public class BotBrain {
             }
         }
         return null;
+    }
+
+    static XY moveToNearestGoodEntity(ControllerContext context, XY maxSize) {
+        XY moveDirection = XY.ZERO_ZERO;
+        XY nearestBB = BotBrain.nearestEntity(context, EntityType.BAD_BEAST);
+        XY nearestGB = BotBrain.nearestEntity(context, EntityType.GOOD_BEAST);
+        XY nearestGP = BotBrain.nearestEntity(context, EntityType.GOOD_PLANT);
+
+        if (context.locate().distanceFrom(nearestBB) < 5) {
+            if ((context.locate().distanceFrom(nearestGB) >= context.locate().distanceFrom(nearestBB)) & (context.locate().distanceFrom(nearestGP) >= context.locate().distanceFrom(nearestBB))) {
+                moveDirection = XYsupport.assignMoveVector(context.locate().reduceVector(nearestBB));
+            }
+        } else if ((context.locate().distanceFrom(nearestGB)) < 16) {
+            moveDirection = XYsupport.assignMoveVector(nearestGB.reduceVector(context.locate()));
+        } else if ((context.locate().distanceFrom(nearestGP)) < 16) {
+            moveDirection = XYsupport.assignMoveVector(nearestGP.reduceVector(context.locate()));
+        }
+//          else {
+//            if (!context.locate().equals(new XY(maxSize.getX() / 2, maxSize.getY() / 2))) {
+//                moveDirection = XYsupport.assignMoveVector(new XY(maxSize.getX() / 2, maxSize.getY() / 2).reduceVector(context.locate()));
+//            }
+//        }
+        return moveDirection;
     }
 
     private static XY rotation(XY direction, int numberOfRotation) {
@@ -70,47 +92,33 @@ public class BotBrain {
         return null;
     }
 
-    static XY moveToNearestGoodEntity(ControllerContext context, XY maxSize) {
-        XY moveDirection = XY.ZERO_ZERO;
-        XY nearestBB = BotBrain.nearestEntity(context, EntityType.BAD_BEAST);
-        XY nearestGB = BotBrain.nearestEntity(context, EntityType.GOOD_BEAST);
-        XY nearestGP = BotBrain.nearestEntity(context, EntityType.GOOD_PLANT);
-
-        if (context.locate().distanceFrom(nearestBB) < 5) {
-            if ((context.locate().distanceFrom(nearestGB) >= context.locate().distanceFrom(nearestBB)) & (context.locate().distanceFrom(nearestGP) >= context.locate().distanceFrom(nearestBB))) {
-                moveDirection = XYsupport.assignMoveVector(context.locate().reduceVector(nearestBB));
-            }
-        } else if ((context.locate().distanceFrom(nearestGB)) < 31) {
-            moveDirection = XYsupport.assignMoveVector(nearestGB.reduceVector(context.locate()));
-        } else if ((context.locate().distanceFrom(nearestGP)) < 31) {
-            moveDirection = XYsupport.assignMoveVector(nearestGP.reduceVector(context.locate()));
-        } else {
-            if (!context.locate().equals(new XY(maxSize.getX() / 2, maxSize.getY() / 2))) {
-                moveDirection = XYsupport.assignMoveVector(new XY(maxSize.getX() / 2, maxSize.getY() / 2).reduceVector(context.locate()));
-            }
-        }
-        return moveDirection;
-    }
-
-    static boolean freeFieldSpace(ControllerContext context, XY location) {
+    static boolean freeFieldSpace(ControllerContext context, XY location, freeFieldSpaceMode ffsm) {
         try {
             EntityType entityType = (context.getEntityAt(location));
-            switch (entityType) {
-                case GOOD_BEAST:
-                case GOOD_PLANT:
-                case NOTHING:
-                    return true;
-                case BAD_PLANT:
-                case BAD_BEAST:
-                case WALL:
-                    return false;
-                case MINI_SQUIRREL:
-                case MASTER_SQUIRREL:
-                    return context.isMine(location);
+            switch (ffsm) {
+                case master:
+                case mini:
+                    switch (entityType) {
+                        case GOOD_BEAST:
+                        case GOOD_PLANT:
+                        case NOTHING:
+                            return true;
+                        case BAD_PLANT:
+                        case BAD_BEAST:
+                        case WALL:
+                            return false;
+                        case MINI_SQUIRREL:
+                        case MASTER_SQUIRREL:
+                            return context.isMine(location);
+                    }
             }
         } catch (OutOfViewException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    protected enum freeFieldSpaceMode {
+        master, mini, spawnmini,
     }
 }

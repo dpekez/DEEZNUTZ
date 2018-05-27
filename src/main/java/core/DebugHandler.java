@@ -3,7 +3,9 @@ package core;
 import botapi.ControllerContext;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DebugHandler implements InvocationHandler {
@@ -17,14 +19,18 @@ public class DebugHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         StringBuilder stringBuilder = new StringBuilder();
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-        stringBuilder.append("* method:").append(method).append(" parms");
-        if (args != null) {
-            for (Object arg : args)
-                stringBuilder.append(" ").append(arg);
-            stringBuilder.append("\n");
-        }
         Object result = null;
-        result = method.invoke(view, args);
+        try {
+            result = method.invoke(view, args);
+        } catch (IllegalAccessException ex) {
+            logger.log(Level.FINER, ex.getMessage());
+        } catch (InvocationTargetException e) {
+            throw e.getTargetException();
+        } catch (Exception e) {
+
+        }
+        stringBuilder.append("* result:").append(result);
+        logger.log(Level.FINER, stringBuilder.toString());
         return result;
     }
 }
