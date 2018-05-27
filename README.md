@@ -10,6 +10,13 @@ Please read [CONTRIBUTING.md]( DEEZNUTS/CONTRIBUTING.md) for details on our code
 
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/dpekez/DEEZNUTS/blob/master/LICENSE) file for details
 
+## TODO
+
+1. - [ ] JUnit testing (viel schreib Arbeit)
+2. - [ ] Logging (gedanken machen was alles geloggt werden sollte)
+3. - [ ] MasterBot KI implementiern
+4. - [ ] MiniBot KI schreiben und implementieren 
+
 ## Authors
 
 * **Dejan Pekez**  [dpekez](https://github.com/dpekez)
