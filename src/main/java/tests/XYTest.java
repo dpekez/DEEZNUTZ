@@ -1,5 +1,3 @@
-package tests;
-
 import core.XY;
 import org.junit.Test;
 

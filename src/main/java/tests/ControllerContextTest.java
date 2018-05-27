@@ -1,5 +1,3 @@
-package tests;
-
 import botapi.BotControllerFactory;
 import botapi.botimpl.player.PlayerFactory;
 import core.Board;
