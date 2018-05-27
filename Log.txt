@@ -1,0 +1,328 @@
+Mai 27, 2018 10:50:45 VORM. Launcher menu
+INFORMATION: Game type: in Gui
+Mai 27, 2018 10:50:45 VORM. Launcher start
+INFORMATION: Start Gui Game
+Mai 27, 2018 10:50:45 VORM. Launcher startGameMultiThreaded
+INFORMATION: Start Game MultiThreaded
+Mai 27, 2018 10:50:45 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:45 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:46 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:47 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:48 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:49 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:50 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start processInput
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to update
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start to render
+Mai 27, 2018 10:50:51 VORM. core.Game run
+INFORMATION: Start processInput
