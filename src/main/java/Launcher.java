@@ -1,5 +1,4 @@
 import GUI.FxUI;
-import Music.BackgroundMusic;
 import console.ScanException;
 import core.BoardConfig;
 import core.Game;
@@ -38,12 +37,12 @@ public class Launcher extends Application {
 
     public static void main(String[] args) throws Exception {
         Handler handler = (new FileHandler("Log.txt"));
-        logger.setLevel(Level.ALL);
+        logger.setLevel(Level.FINER);
         SimpleFormatter simpleFormatter = new SimpleFormatter();
         handler.setFormatter(simpleFormatter);
 
         //Set Log.txt level
-        handler.setLevel(Level.SEVERE);
+        handler.setLevel(Level.ALL);
         logger.addHandler(handler);
 
         if (args.length >= 1)
