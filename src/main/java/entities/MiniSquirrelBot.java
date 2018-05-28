@@ -67,7 +67,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         public EntityType getEntityAt(XY xy) throws OutOfViewException {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
                 logger.log(Level.WARNING, "Kein Entity in Sichtweite (MiniBot)");
-                throw new OutOfViewException("Kein Entity in Sichtweite (MiniBot)");
+                //throw new OutOfViewException("Kein Entity in Sichtweite (MiniBot)");
             }
             return context.getEntityType(xy);
         }
