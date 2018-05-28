@@ -65,28 +65,28 @@ public class XYsupport {
             if (oldY == 0)
                 return XY.ZERO_ZERO;
             else if (oldY < 0) {
-                return XY.UP;
-            } else {
                 return XY.DOWN;
+            } else {
+                return XY.UP;
             }
         } else if (oldY == 0) {
             if (oldX < 0) {
-                return XY.LEFT;
-            } else {
                 return XY.RIGHT;
+            } else {
+                return XY.LEFT;
             }
         } else {
             if (oldX < 0) {
                 if (oldY < 0)
-                    return XY.RIGHT_UP;
+                    return XY.LEFT_DOWN;
                 else {
-                    return XY.RIGHT_DOWN;
+                    return XY.LEFT_UP;
                 }
             } else {
                 if (oldY < 0)
-                    return XY.LEFT_UP;
+                    return XY.RIGHT_DOWN;
                 else {
-                    return XY.LEFT_DOWN;
+                    return XY.RIGHT_UP;
                 }
             }
         }

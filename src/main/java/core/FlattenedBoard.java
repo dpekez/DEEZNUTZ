@@ -127,6 +127,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 goodBeast.move(moveDirection);
                 updateFlattenedBoard();
                 break;
+            case MINI_SQUIRREL_BOT:
+            case MASTER_SQUIRREL_BOT:
             case MASTER_SQUIRREL:
             case MINI_SQUIRREL:
                 nextEntity.updateEnergy(goodBeast.getEnergy());
@@ -146,6 +148,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 updateFlattenedBoard();
                 break;
             case MINI_SQUIRREL:
+            case MINI_SQUIRREL_BOT:
                 nextEntity.updateEnergy(badBeast.getEnergy());
                 if (nextEntity.getEnergy() <= 0)
                     kill(nextEntity);
@@ -153,6 +156,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 if (badBeast.getBitesLeft() == 0)
                     killAndReplace(badBeast);
                 break;
+            case MASTER_SQUIRREL_BOT:
             case MASTER_SQUIRREL:
                 nextEntity.updateEnergy(badBeast.getEnergy());
                 badBeast.bite();

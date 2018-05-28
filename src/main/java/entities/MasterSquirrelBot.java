@@ -49,7 +49,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public XY getViewUpperRight() {
             int x = (locate().getX() + viewDistanceMasterBot) > (context.getSize().getX()) ? context.getSize().getX() : locate().getX() + viewDistanceMasterBot;
-            int y = (locate().getY() + viewDistanceMasterBot) > (context.getSize().getY()) ? context.getSize().getY() : locate().getY();
+            int y = (locate().getY() + viewDistanceMasterBot) > (context.getSize().getY()) ? context.getSize().getY() : locate().getY() + viewDistanceMasterBot;
             return new XY(x, y);
         }
 

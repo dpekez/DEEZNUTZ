@@ -7,63 +7,37 @@ import core.EntityType;
 import core.XY;
 import core.XYsupport;
 
-import static java.lang.Math.PI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BotBrain {
-
-    static XY stuck(ControllerContext context, XY direction, freeFieldSpaceMode ffsm) {
-        int numberOfRotation = 1;
-        boolean stuck = true;
-        XY checkPosition = context.locate().addVector(direction);
-        if ((freeFieldSpace(context, checkPosition, ffsm))) {
-            return direction;
-        }
-        XY newVector;
-        while (stuck) {
-            newVector = BotBrain.rotation(direction, numberOfRotation);
-            checkPosition = context.locate().addVector(newVector);
-            if (freeFieldSpace(context, checkPosition, ffsm)) {
-                return newVector;
-            } else {
-                numberOfRotation++;
-
-                if (numberOfRotation > 3) {
-                    return direction.times(-1);
-                }
-            }
-        }
-        return null;
-    }
+    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     static XY moveToNearestGoodEntity(ControllerContext context, XY maxSize) {
         XY moveDirection = XY.ZERO_ZERO;
+        XY nearestBP = BotBrain.nearestEntity(context, EntityType.BAD_PLANT);
         XY nearestBB = BotBrain.nearestEntity(context, EntityType.BAD_BEAST);
         XY nearestGB = BotBrain.nearestEntity(context, EntityType.GOOD_BEAST);
         XY nearestGP = BotBrain.nearestEntity(context, EntityType.GOOD_PLANT);
+        XY nearestWW = BotBrain.nearestEntity(context, EntityType.WALL);
 
-        if (context.locate().distanceFrom(nearestBB) < 5) {
-            if ((context.locate().distanceFrom(nearestGB) >= context.locate().distanceFrom(nearestBB)) & (context.locate().distanceFrom(nearestGP) >= context.locate().distanceFrom(nearestBB))) {
-                moveDirection = XYsupport.assignMoveVector(context.locate().reduceVector(nearestBB));
+        XY nearestPositive;
+        if (nearestGB.distanceFrom(context.locate()) < nearestGP.distanceFrom(context.locate()))
+            nearestPositive = nearestGB;
+        else nearestPositive = nearestGP;
+
+        if (context.locate().distanceFrom(nearestBB) < 4) {
+            if ((context.locate().distanceFrom(nearestPositive) > context.locate().distanceFrom(nearestBB))) {
+                moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestBB));
             }
-        } else if ((context.locate().distanceFrom(nearestGB)) < 16) {
-            moveDirection = XYsupport.assignMoveVector(nearestGB.reduceVector(context.locate()));
-        } else if ((context.locate().distanceFrom(nearestGP)) < 16) {
-            moveDirection = XYsupport.assignMoveVector(nearestGP.reduceVector(context.locate()));
+        } else if ((context.locate().distanceFrom(nearestBP)) < 2) {
+            moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestBP));
+        } else if ((context.locate().distanceFrom(nearestWW)) < 2) {
+            moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestWW));
+        } else if ((context.locate().distanceFrom(nearestPositive)) < 16) {
+            moveDirection = XYsupport.assignMoveVector(context.locate().reduceVector(nearestPositive));
         }
-//          else {
-//            if (!context.locate().equals(new XY(maxSize.getX() / 2, maxSize.getY() / 2))) {
-//                moveDirection = XYsupport.assignMoveVector(new XY(maxSize.getX() / 2, maxSize.getY() / 2).reduceVector(context.locate()));
-//            }
-//        }
         return moveDirection;
-    }
-
-    private static XY rotation(XY direction, int numberOfRotation) {
-        int x = (int) Math.round(direction.getX() * Math.cos(PI / 4 * numberOfRotation)
-                - direction.getY() * Math.sin(PI / 4 * numberOfRotation));
-        int y = (int) Math.round(direction.getX() * Math.sin(PI / 4 * numberOfRotation)
-                + direction.getY() * Math.cos(PI / 4 * numberOfRotation));
-        return new XY(x, y);
     }
 
     public static XY nearestEntity(ControllerContext context, EntityType type) {
@@ -74,7 +48,7 @@ public class BotBrain {
         int maxY = context.getViewUpperRight().getY();
 
         try {
-            XY nearestEntity = new XY(15, 15);
+            XY nearestEntity = new XY(0, 0);
             for (int x = minX; x < maxX; x++) {
                 for (int y = minY; y < maxY; y++) {
                     if (context.getEntityAt(new XY(x, y)) == type) {
@@ -87,38 +61,8 @@ public class BotBrain {
             }
             return nearestEntity;
         } catch (OutOfViewException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Kein Entity im Reichweite (nearesEntity)");
         }
         return null;
-    }
-
-    static boolean freeFieldSpace(ControllerContext context, XY location, freeFieldSpaceMode ffsm) {
-        try {
-            EntityType entityType = (context.getEntityAt(location));
-            switch (ffsm) {
-                case master:
-                case mini:
-                    switch (entityType) {
-                        case GOOD_BEAST:
-                        case GOOD_PLANT:
-                        case NOTHING:
-                            return true;
-                        case BAD_PLANT:
-                        case BAD_BEAST:
-                        case WALL:
-                            return false;
-                        case MINI_SQUIRREL:
-                        case MASTER_SQUIRREL:
-                            return context.isMine(location);
-                    }
-            }
-        } catch (OutOfViewException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    protected enum freeFieldSpaceMode {
-        master, mini, spawnmini,
     }
 }

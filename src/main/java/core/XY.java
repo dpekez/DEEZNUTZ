@@ -19,11 +19,11 @@ public final class XY {
     }
 
     public XY addVector(XY vector) {
-        return new XY(x + vector.x, y + vector.y);
+        return new XY(x + vector.getX(), y + vector.getY());
     }
 
     public XY reduceVector(XY vector) {
-        return new XY(x - vector.x, y - vector.y);
+        return new XY(x - vector.getX(), y - vector.getY());
     }
 
     public XY times(int factor) {
