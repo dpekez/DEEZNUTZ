@@ -30,12 +30,12 @@ public class BotBrain {
             if ((context.locate().distanceFrom(nearestPositive) > context.locate().distanceFrom(nearestBB))) {
                 moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestBB));
             }
+        } else if ((context.locate().distanceFrom(nearestPositive)) < 16) {
+            moveDirection = XYsupport.assignMoveVector(context.locate().reduceVector(nearestPositive));
         } else if ((context.locate().distanceFrom(nearestBP)) < 2) {
             moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestBP));
         } else if ((context.locate().distanceFrom(nearestWW)) < 2) {
             moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestWW));
-        } else if ((context.locate().distanceFrom(nearestPositive)) < 16) {
-            moveDirection = XYsupport.assignMoveVector(context.locate().reduceVector(nearestPositive));
         }
         return moveDirection;
     }

@@ -17,6 +17,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
     @Override
     public void nextStep(EntityContext context) {
+        super.nextStep(context);
         ControllerContextImpl view = new ControllerContextImpl(context, this);
         DebugHandler handler = new DebugHandler(view);
         ControllerContext proxyView = (ControllerContext) Proxy.newProxyInstance(
@@ -24,8 +25,9 @@ public class MasterSquirrelBot extends MasterSquirrel {
                 new Class[]{ControllerContext.class},
                 handler);
 
-        if (!isStunned())
-            controller.nextStep(proxyView);
+        if (isStunned())
+            return;
+        controller.nextStep(proxyView);
     }
 
     public static class ControllerContextImpl implements ControllerContext {
