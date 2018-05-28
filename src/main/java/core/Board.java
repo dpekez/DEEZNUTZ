@@ -114,7 +114,7 @@ public class Board {
         XY location = masterSquirrel.getLocation().addVector(direction);
         if (masterSquirrel.getEnergy() >= energy) {
             masterSquirrel.updateEnergy(-energy);
-            insert(new MiniSquirrelBot(energy, location, daddy));
+            insert(new MiniSquirrel(energy, location, daddy));
         }
     }
 
