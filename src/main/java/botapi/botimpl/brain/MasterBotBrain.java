@@ -26,8 +26,8 @@ public class MasterBotBrain implements BotController {
             } else {
                 XY spawnDirection = XYsupport.generateRandomMoveVector();
                 if (BotBrain.checkSpawnField(view, view.locate().addVector(spawnDirection))) {
-                    view.spawnMiniBot(spawnDirection, 1000);
-                    energyToReachForSpawn = energyToReachForSpawn + 1000;
+                    view.spawnMiniBot(spawnDirection, 200);
+                    energyToReachForSpawn = energyToReachForSpawn + 0;
                 }
             }
         } catch (SpawnException e) {
