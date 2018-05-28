@@ -59,15 +59,16 @@ public class XYsupport {
     }
 
     public static XY assignMoveVector(XY xy) {
+        int newX, newY;
         int oldX = xy.getX();
         int oldY = xy.getY();
         if (oldX == 0) {
             if (oldY == 0)
                 return XY.ZERO_ZERO;
             else if (oldY < 0) {
-                return XY.DOWN;
-            } else {
                 return XY.UP;
+            } else {
+                return XY.DOWN;
             }
         } else if (oldY == 0) {
             if (oldX < 0) {
@@ -76,19 +77,19 @@ public class XYsupport {
                 return XY.RIGHT;
             }
         } else {
-            if (oldX < 0) {
-                if (oldY < 0)
-                    return XY.LEFT_DOWN;
-                else {
-                    return XY.LEFT_UP;
-                }
-            } else {
-                if (oldY < 0)
-                    return XY.RIGHT_DOWN;
-                else {
-                    return XY.RIGHT_UP;
-                }
+            if (oldX < 0)
+                newX = Math.round(-1 * (Math.abs(oldX / oldY)));
+            else {
+                newX = Math.round(Math.abs(oldX / oldY));
+            }
+
+            if (oldY < 0)
+                newY = Math.round(-1 * (Math.abs(oldY / oldX)));
+            else {
+                newY = Math.round(Math.abs(oldY / oldX));
             }
         }
+        return new XY(newX, newY);
     }
 }
+
