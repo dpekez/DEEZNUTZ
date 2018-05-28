@@ -18,23 +18,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         this.controller = factory.createMasterBotController();
     }
 
-    @Override
-    public void nextStep(EntityContext context) {
-        super.nextStep(context);
-        ControllerContextImpl view = new ControllerContextImpl(context, this);
-        DebugHandler handler = new DebugHandler(view);
-        ControllerContext proxyView = (ControllerContext) Proxy.newProxyInstance(
-                ControllerContext.class.getClassLoader(),
-                new Class[]{ControllerContext.class},
-                handler);
-
-        if (isStunned())
-            return;
-        controller.nextStep(proxyView);
-    }
-
     public class ControllerContextImpl implements ControllerContext {
-
         private EntityContext context;
         private MasterSquirrel masterSquirrel;
         final int viewDistanceMasterBot = 15;
@@ -130,4 +114,20 @@ public class MasterSquirrelBot extends MasterSquirrel {
             return 0;
         }
     }
+
+    @Override
+    public void nextStep(EntityContext context) {
+        super.nextStep(context);
+        ControllerContextImpl view = new ControllerContextImpl(context, this);
+        DebugHandler handler = new DebugHandler(view);
+        ControllerContext proxyView = (ControllerContext) Proxy.newProxyInstance(
+                ControllerContext.class.getClassLoader(),
+                new Class[]{ControllerContext.class},
+                handler);
+
+        if (isStunned())
+            return;
+        controller.nextStep(proxyView);
+    }
+
 }
