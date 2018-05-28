@@ -282,4 +282,10 @@ public class FlattenedBoard implements BoardView, EntityContext {
     public Entity getEntiy(XY xy) {
         return null;
     }
+
+    @Override
+    public void insertEntity(Entity entity) {
+        board.insert(entity);
+    }
+
 }

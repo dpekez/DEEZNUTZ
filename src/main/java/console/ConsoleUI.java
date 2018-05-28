@@ -63,6 +63,11 @@ public class ConsoleUI implements UI {
         Object[] params = command.getParameters();
         GameCommandType commandType = (GameCommandType) command.getCommandType();
         try {
+            // The class keyword can also be used in the form
+            // Class.class to get a Class object without needing
+            // an instance of that class. For example, String.class
+            // can be used instead of doing new String().getClass().
+            // ConsoleUI.class.getMethod(commandType.getName(), commandType.getParamTypes()).invoke(this, params);
             this.getClass().getMethod(commandType.getName(), commandType.getParamTypes()).invoke(this, params);
 
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

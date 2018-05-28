@@ -32,7 +32,7 @@ public class KiMasterBot {
         board.insert(wallOne);
         board.insert(masterSquirrelBot);
 
-        controllerContext = new MasterSquirrelBot.ControllerContextImpl(board.flatten(), masterSquirrelBot);
+        controllerContext = masterSquirrelBot.new ControllerContextImpl(board.flatten(), masterSquirrelBot);
     }
 
     @Test

@@ -1,8 +1,7 @@
 import core.XY;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class XYTest {
     private final XY test1 = new XY(10, 10);
@@ -29,14 +28,14 @@ public class XYTest {
 
     @Test
     public void distanceFrom() {
-        assertEquals(Math.sqrt(26), testDistanceFrom2.distanceFrom(testDistanceFrom1));
-        assertEquals(0.0, testDistanceFrom1.distanceFrom(testDistanceFrom1));
+        assertEquals(Math.sqrt(26), testDistanceFrom2.distanceFrom(testDistanceFrom1), 0.0);
+        assertEquals(0.0, testDistanceFrom1.distanceFrom(testDistanceFrom1), 0.0);
     }
 
     @Test
     public void equals() {
         assertEquals(test1, new XY(10, 10));
-        assertFalse(test1.equals(new XY(15, 10)));
+        assertNotEquals(test1, new XY(15, 10));
 
     }
 }

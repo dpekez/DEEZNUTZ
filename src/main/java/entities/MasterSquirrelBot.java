@@ -33,7 +33,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         controller.nextStep(proxyView);
     }
 
-    public static class ControllerContextImpl implements ControllerContext {
+    public class ControllerContextImpl implements ControllerContext {
 
         private EntityContext context;
         private MasterSquirrel masterSquirrel;
@@ -99,7 +99,11 @@ public class MasterSquirrelBot extends MasterSquirrel {
                 if (energy >= masterSquirrel.getEnergy()) {
                     throw new SpawnException("Nicht genug Energie");
                 } else {
-//TODO spawnMethode oder so
+
+                    MiniSquirrelBot mini = new MiniSquirrelBot(energy, getLocation(), masterSquirrel);
+
+                    context.insertEntity(mini);
+
                 }
             } catch (SpawnException e) {
                 logger.log(Level.WARNING, e.getMessage());

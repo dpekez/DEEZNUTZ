@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class MasterBotBrain implements BotController {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private int energyToReachForSpawn = 3000;
+    private int energyToReachForSpawn = 200;
     private XY lastPosition = XY.ZERO_ZERO;
 
     @Override

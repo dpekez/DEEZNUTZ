@@ -28,4 +28,6 @@ public interface EntityContext {
 
     int getPlayerViewDistance();
 
+    void insertEntity(Entity entity);
+
 }

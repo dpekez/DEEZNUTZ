@@ -20,7 +20,6 @@ public class Launcher extends Application {
 
     private static void startGameMultiThreaded(Game game) throws ScanException {
         logger.log(Level.INFO, "Start Game MultiThreaded");
-        System.out.println("multi");
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -57,7 +56,6 @@ public class Launcher extends Application {
 
     private static void startGameSingleThreaded(Game game) throws ScanException {
         logger.log(Level.INFO, "Start Game SingleThreaded");
-        System.out.println("single");
         game.run();
     }
 
@@ -103,7 +101,7 @@ public class Launcher extends Application {
         BoardConfig boardConfig = new BoardConfig();
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
         final Game game = new GameImpl(true);
-        BackgroundMusic.backgroundMusic.loop();
+        //BackgroundMusic.backgroundMusic.loop();
         game.setUi(fxUI);
         fxUI.setGameImpl((GameImpl) game);
         primaryStage.setScene(fxUI);

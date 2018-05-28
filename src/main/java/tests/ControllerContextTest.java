@@ -37,7 +37,8 @@ public class ControllerContextTest {
 
     @Test
     public void locate() {
-        viewMaster = new MasterSquirrelBot.ControllerContextImpl(context, masterBot);
+        viewMaster = masterBot.new ControllerContextImpl(context, masterBot);
+
         assertEquals(spawnPositionMasterBot, viewMaster.locate());
     }
 
