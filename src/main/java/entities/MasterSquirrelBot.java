@@ -66,7 +66,6 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public EntityType getEntityAt(XY xy) throws OutOfViewException {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-                logger.log(Level.WARNING, "Kein Entity in Sichtweite (MasterBot)");
                 throw new OutOfViewException("Kein Entity in Sichtweite (MasterBot)");
             }
             return context.getEntityType(xy);
@@ -76,7 +75,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public boolean isMine(XY xy) throws OutOfViewException {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-                logger.log(Level.WARNING, "Kein Entity in Sichtweite (master)");
+                logger.log(Level.FINER, "Kein Entity in Sichtweite (master)");
                 throw new OutOfViewException("Kein entity in Sichtweite (master)");
             }
             try {

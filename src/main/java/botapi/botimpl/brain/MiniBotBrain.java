@@ -12,6 +12,21 @@ public class MiniBotBrain implements BotController {
     public void nextStep(ControllerContext view) {
         XY maxSize = view.getViewUpperRight();
         int impactRadius = 5;
+        boolean shouldImplode = implodeCondition(view, impactRadius);
+
+        if (shouldImplode)
+            view.implode(impactRadius);
+
+        XY move = BotBrain.moveToNearestGoodEntity(view, maxSize);
+        if (view.getEnergy() < 4000) {
+            view.move(move);
+        } else {
+            move = view.directionOfMaster();
+            view.move(move);
+        }
+    }
+
+    private boolean implodeCondition(ControllerContext view, int impactRadius) {
         int counterToImplode = 0;
         boolean shouldImpode = false;
 
@@ -41,18 +56,8 @@ public class MiniBotBrain implements BotController {
                 }
             }
         }
-        if (counterToImplode > 3)
+        if (counterToImplode >= 3)
             shouldImpode = true;
-
-        if (shouldImpode)
-            view.implode(impactRadius);
-
-        XY move = BotBrain.moveToNearestGoodEntity(view, maxSize);
-
-        if (view.getEnergy() > 4000) {
-            move = view.directionOfMaster();
-            view.move(move);
-        }
-        view.move(move);
+        return shouldImpode;
     }
 }

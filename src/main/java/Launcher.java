@@ -37,12 +37,12 @@ public class Launcher extends Application {
 
     public static void main(String[] args) throws Exception {
         Handler handler = (new FileHandler("Log.txt"));
-        logger.setLevel(Level.FINER);
+        logger.setLevel(Level.ALL);
         SimpleFormatter simpleFormatter = new SimpleFormatter();
         handler.setFormatter(simpleFormatter);
 
         //Set Log.txt level
-        handler.setLevel(Level.ALL);
+        handler.setLevel(Level.INFO);
         logger.addHandler(handler);
 
         if (args.length >= 1)
