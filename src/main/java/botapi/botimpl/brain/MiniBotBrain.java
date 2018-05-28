@@ -2,23 +2,57 @@ package botapi.botimpl.brain;
 
 import botapi.BotController;
 import botapi.ControllerContext;
+import botapi.OutOfViewException;
+import core.EntityType;
 import core.XY;
 
 public class MiniBotBrain implements BotController {
-    private XY lastposition = XY.ZERO_ZERO;
 
     @Override
     public void nextStep(ControllerContext view) {
         XY maxSize = view.getViewUpperRight();
-        XY move;
+        int impactRadius = 5;
+        int counterToImplode = 0;
+        boolean shouldImpode = false;
+
+        for (int i = 0; i < impactRadius; i++) {
+            for (int j = 0; j < impactRadius; j++) {
+                try {
+                    int x = view.locate().getX() + i;
+                    int y = view.locate().getY() + j;
+
+                    // Begrenzung setzen
+                    if (x > view.getViewUpperRight().getX())
+                        x = view.getViewUpperRight().getX();
+                    else if (x < view.getViewLowerLeft().getX())
+                        x = view.getViewLowerLeft().getX();
+
+                    if (y < view.getViewUpperRight().getY())
+                        y = view.getViewUpperRight().getY();
+                    else if (y > view.getViewLowerLeft().getY())
+                        y = view.getViewLowerLeft().getY();
+
+                    EntityType checkEntity = view.getEntityAt(view.locate().addVector(new XY(x, y)));
+                    if (checkEntity == EntityType.GOOD_BEAST || checkEntity == EntityType.GOOD_PLANT) {
+                        counterToImplode++;
+                    }
+                } catch (OutOfViewException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (counterToImplode > 3)
+            shouldImpode = true;
+
+        if (shouldImpode)
+            view.implode(impactRadius);
+
+        XY move = BotBrain.moveToNearestGoodEntity(view, maxSize);
 
         if (view.getEnergy() > 4000) {
             move = view.directionOfMaster();
-            lastposition = view.locate().addVector(move);
             view.move(move);
         }
-        move = BotBrain.moveToNearestGoodEntity(view, lastposition);
-        lastposition = view.locate().addVector(move);
         view.move(move);
     }
 }

@@ -60,8 +60,8 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public boolean isMine(XY xy) throws OutOfViewException {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-                logger.log(Level.WARNING, "Kein Entity in Sichtweite");
-                throw new OutOfViewException("Kein entity in Sichtweite");
+                logger.log(Level.WARNING, "Kein Entity in Sichtweite (master)");
+                throw new OutOfViewException("Kein entity in Sichtweite (master)");
             }
             try {
                 if (masterSquirrel.isMyChild((MiniSquirrel) context.getEntiy(xy)))
