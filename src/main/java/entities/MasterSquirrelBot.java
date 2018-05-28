@@ -4,8 +4,11 @@ import botapi.*;
 import core.*;
 
 import java.lang.reflect.Proxy;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MasterSquirrelBot extends MasterSquirrel {
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private final BotController controller;
 
@@ -62,16 +65,20 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public EntityType getEntityAt(XY xy) throws OutOfViewException {
-            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
-                throw new OutOfViewException("Kein Entity in Sichtweite");
+            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
+                logger.log(Level.WARNING, "Kein Entity in Sichtweite (MasterBot)");
+                throw new OutOfViewException("Kein Entity in Sichtweite (MasterBot)");
+            }
             return context.getEntityType(xy);
 
         }
 
         @Override
         public boolean isMine(XY xy) throws OutOfViewException {
-            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
+            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
+                logger.log(Level.WARNING, "Kein Entity in Sichtweite");
                 throw new OutOfViewException("Kein entity in Sichtweite");
+            }
             try {
                 if (masterSquirrel.isMyChild((MiniSquirrel) context.getEntiy(xy)))
                     return true;
@@ -88,17 +95,17 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public void spawnMiniBot(XY direction, int energy) {
-
-            if (energy >= masterSquirrel.getEnergy()) {
-                try {
+            try {
+                if (energy >= masterSquirrel.getEnergy()) {
                     throw new SpawnException("Nicht genug Energie");
-                } catch (SpawnException e) {
-                    e.printStackTrace();
+                } else {
+//TODO spawnMethode oder so
                 }
-            } else {
-                //TODO spawn MiniSquirrelBot
+            } catch (SpawnException e) {
+                logger.log(Level.WARNING, e.getMessage());
             }
         }
+
 
         @Override
         public void implode(int impactRadius) {

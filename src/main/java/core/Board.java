@@ -78,7 +78,7 @@ public class Board {
         return entitySet.getEntitySetArray();
     }
 
-    public BoardConfig getConfig() {
+    BoardConfig getConfig() {
         return boardConfig;
     }
 
@@ -114,7 +114,7 @@ public class Board {
         XY location = masterSquirrel.getLocation().addVector(direction);
         if (masterSquirrel.getEnergy() >= energy) {
             masterSquirrel.updateEnergy(-energy);
-            insert(new MiniSquirrel(energy, location, daddy));
+            insert(new MiniSquirrelBot(energy, location, daddy));
         }
     }
 

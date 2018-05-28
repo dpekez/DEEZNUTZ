@@ -15,7 +15,6 @@ import java.util.logging.*;
 
 public class Launcher extends Application {
     private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final Level logLevel = Level.INFO;
     private static Launcher launcher = new Launcher();
     private Scanner scanner = new Scanner(System.in);
 
@@ -40,10 +39,12 @@ public class Launcher extends Application {
 
     public static void main(String[] args) throws Exception {
         Handler handler = (new FileHandler("Log.txt"));
-        logger.setLevel(logLevel);
+        logger.setLevel(Level.ALL);
         SimpleFormatter simpleFormatter = new SimpleFormatter();
         handler.setFormatter(simpleFormatter);
-        handler.setLevel(Level.WARNING);
+
+        //Set Log.txt level
+        handler.setLevel(Level.SEVERE);
         logger.addHandler(handler);
 
         if (args.length >= 1)

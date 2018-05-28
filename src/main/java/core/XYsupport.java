@@ -71,9 +71,9 @@ public class XYsupport {
             }
         } else if (oldY == 0) {
             if (oldX < 0) {
-                return XY.RIGHT;
-            } else {
                 return XY.LEFT;
+            } else {
+                return XY.RIGHT;
             }
         } else {
             if (oldX < 0) {

@@ -21,21 +21,28 @@ public class BotBrain {
         XY nearestGP = BotBrain.nearestEntity(context, EntityType.GOOD_PLANT);
         XY nearestWW = BotBrain.nearestEntity(context, EntityType.WALL);
 
-        XY nearestPositive;
-        if (nearestGB.distanceFrom(context.locate()) < nearestGP.distanceFrom(context.locate()))
-            nearestPositive = nearestGB;
-        else nearestPositive = nearestGP;
+        XY nearestPositive = XY.ZERO_ZERO;
+        if (nearestGP != null && nearestGB != null) {
+            if (nearestGB.distanceFrom(context.locate()) < nearestGP.distanceFrom(context.locate()))
+                nearestPositive = nearestGB;
+            else nearestPositive = nearestGP;
+        }
 
-        if (context.locate().distanceFrom(nearestBB) < 4) {
+        if (context.locate().distanceFrom(nearestBB) < 3) {
             if ((context.locate().distanceFrom(nearestPositive) > context.locate().distanceFrom(nearestBB))) {
-                moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestBB));
+                moveDirection = XYsupport.assignMoveVector(nearestBB.reduceVector(context.locate()));
             }
         } else if ((context.locate().distanceFrom(nearestPositive)) < 16) {
             moveDirection = XYsupport.assignMoveVector(context.locate().reduceVector(nearestPositive));
         } else if ((context.locate().distanceFrom(nearestBP)) < 2) {
-            moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestBP));
+            moveDirection = XYsupport.assignMoveVector(nearestBP.reduceVector(context.locate()));
         } else if ((context.locate().distanceFrom(nearestWW)) < 2) {
-            moveDirection = XYsupport.assignMoveVector(context.locate().addVector(nearestWW));
+            moveDirection = XYsupport.assignMoveVector(nearestWW.reduceVector(context.locate()));
+        } else {
+            if (!context.locate().equals(new XY(maxSize.getX(), maxSize.getY()))) {
+                moveDirection = XYsupport.assignMoveVector(new XY(maxSize.getX() / 2, maxSize.getY() / 2).reduceVector(context.locate()));
+            }
+
         }
         return moveDirection;
     }
@@ -64,5 +71,20 @@ public class BotBrain {
             logger.log(Level.WARNING, "Kein Entity im Reichweite (nearesEntity)");
         }
         return null;
+    }
+
+    static boolean checkSpawnField(ControllerContext context, XY location) {
+        try {
+            EntityType entityType = context.getEntityAt(location);
+            switch (entityType) {
+                case NOTHING:
+                    return true;
+                default:
+                    return false;
+            }
+        } catch (OutOfViewException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

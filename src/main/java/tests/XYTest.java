@@ -7,7 +7,7 @@ import static org.junit.Assert.assertFalse;
 public class XYTest {
     private final XY test1 = new XY(10, 10);
     private final XY test2 = new XY(20, 25);
-    private final XY testDistanceFrom1 = new XY(15, 15);
+    private final XY testDistanceFrom1 = new XY(1, 2);
     private final XY testDistanceFrom2 = new XY(6, 3);
 
 
@@ -29,7 +29,7 @@ public class XYTest {
 
     @Test
     public void distanceFrom() {
-        assertEquals(15.0, testDistanceFrom1.distanceFrom(testDistanceFrom2));
+        assertEquals(Math.sqrt(26), testDistanceFrom2.distanceFrom(testDistanceFrom1));
         assertEquals(0.0, testDistanceFrom1.distanceFrom(testDistanceFrom1));
     }
 
