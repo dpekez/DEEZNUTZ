@@ -200,5 +200,11 @@ public class ConsoleUI implements UI {
             }
             outputStream.println();
         }
+        outputStream.println(message());
     }
+
+    private Object message() {
+        return state.getBoard().getMasterSquirrel();
+    }
+
 }
