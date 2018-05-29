@@ -18,7 +18,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class FxUI extends Scene implements UI {
+    private static Logger logger = Logger.getLogger(FxUI.class.getName());
 
     private static final double CELL_SIZE = 15;
     private static MoveCommand command;
@@ -65,18 +69,23 @@ public class FxUI extends Scene implements UI {
                     command = new MoveCommand(XY.LEFT);
                     break;
                 case M:
-                    int energy = 100;
-                    int x = 1;
-                    int y = 0;
+                    try {
+                        int energy = 100;
+                        int x = 1;
+                        int y = 0;
 
-                    MasterSquirrel daddy = fxUI.gameImpl.getState().getBoard().getMasterSquirrel();
-                    XY direction = new XY(x, y);
+                        MasterSquirrel daddy = fxUI.gameImpl.getState().getBoard().getMasterSquirrel();
+                        XY direction = new XY(x, y);
 
-                    if (fxUI.gameImpl.getState().getBoard().getMasterSquirrel().getEnergy() >= energy) {
-                        fxUI.gameImpl.getState().getBoard().insertMiniSquirrel(energy, direction, daddy);
-                    } else {
-                        throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.gameImpl.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+                        if (fxUI.gameImpl.getState().getBoard().getMasterSquirrel().getEnergy() >= energy) {
+                            fxUI.gameImpl.getState().getBoard().insertMiniSquirrel(energy, direction, daddy);
+                        } else {
+                            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.gameImpl.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+                        }
+                    } catch (NotEnoughEnergyException e) {
+                        logger.log(Level.WARNING, e.getMessage());
                     }
+
                     break;
                 case Q:
                 case ESCAPE:

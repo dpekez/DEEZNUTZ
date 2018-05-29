@@ -10,14 +10,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MasterBotBrain implements BotController {
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final static Logger logger = Logger.getLogger(MasterBotBrain.class.getName());
 
-    private int energyToReachForSpawn = 200;
+    private int energyToReachForSpawn = 400;
 
     @Override
     public void nextStep(ControllerContext view) {
-        XY maxSize = view.getViewUpperRight();
-        XY move = BotBrain.moveToNearestGoodEntity(view, maxSize);
+        XY move = BotBrain.moveToNearestGoodEntity(view);
         try {
             if (view.getEnergy() < energyToReachForSpawn) {
                 view.move(move);
@@ -29,7 +28,7 @@ public class MasterBotBrain implements BotController {
                 }
             }
         } catch (SpawnException e) {
-            logger.log(Level.WARNING, "Nicht genug Energy");
+            logger.log(Level.WARNING, "Unable zo spawn");
         }
     }
 }

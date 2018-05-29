@@ -5,7 +5,6 @@ import botapi.BotControllerFactory;
 import botapi.botimpl.brain.MasterBotBrain;
 import botapi.botimpl.brain.MiniBotBrain;
 
-
 public class BrainFactory implements BotControllerFactory {
     @Override
     public BotController createMiniBotController() {
@@ -18,5 +17,3 @@ public class BrainFactory implements BotControllerFactory {
     }
 
 }
-
-

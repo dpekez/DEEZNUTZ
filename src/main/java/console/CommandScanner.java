@@ -2,9 +2,12 @@ package console;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 class CommandScanner {
+    private static Logger logger = Logger.getLogger(CommandScanner.class.getName());
 
     private CommandTypeInfo[] commandTypeInfos;
     private BufferedReader inputReader;
@@ -14,17 +17,23 @@ class CommandScanner {
         this.inputReader = inputReader;
     }
 
-    public Command next() {
+    Command next() {
 
         // get user input
-        String userInput;
+        String userInput = null;
         try {
             userInput = inputReader.readLine();
+            logger.log(Level.FINEST, "Input : " + userInput);
         } catch (IOException e) {
-            throw new ScanException("input reader error");
+            try {
+                throw new ScanException("Input reader ERROR");
+            } catch (ScanException ex) {
+                logger.log(Level.WARNING, ex.getMessage());
+            }
         }
 
         // clean and split user input
+        assert userInput != null;
         userInput = userInput.trim();
         String[] splittedInput = userInput.split(" ");
 
@@ -40,13 +49,14 @@ class CommandScanner {
 
         // validate parameters
         Object[] parameters = new Object[splittedInput.length - 1];
-        if ((validateParams(command.getParamTypes(), parameters, splittedInput)) && (command.getParamTypes().length == splittedInput.length - 1)) {
-
-        } else
-            throw new ScanException("parameters wrong");
-
+        if (!(validateParams(command.getParamTypes(), parameters, splittedInput)) && (command.getParamTypes().length == splittedInput.length - 1)) {
+            try {
+                throw new ScanException("parameters wrong");
+            } catch (ScanException ex) {
+                logger.log(Level.WARNING, ex.getMessage());
+            }
+        }
         return new Command(command, parameters);
-
     }
 
     private boolean validateParams(Class<?>[] paramTypes, Object[] params, String[] splitCommand) {
@@ -64,5 +74,4 @@ class CommandScanner {
         }
         return true;
     }
-
 }

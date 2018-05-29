@@ -1,21 +1,17 @@
 package core;
 
-
 import botapi.BotControllerFactory;
 import entities.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class Board {
 
-    private XYsupport xYsupport;
     private EntitySet entitySet;
     private BoardConfig boardConfig;
     private HandOperatedMasterSquirrel masterSquirrel;
-    private BotControllerFactory factory;
-    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static Logger logger = Logger.getLogger(Board.class.getName());
 
     public Board(BoardConfig boardConfig) {
 
@@ -54,9 +50,7 @@ public class Board {
         for (int i = 0; i < boardConfig.getGoodPlantQuant(); i++) {
             insert(new GoodPlant(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
-
     }
-
 
     void update(EntityContext context) {
         entitySet.moveEntities(context);
@@ -98,11 +92,10 @@ public class Board {
                 MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
                 insert(masterSquirrelBot);
             } catch (ClassNotFoundException e) {
-                logger.log(Level.WARNING, "factory wurde nicht gefunden");
+                logger.log(Level.SEVERE, "Factory wurde nicht gefunden");
             } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -117,6 +110,5 @@ public class Board {
             insert(new MiniSquirrel(energy, location, daddy));
         }
     }
-
 }
 

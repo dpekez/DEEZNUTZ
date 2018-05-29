@@ -76,20 +76,19 @@ public class XYsupport {
             } else {
                 return XY.RIGHT;
             }
-        } else {
-            if (oldX < 0)
-                newX = Math.round(-1 * (Math.abs(oldX / oldY)));
-            else {
-                newX = Math.round(Math.abs(oldX / oldY));
+        } else if (oldX < 0) {
+            if (oldY < 0) {
+                return XY.LEFT_UP;
+            } else {
+                return XY.LEFT_DOWN;
             }
-
-            if (oldY < 0)
-                newY = Math.round(-1 * (Math.abs(oldY / oldX)));
-            else {
-                newY = Math.round(Math.abs(oldY / oldX));
+        } else {
+            if (oldY < 0) {
+                return XY.RIGHT_UP;
+            } else {
+                return XY.RIGHT_DOWN;
             }
         }
-        return new XY(newX, newY);
     }
 }
 

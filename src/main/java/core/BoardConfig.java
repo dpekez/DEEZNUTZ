@@ -62,6 +62,4 @@ public class BoardConfig {
     int getPlayerEnityViewDistance() {
         return playerEnityViewDistance;
     }
-
-
 }

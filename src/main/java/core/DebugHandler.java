@@ -19,6 +19,9 @@ public class DebugHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         StringBuilder stringBuilder = new StringBuilder();
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+        stringBuilder.append("Methode : ").append(method).append(" , params : ").append(args).append("\n");
+
         Object result = null;
         try {
             result = method.invoke(view, args);
@@ -27,7 +30,7 @@ public class DebugHandler implements InvocationHandler {
         } catch (InvocationTargetException e) {
             throw e.getTargetException();
         } catch (Exception e) {
-
+            logger.log(Level.SEVERE, e.getMessage());
         }
         stringBuilder.append("* result:").append(result);
         logger.log(Level.FINER, stringBuilder.toString());

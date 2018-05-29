@@ -16,10 +16,6 @@ public abstract class Entity {
         this.location = location;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public int getEnergy() {
         return energy;
     }
@@ -44,7 +40,7 @@ public abstract class Entity {
         return "Entity{ " + "id=" + id + ", energy=" + energy + ", location=" + location + '}';
     }
 
-    public EntityType getEntityType() {
+    EntityType getEntityType() {
         if (this instanceof BadBeast)
             return EntityType.BAD_BEAST;
         else if (this instanceof GoodBeast)

@@ -11,9 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BotBrain {
-    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final static Logger logger = Logger.getLogger(BotBrain.class.getName());
 
-    static XY moveToNearestGoodEntity(ControllerContext context, XY maxSize) {
+    static XY moveToNearestGoodEntity(ControllerContext context) {
         XY moveDirection = XY.ZERO_ZERO;
         XY nearestBP = BotBrain.nearestEntity(context, EntityType.BAD_PLANT);
         XY nearestBB = BotBrain.nearestEntity(context, EntityType.BAD_BEAST);
@@ -67,7 +67,7 @@ public class BotBrain {
             }
             return nearestEntity;
         } catch (OutOfViewException e) {
-            logger.log(Level.WARNING, "Kein Entity im Reichweite (nearestEntity)");
+            logger.log(Level.WARNING, "No Entity in the searchVector");
         }
         return null;
     }
@@ -82,7 +82,7 @@ public class BotBrain {
                     return false;
             }
         } catch (OutOfViewException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "No Entity in the searchVector");
         }
         return false;
     }
