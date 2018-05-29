@@ -3,7 +3,11 @@ package core;
 import entities.Character;
 import entities.Entity;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class EntitySet {
+    private static final Logger logger = Logger.getLogger(EntitySet.class.getName());
 
     private Entity[] entities;
     private int h;
@@ -13,14 +17,16 @@ public class EntitySet {
     }
 
     void add(Entity entity) {
+        logger.log(Level.FINEST, "Add entity" + entity);
         if (h < entities.length) {
             entities[h++] = entity;
         } else {
-            System.out.println("EntitySet voll!");
+            logger.log(Level.INFO, "EntitySet is full");
         }
     }
 
     void remove(Entity entity) {
+        logger.log(Level.FINEST, "Remove entity" + entity);
         for (int i = 0; i < entities.length; i++)
             if (entity.equals(entities[i])) {
                 entities[i] = null;

@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 
 class CommandScanner {
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static Logger logger = Logger.getLogger(CommandScanner.class.getName());
 
     private CommandTypeInfo[] commandTypeInfos;
     private BufferedReader inputReader;
@@ -23,9 +23,10 @@ class CommandScanner {
         String userInput = null;
         try {
             userInput = inputReader.readLine();
+            logger.log(Level.FINEST, "Input : " + userInput);
         } catch (IOException e) {
             try {
-                throw new ScanException("input reader error");
+                throw new ScanException("Input reader ERROR");
             } catch (ScanException ex) {
                 logger.log(Level.WARNING, ex.getMessage());
             }

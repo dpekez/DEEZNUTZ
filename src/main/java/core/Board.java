@@ -11,7 +11,7 @@ public class Board {
     private EntitySet entitySet;
     private BoardConfig boardConfig;
     private HandOperatedMasterSquirrel masterSquirrel;
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static Logger logger = Logger.getLogger(Board.class.getName());
 
     public Board(BoardConfig boardConfig) {
 
@@ -51,7 +51,6 @@ public class Board {
             insert(new GoodPlant(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
     }
-
 
     void update(EntityContext context) {
         entitySet.moveEntities(context);
@@ -93,7 +92,7 @@ public class Board {
                 MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
                 insert(masterSquirrelBot);
             } catch (ClassNotFoundException e) {
-                logger.log(Level.WARNING, "Factory wurde nicht gefunden");
+                logger.log(Level.SEVERE, "Factory wurde nicht gefunden");
             } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
             }

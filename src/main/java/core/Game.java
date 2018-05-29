@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public abstract class Game {
 
-    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final static Logger logger = Logger.getLogger(Game.class.getName());
 
     private static final int FPS = 10;
     public UI ui;

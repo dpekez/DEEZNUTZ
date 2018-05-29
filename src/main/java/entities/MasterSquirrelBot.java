@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MasterSquirrelBot extends MasterSquirrel {
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static Logger logger = Logger.getLogger(MasterSquirrelBot.class.getName());
 
     private final BotController controller;
 
@@ -53,7 +53,6 @@ public class MasterSquirrelBot extends MasterSquirrel {
                 throw new OutOfViewException("Kein Entity in Sichtweite (MasterBot)");
             }
             return context.getEntityType(xy);
-
         }
 
         @Override
@@ -82,17 +81,13 @@ public class MasterSquirrelBot extends MasterSquirrel {
                 if (energy >= masterSquirrel.getEnergy()) {
                     throw new SpawnException("Nicht genug Energie");
                 } else {
-
                     MiniSquirrelBot mini = new MiniSquirrelBot(energy, getLocation(), masterSquirrel);
-
                     context.insertEntity(mini);
-
                 }
             } catch (SpawnException e) {
                 logger.log(Level.WARNING, e.getMessage());
             }
         }
-
 
         @Override
         public void implode(int impactRadius) {
@@ -129,5 +124,4 @@ public class MasterSquirrelBot extends MasterSquirrel {
             return;
         controller.nextStep(proxyView);
     }
-
 }

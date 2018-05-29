@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConsoleUI implements UI {
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static Logger logger = Logger.getLogger(ConsoleUI.class.getName());
 
     private State state;
     private PrintStream outputStream;
@@ -80,11 +80,13 @@ public class ConsoleUI implements UI {
 
     @SuppressWarnings("unused")
     public void exit() {
+        logger.log(Level.FINEST, "Exit program");
         System.exit(0);
     }
 
     @SuppressWarnings("unused")
     public void help() {
+        logger.log(Level.FINEST, "Print help to Console");
         for (CommandTypeInfo cmdti : GameCommandType.values()) {
             System.out.println(cmdti.getName() + " " + cmdti.getHelpText());
         }
@@ -92,36 +94,43 @@ public class ConsoleUI implements UI {
 
     @SuppressWarnings("unused")
     public void all() {
+        logger.log(Level.FINEST, "Print all entities and their location");
         System.out.println(state.getBoard().getEntitySet());
     }
 
     @SuppressWarnings("unused")
     public void a() {
+        logger.log(Level.FINEST, "Move left");
         returnCommand = new MoveCommand(XY.LEFT);
     }
 
     @SuppressWarnings("unused")
     public void w() {
+        logger.log(Level.FINEST, "Move up");
         returnCommand = new MoveCommand(XY.UP);
     }
 
     @SuppressWarnings("unused")
     public void d() {
+        logger.log(Level.FINEST, "Move right");
         returnCommand = new MoveCommand(XY.RIGHT);
     }
 
     @SuppressWarnings("unused")
     public void s() {
+        logger.log(Level.FINEST, "Move down");
         returnCommand = new MoveCommand(XY.DOWN);
     }
 
     @SuppressWarnings("unused")
     public void master_energy() {
+        logger.log(Level.FINEST, "Print the MasterSquirrel energy");
         outputStream.print(state.getBoard().getMasterSquirrel().getEnergy());
     }
 
     @SuppressWarnings("unused")
     public void spawn_mini(int energy, int x, int y) {
+        logger.log(Level.FINEST, "Spawn a MiniSquirrel");
         MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
         XY direction = new XY(x, y);
         if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
@@ -133,6 +142,7 @@ public class ConsoleUI implements UI {
 
     @Deprecated
     public void spawnMiniSquirrel(Object[] parameters) {
+        logger.log(Level.FINEST, "Spawn a MiniSquirrel");
         try {
             int energy = (Integer) parameters[0];
             XY direction = new XY((Integer) parameters[1], (Integer) parameters[2]);

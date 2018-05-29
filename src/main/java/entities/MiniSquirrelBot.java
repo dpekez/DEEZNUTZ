@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MiniSquirrelBot extends MiniSquirrel {
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static Logger logger = Logger.getLogger(MiniSquirrelBot.class.getName());
 
     private final BotController controller;
 
@@ -66,8 +66,8 @@ public class MiniSquirrelBot extends MiniSquirrel {
         @Override
         public EntityType getEntityAt(XY xy) throws OutOfViewException {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-                logger.log(Level.FINER, "Kein Entity in Sichtweite (MiniBot)");
-                throw new OutOfViewException("Kein Entity in Sichtweite (MiniBot)");
+                logger.log(Level.FINER, "No Entity in the searchVector");
+                throw new OutOfViewException("No Entity in the searchVector");
             }
             return context.getEntityType(xy);
         }
@@ -75,7 +75,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         @Override
         public boolean isMine(XY xy) throws OutOfViewException {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
-                throw new OutOfViewException("Daddy nicht in Sichtweite");
+                throw new OutOfViewException("Daddy not reachable");
             try {
                 return context.getEntityType(xy).equals(miniSquirrel.getDaddy());
             } catch (Exception e) {

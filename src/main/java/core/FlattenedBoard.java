@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FlattenedBoard implements BoardView, EntityContext {
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static Logger logger = Logger.getLogger(FlattenedBoard.class.getName());
 
     private Board board;
     private Entity[][] cells;
@@ -264,7 +264,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
     @Override
     public void killAndReplace(Entity entity) {
-        logger.log(Level.FINE, "Entfernt und ersetzt ", entity);
+        logger.log(Level.FINE, "Remove and replace " + entity);
         board.remove(entity);
         if (entity instanceof BadBeast)
             board.insert(new BadBeast(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));

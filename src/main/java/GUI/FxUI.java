@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FxUI extends Scene implements UI {
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static Logger logger = Logger.getLogger(FxUI.class.getName());
 
     private static final double CELL_SIZE = 15;
     private static MoveCommand command;
