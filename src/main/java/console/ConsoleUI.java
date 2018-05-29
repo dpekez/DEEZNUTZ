@@ -185,6 +185,12 @@ public class ConsoleUI implements UI {
                     case WALL:
                         c = '#';
                         break;
+                    case MASTER_SQUIRREL_BOT:
+                        c = 'X';
+                        break;
+                    case MINI_SQUIRREL_BOT:
+                        c = 'x';
+                        break;
                     case NOTHING:
                     default:
                         c = ' ';
