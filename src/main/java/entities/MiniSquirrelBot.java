@@ -14,7 +14,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
     private final BotController controller;
 
-    public MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy) {
+    MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy) {
         super(energy, location, daddy);
         this.controller = daddy.getFactory().createMiniBotController();
     }

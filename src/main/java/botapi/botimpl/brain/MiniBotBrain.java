@@ -10,14 +10,13 @@ public class MiniBotBrain implements BotController {
 
     @Override
     public void nextStep(ControllerContext view) {
-        XY maxSize = view.getViewUpperRight();
-        int impactRadius = 5;
+        int impactRadius = 6;
         boolean shouldImplode = implodeCondition(view, impactRadius);
 
         if (shouldImplode)
             view.implode(impactRadius);
 
-        XY move = BotBrain.moveToNearestGoodEntity(view, maxSize);
+        XY move = BotBrain.moveToNearestGoodEntity(view);
         if (view.getEnergy() < 4000) {
             view.move(move);
         } else {

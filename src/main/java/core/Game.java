@@ -23,9 +23,9 @@ public abstract class Game {
     public void run() throws ScanException {
 
         while (true) {
-            logger.log(Level.FINER, "start render()");
+            logger.log(Level.FINEST, "start render()");
             render();
-            logger.log(Level.FINER, "start processInput()");
+            logger.log(Level.FINEST, "start processInput()");
             processInput();
             if (threaded) {
                 try {
@@ -34,7 +34,7 @@ public abstract class Game {
                     e.printStackTrace();
                 }
             }
-            logger.log(Level.FINER, "start update()");
+            logger.log(Level.FINEST, "start update()");
             update();
         }
     }

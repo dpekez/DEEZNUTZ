@@ -3,11 +3,9 @@ package core;
 import console.ConsoleUI;
 import console.ScanException;
 import entities.HandOperatedMasterSquirrel;
-import entities.MasterSquirrelBot;
 
 public class GameImpl extends Game {
     private HandOperatedMasterSquirrel masterSquirrel;
-    private MasterSquirrelBot masterSquirrelBot;
 
     public GameImpl(boolean threaded) {
         super(new State(), threaded);

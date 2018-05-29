@@ -13,7 +13,19 @@ import java.util.logging.*;
 
 
 public class Launcher extends Application {
-    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    //Logger Level:
+    //FINEST : detailliertere Ausgabe als FINER (zum Beispiel Start und Ende einer Methode)
+    //FINER  : detailliertere Ausgabe als FINE
+    //FINE   : Ausgabe von wichtigen Schritten im Programmfluss
+    //CONFIG : Ausgabe von Information über eine Konfiguration (Welche BotFactory wurde gewählt)
+    //INFO   : Wichtige Information ( Start game, Quit game ...)
+    //WARNING: es ist ein Fehler aufgetreten (gecatchte Fehler)
+    //SEVERE : kritischer Fehler, der dazu führt, dass das Programm nicht ordnungsgemäß fortgesetzt werden kann, eventuell Programmabbruch
+    //ALL    : Alle Obengenante level werden in einer Date gespeichert oder ausgegeben.
+    //OFF    : es wird nichts geloggt
+
+    //TODO kein Logger.GLOBAL_LOGGER_NAME sondern eher this.class.getName
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static Launcher launcher = new Launcher();
     private Scanner scanner = new Scanner(System.in);
 
@@ -40,7 +52,6 @@ public class Launcher extends Application {
         logger.setLevel(Level.ALL);
         SimpleFormatter simpleFormatter = new SimpleFormatter();
         handler.setFormatter(simpleFormatter);
-
         //Set Log.txt level
         handler.setLevel(Level.INFO);
         logger.addHandler(handler);
@@ -63,7 +74,7 @@ public class Launcher extends Application {
         switch (scanner.nextInt()) {
             case 1:
                 logger.log(Level.INFO, "Game type: Console");
-                launcher.gameMode(args);
+                launcher.gameMode();
                 break;
             case 2:
                 logger.log(Level.INFO, "Game type: in Gui");
@@ -74,7 +85,7 @@ public class Launcher extends Application {
         }
     }
 
-    private void gameMode(String[] args) {
+    private void gameMode() {
         System.out.println("Wählen sie zwischen den Spielmodi: [1] Multithreaded [2] Siglethreaded [3] Verlassen ");
         switch (scanner.nextInt()) {
             case 1:

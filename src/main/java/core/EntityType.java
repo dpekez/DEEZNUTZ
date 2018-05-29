@@ -7,7 +7,6 @@ public enum EntityType {
     BAD_BEAST, GOOD_BEAST, BAD_PLANT, GOOD_PLANT, MASTER_SQUIRREL, MINI_SQUIRREL, WALL, NOTHING, MINI_SQUIRREL_BOT, MASTER_SQUIRREL_BOT;
 
     public static EntityType getType(Entity entity) {
-
         if (entity instanceof BadBeast)
             return EntityType.BAD_BEAST;
         else if (entity instanceof GoodBeast)

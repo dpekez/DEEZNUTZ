@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class BotBrain {
     private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    static XY moveToNearestGoodEntity(ControllerContext context, XY maxSize) {
+    static XY moveToNearestGoodEntity(ControllerContext context) {
         XY moveDirection = XY.ZERO_ZERO;
         XY nearestBP = BotBrain.nearestEntity(context, EntityType.BAD_PLANT);
         XY nearestBB = BotBrain.nearestEntity(context, EntityType.BAD_BEAST);

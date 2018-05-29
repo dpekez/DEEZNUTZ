@@ -10,8 +10,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConsoleUI implements UI {
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private State state;
     private PrintStream outputStream;
@@ -130,13 +133,18 @@ public class ConsoleUI implements UI {
 
     @Deprecated
     public void spawnMiniSquirrel(Object[] parameters) {
-        int energy = (Integer) parameters[0];
-        XY direction = new XY((Integer) parameters[1], (Integer) parameters[2]);
-        MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
-        if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
-            state.getBoard().insertMiniSquirrel(energy, direction, daddy);
-        } else {
-            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+        try {
+            int energy = (Integer) parameters[0];
+            XY direction = new XY((Integer) parameters[1], (Integer) parameters[2]);
+            MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
+            if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
+                state.getBoard().insertMiniSquirrel(energy, direction, daddy);
+            } else {
+                throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+            }
+        } catch (NotEnoughEnergyException e) {
+            e.getMessage();
+            logger.log(Level.WARNING, e.getMessage());
         }
     }
 
@@ -177,5 +185,4 @@ public class ConsoleUI implements UI {
             outputStream.println();
         }
     }
-
 }

@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FlattenedBoard implements BoardView, EntityContext {
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private Board board;
     private Entity[][] cells;
@@ -84,7 +85,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
             case BAD_PLANT:
                 miniSquirrel.updateEnergy(nextEntity.getEnergy());
                 killAndReplace(nextEntity);
-
                 if (miniSquirrel.getEnergy() <= 0)
                     kill(miniSquirrel);
                 break;
@@ -264,10 +264,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
     @Override
     public void killAndReplace(Entity entity) {
-        Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-        logger.log(Level.FINER, "remove Entity", entity);
+        logger.log(Level.FINE, "Entfernt und ersetzt ", entity);
         board.remove(entity);
-
         if (entity instanceof BadBeast)
             board.insert(new BadBeast(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
         else if (entity instanceof GoodBeast)
@@ -287,5 +285,4 @@ public class FlattenedBoard implements BoardView, EntityContext {
     public void insertEntity(Entity entity) {
         board.insert(entity);
     }
-
 }
