@@ -13,6 +13,7 @@ import java.util.TimerTask;
 import java.util.logging.*;
 
 public class Launcher extends Application {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
     //Logger Level:
     //OFF    : nothing will be logged
     //SEVERE : kritischer Fehler, der dazu führt, dass das Programm nicht ordnungsgemäß fortgesetzt werden kann, eventuell Programmabbruch
@@ -24,9 +25,10 @@ public class Launcher extends Application {
     //FINEST : detailliertere Ausgabe als FINER (zum Beispiel Start und Ende einer Methode)
     //ALL    : Alle Obengenante level werden in einer Date gespeichert oder ausgegeben.
 
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
     private static Launcher launcher = new Launcher();
+    private static BoardConfig boardConfig = new BoardConfig();
     private Scanner scanner = new Scanner(System.in);
+
 
     public static void main(String[] args) throws Exception {
         LogManager.getLogManager().reset();
@@ -51,11 +53,11 @@ public class Launcher extends Application {
         switch (scanner.nextInt()) {
             case 1:
                 logger.log(Level.INFO, "Game Type: Multithreaded Console");
-                startGameMultiThreaded(new GameImpl(true));
+                startGameMultiThreaded(new GameImpl(true, boardConfig));
                 break;
             case 2:
                 logger.log(Level.INFO, "Game Type: Singlethreaded Console");
-                startGameSingleThreaded(new GameImpl(false));
+                startGameSingleThreaded(new GameImpl(false, boardConfig));
                 break;
             case 3:
                 logger.log(Level.INFO, "Game Type: GUI");
@@ -96,9 +98,8 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) throws ScanException {
         logger.log(Level.INFO, "Start GUI Game");
 
-        BoardConfig boardConfig = new BoardConfig();
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
-        final Game game = new GameImpl(true);
+        final Game game = new GameImpl(true, boardConfig);
         //BackgroundMusic.backgroundMusic.loop();
         game.setUi(fxUI);
         fxUI.setGameImpl((GameImpl) game);

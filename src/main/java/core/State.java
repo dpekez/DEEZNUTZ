@@ -10,8 +10,8 @@ public class State {
     private int highScore;
     private Board board;
 
-    State() {
-        board = new Board(new BoardConfig());
+    State(BoardConfig boardConfig) {
+        board = new Board(boardConfig);
         update();
     }
 
