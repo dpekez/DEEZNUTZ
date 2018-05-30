@@ -6,17 +6,21 @@ import entities.MasterSquirrelBot;
 public class GameImplBotOnly extends Game {
     private MasterSquirrelBot mainMasterSquirrelBot;
     private MasterSquirrelBot secondaryMasterSquirrelBot;
+    private String mainMasterSquirrelBotInfo;
+    private String secondaryMasterSquirrelBotInfo;
 
     public GameImplBotOnly(boolean threaded, BoardConfig boardConfig) {
         super(new State(boardConfig));
         super.threaded = threaded;
         ui = new ConsoleUI(state, threaded);
 
-        // create and insert bot
+        // create and insert bots
         mainMasterSquirrelBot = state.getBoard().createBot(boardConfig.getMainBotPath());
         secondaryMasterSquirrelBot = state.getBoard().createBot(boardConfig.getSecondaryBotPath());
         state.getBoard().insert(mainMasterSquirrelBot);
         state.getBoard().insert(secondaryMasterSquirrelBot);
+        mainMasterSquirrelBotInfo = boardConfig.getMainBotPath();
+        secondaryMasterSquirrelBotInfo = boardConfig.getSecondaryBotPath();
     }
 
     @Override
@@ -31,8 +35,8 @@ public class GameImplBotOnly extends Game {
 
     @Override
     public String message() {
-        return "Bot 1 Energy: " + mainMasterSquirrelBot.getEnergy() +
-               " Bot 2 Energy: " + secondaryMasterSquirrelBot.getEnergy();
+        return mainMasterSquirrelBotInfo + " Energy: " + mainMasterSquirrelBot.getEnergy() + " VS. " +
+                secondaryMasterSquirrelBotInfo + " Energy: " + secondaryMasterSquirrelBot.getEnergy();
     }
 
 }
