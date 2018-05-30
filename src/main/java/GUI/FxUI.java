@@ -2,10 +2,7 @@ package GUI;
 
 import console.NotEnoughEnergyException;
 import console.UI;
-import core.BoardView;
-import core.GameImpl;
-import core.MoveCommand;
-import core.XY;
+import core.*;
 import entities.MasterSquirrel;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -28,7 +25,7 @@ public class FxUI extends Scene implements UI {
     private static MoveCommand command;
     private final Label msgLabel;
     private final Canvas boardCanvas;
-    private GameImpl gameImpl;
+    private Game game;
 
 
     private FxUI(Parent parent, Canvas boardCanvas, Label msgLabel) {
@@ -74,13 +71,13 @@ public class FxUI extends Scene implements UI {
                         int x = 1;
                         int y = 0;
 
-                        MasterSquirrel daddy = fxUI.gameImpl.getState().getBoard().getMasterSquirrel();
+                        MasterSquirrel daddy = fxUI.game.getState().getBoard().getMasterSquirrel();
                         XY direction = new XY(x, y);
 
-                        if (fxUI.gameImpl.getState().getBoard().getMasterSquirrel().getEnergy() >= energy) {
-                            fxUI.gameImpl.getState().getBoard().insertMiniSquirrel(energy, direction, daddy);
+                        if (fxUI.game.getState().getBoard().getMasterSquirrel().getEnergy() >= energy) {
+                            fxUI.game.getState().getBoard().insertMiniSquirrel(energy, direction, daddy);
                         } else {
-                            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.gameImpl.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+                            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.game.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
                         }
                     } catch (NotEnoughEnergyException e) {
                         logger.log(Level.WARNING, e.getMessage());
@@ -112,8 +109,8 @@ public class FxUI extends Scene implements UI {
     public void multiThreadCommandProcess() {
     }
 
-    public void setGameImpl(GameImpl game) {
-        this.gameImpl = game;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     private void repaintBoardCanvas(BoardView view) {
@@ -172,7 +169,7 @@ public class FxUI extends Scene implements UI {
     }
 
     private void message(final String msg) {
-        String message = msg + gameImpl.update();
+        String message = msg + game.message();
         Platform.runLater(() -> msgLabel.setText(message));
     }
 
