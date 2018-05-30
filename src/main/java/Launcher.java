@@ -46,29 +46,6 @@ public class Launcher extends Application {
         launcher.menu(args, launcher);
     }
 
-    private static void startGameSingleThreaded(Game game) throws ScanException {
-        logger.log(Level.INFO, "Start Game Singlethreaded");
-        game.run();
-    }
-
-    private static void startGameMultiThreaded(Game game) throws ScanException {
-        logger.log(Level.INFO, "Start Game Multithreaded");
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    game.processInput();
-                    game.run();
-                } catch (ScanException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        timer.schedule(timerTask, 0, 1);
-        game.ui.multiThreadCommandProcess();
-    }
-
     private void menu(String[] args, Launcher launcher) {
         System.out.println("Choose Game Mode: [1] Console [2] GUI [3] Exit");
         switch (scanner.nextInt()) {
@@ -78,7 +55,7 @@ public class Launcher extends Application {
                 break;
             case 2:
                 logger.log(Level.INFO, "Game Type: GUI");
-                launcher.startGUIGame(args);
+                Application.launch(args);
                 break;
             case 3:
                 System.exit(0);
@@ -101,8 +78,27 @@ public class Launcher extends Application {
         }
     }
 
-    private void startGUIGame(String[] args) {
-        Application.launch(args);
+    private static void startGameMultiThreaded(Game game) throws ScanException {
+        logger.log(Level.INFO, "Start Game Multithreaded");
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    game.processInput();
+                    game.run();
+                } catch (ScanException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        timer.schedule(timerTask, 1000, 1);
+        game.ui.multiThreadCommandProcess();
+    }
+
+    private static void startGameSingleThreaded(Game game) throws ScanException {
+        logger.log(Level.INFO, "Start Game Singlethreaded");
+        game.run();
     }
 
     @Override

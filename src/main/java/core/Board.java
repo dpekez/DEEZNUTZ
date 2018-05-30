@@ -80,11 +80,6 @@ public class Board {
         return entitySet;
     }
 
-    void insertMasterSquirrel(HandOperatedMasterSquirrel masterSquirrel) {
-        this.masterSquirrel = masterSquirrel;
-        insert(masterSquirrel);
-    }
-
     public void createBots() {
         for (int botsCount = 0; botsCount < boardConfig.getNumberOfBots(); botsCount++) {
             try {
@@ -97,6 +92,11 @@ public class Board {
                 e.printStackTrace();
             }
         }
+    }
+
+    void insertMasterSquirrel(HandOperatedMasterSquirrel masterSquirrel) {
+        this.masterSquirrel = masterSquirrel;
+        insert(masterSquirrel);
     }
 
     public MasterSquirrel getMasterSquirrel() {
