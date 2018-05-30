@@ -1,9 +1,6 @@
 import GUI.FxUI;
-import Music.BackgroundMusic;
 import console.ScanException;
-import core.BoardConfig;
-import core.Game;
-import core.GameImpl;
+import core.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -28,7 +25,7 @@ public class Launcher extends Application {
     private static Launcher launcher = new Launcher();
     private static BoardConfig boardConfig = new BoardConfig();
     private Scanner scanner = new Scanner(System.in);
-
+    private static Game game;
 
     public static void main(String[] args) throws Exception {
         LogManager.getLogManager().reset();
@@ -45,55 +42,88 @@ public class Launcher extends Application {
         fileHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(fileHandler);
 
-        launcher.menu(args);
+        launcher.menu();
     }
 
-    private void menu(String[] args) {
+    private void menu() {
         System.out.println("Choose Game Mode: [1] Multithr. Console [2] Singlethr. Console [3] GUI [4] Exit");
         switch (scanner.nextInt()) {
             case 1:
                 logger.log(Level.INFO, "Game Type: Multithreaded Console");
-                startGameMultiThreaded(new GameImpl(true, boardConfig));
+                fighterMenu(true, "console");
                 break;
             case 2:
                 logger.log(Level.INFO, "Game Type: Singlethreaded Console");
-                startGameSingleThreaded(new GameImpl(false, boardConfig));
+                fighterMenu(false, "console");
                 break;
             case 3:
                 logger.log(Level.INFO, "Game Type: GUI");
-                Application.launch(args);
+                fighterMenu(true, "gui");
                 break;
             case 4:
                 logger.log(Level.INFO, "Game Menu Exit");
                 System.exit(0);
+            default:
+                logger.log(Level.INFO, "User is retarded, choosing Game Type: GUI");
+                fighterMenu(true, "gui");
+                break;
         }
     }
 
-    private static void startGameMultiThreaded(Game game) throws ScanException {
-        logger.log(Level.INFO, "Start Game Multithreaded");
+    private void fighterMenu(boolean threaded, String display) {
+        System.out.println("Choose Fight Mode: [1] Single [2] Against Bot [3] Bot only [4] Exit");
+        switch (scanner.nextInt()) {
+            case 1:
+                logger.log(Level.INFO, "Fight Mode: single");
+                game = new GameImpl(threaded, boardConfig);
+                break;
+            case 2:
+                logger.log(Level.INFO, "Fight Mode: Bot against User");
+                game = new GameImplBotUser(threaded, boardConfig);
+                break;
+            case 3:
+                logger.log(Level.INFO, "Fight Mode: Bots only");
+                game = new GameImplBotOnly(threaded, boardConfig);
+                break;
+            case 4:
+                logger.log(Level.INFO, "Fighter Menu Exit");
+                System.exit(0);
+            default:
+                logger.log(Level.INFO, "User is retarded, choosing Fight Mode: single");
+                game = new GameImpl(threaded, boardConfig);
+                break;
+        }
 
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    game.processInput();
-                    game.run();
-                } catch (ScanException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        System.out.println("Get ready to rumble!");
-        timer.schedule(timerTask, 2000, 1);
-        game.ui.multiThreadCommandProcess();
+        if (display.equalsIgnoreCase("gui"))
+            Application.launch();
+        else
+            startGame(threaded, game);
     }
 
-    private static void startGameSingleThreaded(Game game) throws ScanException {
-        logger.log(Level.INFO, "Start Game Singlethreaded");
+    private static void startGame(boolean threaded, Game game) {
+        if (threaded) {
+            logger.log(Level.INFO, "Start Game Multithreaded");
 
-        game.run();
+            Timer timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        game.run();
+                    } catch (ScanException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            System.out.println("Get ready to rumble!");
+            timer.schedule(timerTask, 2000, 1);
+            game.ui.multiThreadCommandProcess();
+        } else {
+            logger.log(Level.INFO, "Start Game Singlethreaded");
+
+            game.run();
+        }
     }
 
     @Override
@@ -101,10 +131,10 @@ public class Launcher extends Application {
         logger.log(Level.INFO, "Start GUI Game");
 
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
-        final Game game = new GameImpl(true, boardConfig);
         //BackgroundMusic.backgroundMusic.loop();
+
         game.setUi(fxUI);
-        fxUI.setGameImpl((GameImpl) game);
+        fxUI.setGame(game);
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("DEEZNUTZ");
 
@@ -114,7 +144,7 @@ public class Launcher extends Application {
         });
 
         primaryStage.show();
-        startGameMultiThreaded(game);
+        startGame(true, game);
     }
 
 }
