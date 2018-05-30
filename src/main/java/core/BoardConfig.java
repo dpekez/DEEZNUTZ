@@ -2,13 +2,12 @@ package core;
 
 public class BoardConfig {
 
-    private final String playerOne = "manual";
-    private final String playerTwo = "potato";
+    private final String mainBotPath = "botimpls.mozartuss.BrainFactory";
+    private final String secondaryBotPath = "botimpls.potato.PotatoControllerFactory";
 
     private final int width = 40;
     private final int height = 30;
     private final int wallQuant = 10;
-    private final int numberOfBots = 1;
     private final int badPlantQuant = 5;
     private final int badBeastQuant = 5;
     private final int goodBeastQuant = 5;
@@ -17,6 +16,14 @@ public class BoardConfig {
     private final int playerEnityViewDistance = 6;
     private final int pointsOfBadMiniSquirrel = 150;
     private final XY boardSize = new XY(width, height);
+
+    public String getMainBotPath() {
+        return mainBotPath;
+    }
+
+    String getSecondaryBotPath() {
+        return secondaryBotPath;
+    }
 
     int getWidth() {
         return width;
@@ -48,10 +55,6 @@ public class BoardConfig {
 
     int getGoodPlantQuant() {
         return goodPlantQuant;
-    }
-
-    int getNumberOfBots() {
-        return numberOfBots;
     }
 
     int getWaitingTimeBeast() {
