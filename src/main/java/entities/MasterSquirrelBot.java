@@ -124,4 +124,5 @@ public class MasterSquirrelBot extends MasterSquirrel {
             return;
         controller.nextStep(proxyView);
     }
+
 }

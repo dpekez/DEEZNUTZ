@@ -1,9 +1,9 @@
-package botapi.botimpl;
+package botimpl.mozartuss;
 
 import botapi.BotController;
 import botapi.BotControllerFactory;
-import botapi.botimpl.brain.MasterBotBrain;
-import botapi.botimpl.brain.MiniBotBrain;
+import botimpl.mozartuss.MasterBotBrain;
+import botimpl.mozartuss.MiniBotBrain;
 
 public class BrainFactory implements BotControllerFactory {
     @Override

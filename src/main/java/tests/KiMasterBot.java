@@ -1,5 +1,5 @@
-import botapi.botimpl.BrainFactory;
-import botapi.botimpl.brain.BotBrain;
+import botimpl.mozartuss.BrainFactory;
+import botimpl.mozartuss.BotBrain;
 import core.Board;
 import core.BoardConfig;
 import core.EntityType;

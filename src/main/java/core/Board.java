@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 
 public class Board {
 
+    private static Logger logger = Logger.getLogger(Board.class.getName());
     private EntitySet entitySet;
     private BoardConfig boardConfig;
     private HandOperatedMasterSquirrel masterSquirrel;
-    private static Logger logger = Logger.getLogger(Board.class.getName());
 
     public Board(BoardConfig boardConfig) {
 
@@ -88,7 +88,7 @@ public class Board {
     public void createBots() {
         for (int botsCount = 0; botsCount < boardConfig.getNumberOfBots(); botsCount++) {
             try {
-                BotControllerFactory factory = (BotControllerFactory) Class.forName("botapi.botimpl.BrainFactory").newInstance();
+                BotControllerFactory factory = (BotControllerFactory) Class.forName("botimpl.mozartuss.BrainFactory").newInstance();
                 MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
                 insert(masterSquirrelBot);
             } catch (ClassNotFoundException e) {
@@ -110,5 +110,5 @@ public class Board {
             insert(new MiniSquirrel(energy, location, daddy));
         }
     }
-}
 
+}

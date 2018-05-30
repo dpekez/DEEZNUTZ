@@ -19,21 +19,6 @@ public class MiniSquirrelBot extends MiniSquirrel {
         this.controller = daddy.getFactory().createMiniBotController();
     }
 
-    @Override
-    public void nextStep(EntityContext context) {
-        super.nextStep(context);
-        MiniSquirrelBot.ControllerContextImpl view = new MiniSquirrelBot.ControllerContextImpl(context, this);
-        DebugHandler handler = new DebugHandler(view);
-        ControllerContext proxyView = (ControllerContext) Proxy.newProxyInstance(
-                ControllerContext.class.getClassLoader(),
-                new Class[]{ControllerContext.class},
-                handler);
-        if (isStunned())
-            return;
-        controller.nextStep(proxyView);
-    }
-
-
     public class ControllerContextImpl implements ControllerContext {
         final int viewDistanceMiniBot = 10;
         private EntityContext context;
@@ -157,4 +142,19 @@ public class MiniSquirrelBot extends MiniSquirrel {
             return 0;
         }
     }
+
+    @Override
+    public void nextStep(EntityContext context) {
+        super.nextStep(context);
+        MiniSquirrelBot.ControllerContextImpl view = new MiniSquirrelBot.ControllerContextImpl(context, this);
+        DebugHandler handler = new DebugHandler(view);
+        ControllerContext proxyView = (ControllerContext) Proxy.newProxyInstance(
+                ControllerContext.class.getClassLoader(),
+                new Class[]{ControllerContext.class},
+                handler);
+        if (isStunned())
+            return;
+        controller.nextStep(proxyView);
+    }
+
 }

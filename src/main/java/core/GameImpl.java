@@ -27,7 +27,10 @@ public class GameImpl extends Game {
     }
 
     public String update() {
-        return "MasterSquirrel Energy: " + state.getBoard().getMasterSquirrel().getEnergy();
+
+
+
+        return "MS Energy: " + state.getBoard().getMasterSquirrel().getEnergy();
     }
 
 }

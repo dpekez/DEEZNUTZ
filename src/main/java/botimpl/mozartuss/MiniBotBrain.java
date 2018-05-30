@@ -1,4 +1,4 @@
-package botapi.botimpl.brain;
+package botimpl.mozartuss;
 
 import botapi.BotController;
 import botapi.ControllerContext;
