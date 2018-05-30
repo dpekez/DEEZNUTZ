@@ -80,18 +80,16 @@ public class Board {
         return entitySet;
     }
 
-    public void createBots() {
-        for (int botsCount = 0; botsCount < boardConfig.getNumberOfBots(); botsCount++) {
-            try {
-                BotControllerFactory factory = (BotControllerFactory) Class.forName("botimpls.mozartuss.BrainFactory").newInstance();
-                MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
-                insert(masterSquirrelBot);
-            } catch (ClassNotFoundException e) {
-                logger.log(Level.SEVERE, "Factory wurde nicht gefunden");
-            } catch (IllegalAccessException | InstantiationException e) {
-                e.printStackTrace();
-            }
+    public MasterSquirrelBot createBot(String botPath) {
+        try {
+            BotControllerFactory factory = (BotControllerFactory) Class.forName(botPath).newInstance();
+            return new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
+        } catch (ClassNotFoundException e) {
+            logger.log(Level.SEVERE, "Factory wurde nicht gefunden");
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     void insertMasterSquirrel(HandOperatedMasterSquirrel masterSquirrel) {

@@ -1,6 +1,7 @@
 import botapi.BotControllerFactory;
 import botimpls.mozartuss.BrainFactory;
 import core.Board;
+import core.BoardConfig;
 import core.EntityContext;
 import core.XY;
 import entities.MasterSquirrel;
@@ -23,12 +24,13 @@ public class ControllerContextTest {
     MasterSquirrelBot.ControllerContextImpl viewMaster;
     BotControllerFactory botControllerFactory;
     BrainFactory factory;
+    BoardConfig boardConfig;
 
     @Before
     public void init() {
         masterBot = new MasterSquirrelBot(spawnPositionMasterBot, factory);
 
-        board.createBots();
+        board.createBot(boardConfig.getMainBotPath());
     }
 
     public void tearDown() {

@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public abstract class Game {
 
-    private final static Logger logger = Logger.getLogger(Game.class.getName());
+    final static Logger logger = Logger.getLogger(Game.class.getName());
 
     private static final int FPS = 10;
     public UI ui;
@@ -26,6 +26,7 @@ public abstract class Game {
             render();
             logger.log(Level.FINEST, "start processInput()");
             processInput();
+
             if (threaded) {
                 try {
                     Thread.sleep(1000 / FPS);
@@ -61,5 +62,7 @@ public abstract class Game {
     }
 
     public abstract void processInput() throws ScanException;
+
+    public abstract String message();
 
 }
