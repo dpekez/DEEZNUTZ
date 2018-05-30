@@ -13,11 +13,10 @@ public abstract class Game {
     private static final int FPS = 10;
     public UI ui;
     State state;
-    private boolean threaded;
+    public boolean threaded;
 
-    Game(State state, boolean threaded) {
+    Game(State state) {
         this.state = state;
-        this.threaded = threaded;
     }
 
     public void run() throws ScanException {

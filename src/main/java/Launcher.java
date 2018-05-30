@@ -107,8 +107,12 @@ public class Launcher extends Application {
         fxUI.setGameImpl((GameImpl) game);
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("DEEZNUTZ");
-        primaryStage.setAlwaysOnTop(false);
-        fxUI.getWindow().setOnCloseRequest(evt -> System.exit(-1));
+
+        fxUI.getWindow().setOnCloseRequest(evt -> {
+            logger.log(Level.INFO, "End GUI Game");
+            System.exit(-1);
+        });
+
         primaryStage.show();
         startGameMultiThreaded(game);
     }
