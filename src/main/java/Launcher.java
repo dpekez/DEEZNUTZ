@@ -84,7 +84,9 @@ public class Launcher extends Application {
                 }
             }
         };
-        timer.schedule(timerTask, 1000, 1);
+
+        System.out.println("Get ready to rumble!");
+        timer.schedule(timerTask, 2000, 1);
         game.ui.multiThreadCommandProcess();
     }
 

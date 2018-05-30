@@ -2,6 +2,9 @@ package core;
 
 public class BoardConfig {
 
+    private final String playerOne = "manual";
+    private final String playerTwo = "potato";
+
     private final int width = 40;
     private final int height = 30;
     private final int wallQuant = 10;

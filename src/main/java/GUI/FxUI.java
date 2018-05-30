@@ -44,7 +44,7 @@ public class FxUI extends Scene implements UI {
         top.getChildren().add(boardCanvas);
         top.getChildren().add(statusLabel);
         final FxUI fxUI = new FxUI(top, boardCanvas, statusLabel);
-        statusLabel.setText("");
+        statusLabel.setText("Get ready to rumble!");
         fxUI.setOnKeyPressed(control(fxUI));
         return fxUI;
     }
