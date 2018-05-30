@@ -23,7 +23,7 @@ public class Launcher extends Application {
     //ALL    : Alle Obengenante level werden in einer Date gespeichert oder ausgegeben.
 
     private static Launcher launcher = new Launcher();
-    private static BoardConfig boardConfig = new BoardConfig();
+    private static BoardConfig boardConfig = new BoardConfig("default.properties");
     private Scanner scanner = new Scanner(System.in);
     private static Game game;
 
@@ -140,6 +140,7 @@ public class Launcher extends Application {
 
         fxUI.getWindow().setOnCloseRequest(evt -> {
             logger.log(Level.INFO, "End GUI Game");
+            boardConfig.saveProperties();
             System.exit(-1);
         });
 

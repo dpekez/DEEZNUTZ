@@ -15,7 +15,7 @@ public class KiMasterBot {
 
     @Before
     public void setup() {
-        Board board = new Board(new BoardConfig());
+        Board board = new Board(new BoardConfig("default.properties"));
         MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(new XY(15, 25), new BrainFactory());
         GoodBeast goodbeastOne = new GoodBeast(new XY(15, 15));
         GoodBeast goodbeastTwo = new GoodBeast(new XY(5, 5));
