@@ -1,4 +1,4 @@
-package botimpl.potato;
+package botimpls.potato;
 
 import botapi.BotController;
 import botapi.ControllerContext;

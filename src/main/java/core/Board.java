@@ -88,7 +88,7 @@ public class Board {
     public void createBots() {
         for (int botsCount = 0; botsCount < boardConfig.getNumberOfBots(); botsCount++) {
             try {
-                BotControllerFactory factory = (BotControllerFactory) Class.forName("botimpl.mozartuss.BrainFactory").newInstance();
+                BotControllerFactory factory = (BotControllerFactory) Class.forName("botimpls.mozartuss.BrainFactory").newInstance();
                 MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
                 insert(masterSquirrelBot);
             } catch (ClassNotFoundException e) {

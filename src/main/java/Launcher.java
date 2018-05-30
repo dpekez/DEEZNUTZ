@@ -28,8 +28,31 @@ public class Launcher extends Application {
     private static Launcher launcher = new Launcher();
     private Scanner scanner = new Scanner(System.in);
 
+    public static void main(String[] args) throws Exception {
+        LogManager.getLogManager().reset();
+        logger.setLevel(Level.ALL);
+
+        //logging to the console
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.SEVERE);
+        logger.addHandler(consoleHandler);
+
+        //logging to the log.txt
+        FileHandler fileHandler = new FileHandler("log.txt");
+        fileHandler.setLevel(Level.FINE);
+        fileHandler.setFormatter(new SimpleFormatter());
+        logger.addHandler(fileHandler);
+
+        launcher.menu(args, launcher);
+    }
+
+    private static void startGameSingleThreaded(Game game) throws ScanException {
+        logger.log(Level.INFO, "Start Game Singlethreaded");
+        game.run();
+    }
+
     private static void startGameMultiThreaded(Game game) throws ScanException {
-        logger.log(Level.INFO, "Start Game MultiThreaded");
+        logger.log(Level.INFO, "Start Game Multithreaded");
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -46,43 +69,15 @@ public class Launcher extends Application {
         game.ui.multiThreadCommandProcess();
     }
 
-    public static void main(String[] args) throws Exception {
-        LogManager.getLogManager().reset();
-        logger.setLevel(Level.ALL);
-
-        //logging to the console
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(Level.SEVERE);
-        logger.addHandler(consoleHandler);
-
-        //logging to the log.txt
-        FileHandler fileHandler = new FileHandler("log.txt");
-        fileHandler.setLevel(Level.FINE);
-        fileHandler.setFormatter(new SimpleFormatter());
-        logger.addHandler(fileHandler);
-
-        if (args.length >= 1)
-            if (args[0].equalsIgnoreCase("multi")) {
-                startGameMultiThreaded(new GameImpl(true));
-                return;
-            }
-        launcher.menu(args, launcher);
-    }
-
-    private static void startGameSingleThreaded(Game game) throws ScanException {
-        logger.log(Level.INFO, "Start Game SingleThreaded");
-        game.run();
-    }
-
     private void menu(String[] args, Launcher launcher) {
-        System.out.println("Wählen sie einen Spielmodus: [1] Spiel auf der Konsole [2] Spiel mit GUI [3] Verlassen");
+        System.out.println("Choose Game Mode: [1] Console [2] GUI [3] Exit");
         switch (scanner.nextInt()) {
             case 1:
-                logger.log(Level.INFO, "Game type: Console");
+                logger.log(Level.INFO, "Game Type: Console");
                 launcher.gameMode();
                 break;
             case 2:
-                logger.log(Level.INFO, "Game type: in Gui");
+                logger.log(Level.INFO, "Game Type: GUI");
                 launcher.startGUIGame(args);
                 break;
             case 3:
@@ -91,14 +86,14 @@ public class Launcher extends Application {
     }
 
     private void gameMode() {
-        System.out.println("Wählen sie zwischen den Spielmodi: [1] Multithreaded [2] Siglethreaded [3] Verlassen ");
+        System.out.println("Choose Threading: [1] Multithreaded [2] Singlethreaded [3] Exit ");
         switch (scanner.nextInt()) {
             case 1:
-                logger.log(Level.INFO, "Game type: Console + MultiThreaded");
+                logger.log(Level.INFO, "Game Type: Console + Multithreaded");
                 startGameSingleThreaded(new GameImpl(true));
                 break;
             case 2:
-                logger.log(Level.INFO, "Game type: Console + SingleThreaded");
+                logger.log(Level.INFO, "Game Type: Console + Singlethreaded");
                 startGameSingleThreaded(new GameImpl(false));
                 break;
             case 3:
@@ -112,7 +107,7 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) throws ScanException {
-        logger.log(Level.INFO, "Start Gui Game");
+        logger.log(Level.INFO, "Start GUI Game");
         BoardConfig boardConfig = new BoardConfig();
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
         final Game game = new GameImpl(true);
@@ -126,4 +121,5 @@ public class Launcher extends Application {
         primaryStage.show();
         startGameMultiThreaded(game);
     }
+
 }

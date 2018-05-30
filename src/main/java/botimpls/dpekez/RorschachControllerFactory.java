@@ -1,4 +1,4 @@
-package botimpl.dpekez;
+package botimpls.dpekez;
 
 import botapi.BotController;
 import botapi.BotControllerFactory;
