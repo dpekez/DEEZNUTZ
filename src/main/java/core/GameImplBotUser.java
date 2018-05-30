@@ -3,17 +3,24 @@ package core;
 import console.ConsoleUI;
 import console.ScanException;
 import entities.HandOperatedMasterSquirrel;
+import entities.MasterSquirrelBot;
 
-public class GameImpl extends Game {
+public class GameImplBotUser extends Game {
     private HandOperatedMasterSquirrel masterSquirrel;
+    private MasterSquirrelBot mainMasterSquirrelBot;
 
-    public GameImpl(boolean threaded, BoardConfig boardConfig) {
+    public GameImplBotUser(boolean threaded, BoardConfig boardConfig) {
         super(new State(boardConfig));
         super.threaded = threaded;
         ui = new ConsoleUI(state, threaded);
 
+        // create and insert hand operated squirrel
         masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
         state.getBoard().insertMasterSquirrel(masterSquirrel);
+
+        // create and insert bot
+        mainMasterSquirrelBot = state.getBoard().createBot(boardConfig.getMainBotPath());
+        state.getBoard().insert(mainMasterSquirrelBot);
     }
 
     @Override
@@ -29,7 +36,8 @@ public class GameImpl extends Game {
 
     @Override
     public String message() {
-        return "Player Energy: " + masterSquirrel.getEnergy();
+        return "Player Energy: " + masterSquirrel.getEnergy() +
+               " Bot Energy: " + mainMasterSquirrelBot.getEnergy();
     }
 
 }
