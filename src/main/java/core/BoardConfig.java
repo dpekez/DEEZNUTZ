@@ -18,6 +18,7 @@ public class BoardConfig {
     private final int collisionPointsWithAlienMS;
     private final String mainBotPath;
     private final String secondaryBotPath;
+    private final String logFileName;
 
     public BoardConfig(String propertiesFile) {
         Properties properties = new Properties();
@@ -43,6 +44,7 @@ public class BoardConfig {
         collisionPointsWithAlienMS = Integer.parseInt(properties.getProperty("collisionPointsWithAlienMS", "150"));
         mainBotPath = properties.getProperty("mainBotPath", "botimpls.mozartuss.BrainFactory");
         secondaryBotPath = properties.getProperty("secondaryBotPath", "botimpls.potato.PotatoControllerFactory");
+        logFileName = properties.getProperty("logFile", "log.txt");
     }
 
     /**
@@ -65,6 +67,7 @@ public class BoardConfig {
         properties.setProperty("collisionPointsWithAlienMS", "" + collisionPointsWithAlienMS);
         properties.setProperty("botimpls.mozartuss.BrainFactory", mainBotPath);
         properties.setProperty("botimpls.potato.PotatoControllerFactory", secondaryBotPath);
+        properties.setProperty("logFile", logFileName);
 
         try {
             System.out.println("writing file");
@@ -125,5 +128,9 @@ public class BoardConfig {
 
     int getPlayerEntityViewDistance() {
         return playerEntityViewDistance;
+    }
+
+    public String getLogFileName() {
+        return logFileName;
     }
 }

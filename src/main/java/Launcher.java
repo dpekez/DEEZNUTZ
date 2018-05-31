@@ -31,13 +31,13 @@ public class Launcher extends Application {
         LogManager.getLogManager().reset();
         logger.setLevel(Level.ALL);
 
-        //logging to the console
+        // logging to console
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setLevel(Level.SEVERE);
         logger.addHandler(consoleHandler);
 
-        //logging to the log.txt
-        FileHandler fileHandler = new FileHandler("log.txt");
+        // logging to log.txt
+        FileHandler fileHandler = new FileHandler(boardConfig.getLogFileName());
         fileHandler.setLevel(Level.FINE);
         fileHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(fileHandler);
