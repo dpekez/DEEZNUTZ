@@ -31,7 +31,7 @@ public class BoardConfig {
 
         width = Integer.parseInt(properties.getProperty("width", "45"));
         height = Integer.parseInt(properties.getProperty("height", "30"));
-        // boardSize dynamically generated, no need to save it in properties file
+        // boardSize is dynamically generated, no need to load/save from/to properties file
         boardSize = new XY(width, height);
         wallQuant = Integer.parseInt(properties.getProperty("wallQuant", "10"));
         badPlantQuant = Integer.parseInt(properties.getProperty("badPlantQuant", "5"));
@@ -45,7 +45,12 @@ public class BoardConfig {
         secondaryBotPath = properties.getProperty("secondaryBotPath", "botimpls.potato.PotatoControllerFactory");
     }
 
-    public void saveProperties() {
+    /**
+     * No real usage as of now.
+     * Future usage could be when in-game setting manipulation is implemented.
+     */
+    @SuppressWarnings("unused")
+    public void saveProperties(String propertiesFile) {
         Properties properties = new Properties();
 
         properties.setProperty("width", "" + width);
@@ -63,8 +68,8 @@ public class BoardConfig {
 
         try {
             System.out.println("writing file");
-            Writer writer = new FileWriter("default.properties");
-            properties.store(writer, "DEEZ NUTZ");
+            Writer writer = new FileWriter(propertiesFile);
+            properties.store(writer, "DEEZNUTZ");
         } catch (IOException e){
             //todo: logger
         }

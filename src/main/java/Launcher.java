@@ -140,7 +140,6 @@ public class Launcher extends Application {
 
         fxUI.getWindow().setOnCloseRequest(evt -> {
             logger.log(Level.INFO, "End GUI Game");
-            boardConfig.saveProperties();
             System.exit(-1);
         });
 
