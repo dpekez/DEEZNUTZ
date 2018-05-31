@@ -1,7 +1,7 @@
-package de.hsa.games.deeznutz.core;
+package de.hsa.games.deeznutz;
 
 import de.hsa.games.deeznutz.console.ScanException;
-import de.hsa.games.deeznutz.UI;
+import de.hsa.games.deeznutz.core.State;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,10 +12,10 @@ public abstract class Game {
 
     private static final int FPS = 10;
     public UI ui;
-    State state;
+    public State state;
     public boolean threaded;
 
-    Game(State state) {
+    public Game(State state) {
         this.state = state;
     }
 

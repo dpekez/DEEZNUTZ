@@ -22,7 +22,7 @@ public class State {
         return board;
     }
 
-    void update() {
+    public void update() {
         logger.log(Level.FINEST, "start update from State");
         board.update(flattenedBoard());
 
@@ -32,7 +32,7 @@ public class State {
         }
     }
 
-    FlattenedBoard flattenedBoard() {
+    public FlattenedBoard flattenedBoard() {
         return new FlattenedBoard(board);
     }
 }

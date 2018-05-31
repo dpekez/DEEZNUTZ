@@ -1,5 +1,6 @@
 package de.hsa.games.deeznutz.core;
 
+import de.hsa.games.deeznutz.Game;
 import de.hsa.games.deeznutz.console.ConsoleUI;
 import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.entities.HandOperatedMasterSquirrel;
@@ -38,7 +39,7 @@ public class GameImplBotUser extends Game {
 
     @Override
     public String message() {
-        return "Player Energy: " + masterSquirrel.getEnergy() + " VS. " +
+        return "Player Energy: " + masterSquirrel.getEnergy() + "\nVS.\n" +
                 mainMasterSquirrelBotInfo + " Energy: " + mainMasterSquirrelBot.getEnergy();
     }
 

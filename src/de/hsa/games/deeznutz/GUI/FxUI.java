@@ -1,5 +1,6 @@
 package de.hsa.games.deeznutz.GUI;
 
+import de.hsa.games.deeznutz.Game;
 import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
 import de.hsa.games.deeznutz.UI;
 import de.hsa.games.deeznutz.core.*;
@@ -37,6 +38,7 @@ public class FxUI extends Scene implements UI {
     public static FxUI createInstance(XY boardSize) {
         Canvas boardCanvas = new Canvas(boardSize.getX() * CELL_SIZE, boardSize.getY() * CELL_SIZE);
         Label statusLabel = new Label();
+        statusLabel.setMinHeight(50);
         VBox top = new VBox();
         top.getChildren().add(boardCanvas);
         top.getChildren().add(statusLabel);

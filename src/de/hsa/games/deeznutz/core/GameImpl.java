@@ -1,5 +1,6 @@
 package de.hsa.games.deeznutz.core;
 
+import de.hsa.games.deeznutz.Game;
 import de.hsa.games.deeznutz.console.ConsoleUI;
 import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.entities.HandOperatedMasterSquirrel;
