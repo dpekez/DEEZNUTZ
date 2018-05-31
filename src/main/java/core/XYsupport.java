@@ -90,5 +90,18 @@ public class XYsupport {
             }
         }
     }
-}
 
+    /**
+     * Needed to convert a String which is saved inside BoardConfig
+     * property files to the XY location format.
+     *
+     * @param string    string which needs to be converted
+     * @return          new XY object
+     */
+
+    public static XY stringToXY(String string){
+        String[] splitted = string.split(" ");
+        return new XY(Integer.parseInt(splitted[1]), Integer.parseInt(splitted[3]));
+    }
+
+}

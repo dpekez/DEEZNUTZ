@@ -45,7 +45,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
     @Override
     public int getPlayerViewDistance() {
-        return board.getConfig().getPlayerEnityViewDistance();
+        return board.getConfig().getPlayerEntityViewDistance();
     }
 
     @Override
@@ -197,7 +197,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 if (masterSquirrel.isMyChild(miniSquirrel)) {
                     energy = miniSquirrel.getEnergy();
                 } else {
-                    energy = board.getConfig().getPointsOfBadMiniSquirrel();
+                    energy = board.getConfig().getCollisionPointsWithAlienMS();
                 }
                 masterSquirrel.updateEnergy(energy);
                 masterSquirrel.move(moveDirection);
