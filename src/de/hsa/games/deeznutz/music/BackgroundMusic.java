@@ -1,4 +1,4 @@
-package de.hsa.games.deeznutz.Music;
+package de.hsa.games.deeznutz.music;
 
 import javax.sound.sampled.*;
 import java.io.IOException;

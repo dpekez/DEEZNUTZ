@@ -1,7 +1,7 @@
 package de.hsa.games.deeznutz;
 
 import de.hsa.games.deeznutz.GUI.FxUI;
-//import de.hsa.games.deeznutz.Music.BackgroundMusic;
+//import de.hsa.games.deeznutz.music.BackgroundMusic;
 import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.core.*;
 import javafx.application.Application;

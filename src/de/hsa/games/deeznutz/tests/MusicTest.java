@@ -1,4 +1,4 @@
-import de.hsa.games.deeznutz.Music.BackgroundMusic;
+import de.hsa.games.deeznutz.music.BackgroundMusic;
 import org.junit.Test;
 
 
