@@ -1,4 +1,4 @@
-# DEEZNUTS
+# DEEZNUTZ
 
 Project [Computer Science HS-Augsburg](https://www.hs-augsburg.de/en/Computer-Science/Computer-Science-BSc.html)
 

@@ -1,7 +1,7 @@
 package de.hsa.games.deeznutz;
 
 import de.hsa.games.deeznutz.GUI.FxUI;
-//import de.hsa.games.deeznutz.music.BackgroundMusic;
+import de.hsa.games.deeznutz.music.BackgroundMusic;
 import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.core.*;
 import javafx.application.Application;
@@ -134,7 +134,7 @@ public class Launcher extends Application {
         logger.log(Level.INFO, "Start GUI Game");
 
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
-        //BackgroundMusic.backgroundMusic.loop();
+        BackgroundMusic.backgroundMusic.loop();
 
         game.setUi(fxUI);
         fxUI.setGame(game);
