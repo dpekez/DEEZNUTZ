@@ -31,7 +31,8 @@ public class BoardConfig {
 
         width = Integer.parseInt(properties.getProperty("width", "45"));
         height = Integer.parseInt(properties.getProperty("height", "30"));
-        boardSize = XYsupport.stringToXY(properties.getProperty("boardSize", "x\\: " + width + " y\\: " + height));
+        // boardSize dynamically generated, no need to save it in properties file
+        boardSize = new XY(width, height);
         wallQuant = Integer.parseInt(properties.getProperty("wallQuant", "10"));
         badPlantQuant = Integer.parseInt(properties.getProperty("badPlantQuant", "5"));
         badBeastQuant = Integer.parseInt(properties.getProperty("badBeastQuant", "5"));
@@ -48,8 +49,7 @@ public class BoardConfig {
         Properties properties = new Properties();
 
         properties.setProperty("width", "" + width);
-        properties.setProperty("width", "" + height);
-        properties.setProperty("boardSize", boardSize.toString());
+        properties.setProperty("height", "" + height);
         properties.setProperty("wallQuant", "" + wallQuant);
         properties.setProperty("badPlantQuant", "" + badPlantQuant);
         properties.setProperty("badBeastQuant", "" + badBeastQuant);
