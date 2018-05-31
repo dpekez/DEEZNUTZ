@@ -2,6 +2,8 @@
 
 Project [Computer Science HS-Augsburg](https://www.hs-augsburg.de/en/Computer-Science/Computer-Science-BSc.html)
 
+![Alt text](screenshot.png?raw=true "Screenshot, Mac Version")
+
 ## Contributing
 
 Please read [CONTRIBUTING.md]( DEEZNUTS/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
