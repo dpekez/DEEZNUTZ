@@ -1,5 +1,6 @@
-package de.hsa.games.deeznutz.console;
+package de.hsa.games.deeznutz;
 
+import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.core.BoardView;
 import de.hsa.games.deeznutz.core.MoveCommand;
 

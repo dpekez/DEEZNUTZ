@@ -1,7 +1,7 @@
 package de.hsa.games.deeznutz.core;
 
 import de.hsa.games.deeznutz.console.ScanException;
-import de.hsa.games.deeznutz.console.UI;
+import de.hsa.games.deeznutz.UI;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

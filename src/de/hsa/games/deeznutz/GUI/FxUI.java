@@ -1,7 +1,7 @@
 package de.hsa.games.deeznutz.GUI;
 
 import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
-import de.hsa.games.deeznutz.console.UI;
+import de.hsa.games.deeznutz.UI;
 import de.hsa.games.deeznutz.core.*;
 import de.hsa.games.deeznutz.entities.MasterSquirrel;
 import javafx.application.Platform;

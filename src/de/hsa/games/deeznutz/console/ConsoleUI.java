@@ -1,5 +1,6 @@
 package de.hsa.games.deeznutz.console;
 
+import de.hsa.games.deeznutz.UI;
 import de.hsa.games.deeznutz.core.BoardView;
 import de.hsa.games.deeznutz.core.MoveCommand;
 import de.hsa.games.deeznutz.core.State;
