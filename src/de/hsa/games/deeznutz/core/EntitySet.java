@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EntitySet {
-    private static final Logger logger = Logger.getLogger(EntitySet.class.getName());
+    private static Logger logger = Logger.getLogger(".");
 
     private Entity[] entities;
     private int h;

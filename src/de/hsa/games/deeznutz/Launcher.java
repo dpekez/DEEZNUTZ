@@ -6,45 +6,21 @@ import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.core.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Launcher extends Application {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
-    //Logger Level:
-    //OFF    : nothing will be logged
-    //SEVERE : kritischer Fehler, der dazu führt, dass das Programm nicht ordnungsgemäß fortgesetzt werden kann, eventuell Programmabbruch
-    //WARNING: es ist ein Fehler aufgetreten (gecatchte Fehler)
-    //INFO   : Wichtige Information ( Start game, Quit game ...)
-    //CONFIG : Ausgabe von Information über eine Konfiguration (Welche BotFactory wurde gewählt)
-    //FINE   : Ausgabe von wichtigen Schritten im Programmfluss
-    //FINER  : detailliertere Ausgabe als FINE
-    //FINEST : detailliertere Ausgabe als FINER (zum Beispiel Start und Ende einer Methode)
-    //ALL    : Alle Obengenante level werden in einer Date gespeichert oder ausgegeben.
+    private static Logger logger = Logger.getLogger(".");
 
     private static Launcher launcher = new Launcher();
     private static BoardConfig boardConfig = new BoardConfig("default.properties");
     private Scanner scanner = new Scanner(System.in);
     private static Game game;
 
-    public static void main(String[] args) throws Exception {
-        LogManager.getLogManager().reset();
-        logger.setLevel(Level.ALL);
-
-        // logging to console
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(Level.SEVERE);
-        logger.addHandler(consoleHandler);
-
-        // logging to log.txt
-        FileHandler fileHandler = new FileHandler(boardConfig.getLogFileName());
-        fileHandler.setLevel(Level.FINE);
-        fileHandler.setFormatter(new SimpleFormatter());
-        logger.addHandler(fileHandler);
-
+    public static void main(String[] args) {
         launcher.menu();
     }
 
