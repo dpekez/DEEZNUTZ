@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Launcher extends Application {
@@ -32,18 +31,18 @@ public class Launcher extends Application {
                 fighterMenu(true, "console");
                 break;
             case 2:
-                logger.log(Level.INFO, "Game Type: Singlethreaded Console");
+                logger.info("Game Type: Singlethreaded Console");
                 fighterMenu(false, "console");
                 break;
             case 3:
-                logger.log(Level.INFO, "Game Type: GUI");
+                logger.info("Game Type: GUI");
                 fighterMenu(true, "gui");
                 break;
             case 4:
-                logger.log(Level.INFO, "Game Menu Exit");
+                logger.info("Game-Menu Exit");
                 System.exit(0);
             default:
-                logger.log(Level.INFO, "User is retarded, choosing Game Type: GUI");
+                logger.info("Choosing Game Type: GUI");
                 fighterMenu(true, "gui");
                 break;
         }
@@ -53,22 +52,22 @@ public class Launcher extends Application {
         System.out.println("Choose Fight Mode: [1] Single [2] Against Bot [3] Bot only [4] Exit");
         switch (scanner.nextInt()) {
             case 1:
-                logger.log(Level.INFO, "Fight Mode: single");
+                logger.info("Fight Mode: Single");
                 game = new GameImpl(threaded, boardConfig);
                 break;
             case 2:
-                logger.log(Level.INFO, "Fight Mode: Bot against User");
+                logger.info("Fight Mode: Bot against User");
                 game = new GameImplBotUser(threaded, boardConfig);
                 break;
             case 3:
-                logger.log(Level.INFO, "Fight Mode: Bots only");
+                logger.info("Fight Mode: Bots only");
                 game = new GameImplBotOnly(threaded, boardConfig);
                 break;
             case 4:
-                logger.log(Level.INFO, "Fighter Menu Exit");
+                logger.info("Fighter-Menu Exit");
                 System.exit(0);
             default:
-                logger.log(Level.INFO, "User is retarded, choosing Fight Mode: single");
+                logger.info("Choosing Fight Mode: Single");
                 game = new GameImpl(threaded, boardConfig);
                 break;
         }
@@ -81,7 +80,7 @@ public class Launcher extends Application {
 
     private static void startGame(boolean threaded, Game game) {
         if (threaded) {
-            logger.log(Level.INFO, "Start Game Multithreaded");
+            logger.info("Starting Game Multithreaded...");
 
             Timer timer = new Timer();
             TimerTask timerTask = new TimerTask() {
@@ -99,7 +98,7 @@ public class Launcher extends Application {
             timer.schedule(timerTask, 2000, 1);
             game.ui.multiThreadCommandProcess();
         } else {
-            logger.log(Level.INFO, "Start Game Singlethreaded");
+            logger.info("Starting Game Singlethreaded...");
 
             game.run();
         }
@@ -107,7 +106,7 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) throws ScanException {
-        logger.log(Level.INFO, "Start GUI Game");
+        logger.info("Starting GUI...");
 
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
         BackgroundMusic.backgroundMusic.loop();
@@ -118,7 +117,7 @@ public class Launcher extends Application {
         primaryStage.setTitle("DEEZNUTZ");
 
         fxUI.getWindow().setOnCloseRequest(evt -> {
-            logger.log(Level.INFO, "End GUI Game");
+            logger.info("End GUI Game");
             System.exit(-1);
         });
 
