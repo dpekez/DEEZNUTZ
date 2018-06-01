@@ -5,12 +5,11 @@ import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.botapi.OutOfViewException;
 import de.hsa.games.deeznutz.core.EntityType;
 import de.hsa.games.deeznutz.core.XY;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MiniBotBrain implements BotController {
-    private static final Logger logger = Logger.getLogger(MiniBotBrain.class.getName());
+    private static Logger logger = Logger.getLogger(MiniBotBrain.class.getName());
 
     @Override
     public void nextStep(ControllerContext view) {
@@ -57,7 +56,7 @@ public class MiniBotBrain implements BotController {
                         counterToImplode++;
                     }
                 } catch (OutOfViewException e) {
-                    logger.log(Level.WARNING, "No Entity in the searchVector");
+                    logger.log(Level.FINEST, "No Entity in the searchVector");
                 }
             }
         }
@@ -65,4 +64,5 @@ public class MiniBotBrain implements BotController {
             shouldImpode = true;
         return shouldImpode;
     }
+
 }

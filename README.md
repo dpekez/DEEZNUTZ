@@ -6,7 +6,7 @@ Project [Computer Science HS-Augsburg](https://www.hs-augsburg.de/en/Computer-Sc
 
 ## Contributing
 
-Please read [CONTRIBUTING.md]( DEEZNUTS/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## License
 

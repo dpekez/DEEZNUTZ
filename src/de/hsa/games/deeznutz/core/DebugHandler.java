@@ -1,11 +1,10 @@
 package de.hsa.games.deeznutz.core;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.ControllerContext;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DebugHandler implements InvocationHandler {
@@ -18,24 +17,25 @@ public class DebugHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         StringBuilder stringBuilder = new StringBuilder();
-        Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
         stringBuilder.append("Methode : ").append(method).append(" , params : ").append(args).append("\n");
 
         Object result = null;
         try {
             result = method.invoke(view, args);
-        } catch (IllegalAccessException ex) {
-            logger.log(Level.FINER, ex.getMessage());
+        } catch (IllegalAccessException e) {
+            Logger.getLogger(Launcher.class.getName()).severe(e.getMessage());
         } catch (InvocationTargetException e) {
             throw e.getTargetException();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            Logger.getLogger(Launcher.class.getName()).severe(e.getMessage());
         }
+
         stringBuilder.append("* result:").append(result);
-        logger.log(Level.FINER, stringBuilder.toString());
+        // todo: solve this mystery
+        // heavy performance impact
+        //Logger.getLogger(Launcher.class.getName()).finer(stringBuilder.toString());
         return result;
     }
+
 }
-
-

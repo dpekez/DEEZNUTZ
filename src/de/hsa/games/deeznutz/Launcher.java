@@ -1,6 +1,6 @@
 package de.hsa.games.deeznutz;
 
-import de.hsa.games.deeznutz.GUI.FxUI;
+import de.hsa.games.deeznutz.gui.FxUI;
 import de.hsa.games.deeznutz.music.BackgroundMusic;
 import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.core.*;
@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Launcher extends Application {
-    private static Logger logger = Logger.getLogger(".");
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private static Launcher launcher = new Launcher();
     private static BoardConfig boardConfig = new BoardConfig("default.properties");
@@ -28,7 +28,7 @@ public class Launcher extends Application {
         System.out.println("Choose Game Mode: [1] Multithr. Console [2] Singlethr. Console [3] GUI [4] Exit");
         switch (scanner.nextInt()) {
             case 1:
-                logger.log(Level.INFO, "Game Type: Multithreaded Console");
+                logger.info("Game Type: Multithreaded Console");
                 fighterMenu(true, "console");
                 break;
             case 2:

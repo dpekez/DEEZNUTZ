@@ -1,7 +1,9 @@
 package de.hsa.games.deeznutz.entities;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.core.EntityType;
 import de.hsa.games.deeznutz.core.XY;
+import java.util.logging.Logger;
 
 public abstract class Entity {
 
@@ -29,6 +31,7 @@ public abstract class Entity {
     }
 
     public void updateEnergy(int energy) {
+        Logger.getLogger(Launcher.class.getName()).finer("Entity with ID " + id + " (" + location + ") got: " + energy);
         this.energy += energy;
     }
 
@@ -62,4 +65,5 @@ public abstract class Entity {
         else
             return EntityType.NOTHING;
     }
+
 }

@@ -66,7 +66,7 @@ public final class XY {
 
     @Override
     public String toString() {
-        return "x: " + x + " y: " + y;
+        return "x" + x + "y" + y;
     }
 
     public int getX() {

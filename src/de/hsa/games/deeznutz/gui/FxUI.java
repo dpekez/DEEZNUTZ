@@ -1,6 +1,7 @@
-package de.hsa.games.deeznutz.GUI;
+package de.hsa.games.deeznutz.gui;
 
 import de.hsa.games.deeznutz.Game;
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
 import de.hsa.games.deeznutz.UI;
 import de.hsa.games.deeznutz.core.*;
@@ -15,12 +16,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FxUI extends Scene implements UI {
-    private static final Logger logger = Logger.getLogger(FxUI.class.getName());
 
     private static final double CELL_SIZE = 15;
     private static MoveCommand command;
@@ -82,7 +80,7 @@ public class FxUI extends Scene implements UI {
                             throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.game.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
                         }
                     } catch (NotEnoughEnergyException e) {
-                        logger.log(Level.WARNING, e.getMessage());
+                        Logger.getLogger(Launcher.class.getName()).warning(e.getMessage());
                     }
 
                     break;
