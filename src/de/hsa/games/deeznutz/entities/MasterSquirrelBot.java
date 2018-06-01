@@ -90,7 +90,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
             }
 
             //todo: diese ganze ->UNTERKLASSE<- von MasterSquirrel und ihre Methoden muss frei vom "masterSquirrel"-Attribut werden, das ist nicht nötig!!
-            //todo: gleiches beim MiniSquirrelBot
+            //todo gleiches beim MiniSquirrelBot
             /*
             try {
                 if (energy >= masterSquirrel.getEnergy()) {
