@@ -18,7 +18,12 @@ public abstract class Entity {
         this.location = location;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getEnergy() {
+
         return energy;
     }
 

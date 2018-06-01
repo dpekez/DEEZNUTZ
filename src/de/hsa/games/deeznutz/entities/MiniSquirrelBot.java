@@ -1,11 +1,15 @@
 package de.hsa.games.deeznutz.entities;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.BotController;
 import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.botapi.OutOfViewException;
 import de.hsa.games.deeznutz.core.*;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -146,15 +150,26 @@ public class MiniSquirrelBot extends MiniSquirrel {
     @Override
     public void nextStep(EntityContext context) {
         super.nextStep(context);
-        MiniSquirrelBot.ControllerContextImpl view = new MiniSquirrelBot.ControllerContextImpl(context, this);
-        DebugHandler handler = new DebugHandler(view);
-        ControllerContext proxyView = (ControllerContext) Proxy.newProxyInstance(
+
+        if (isStunned())
+            return;
+
+        ControllerContext view = new ControllerContextImpl(context, this);
+
+        InvocationHandler handler = new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                Logger.getLogger(Launcher.class.getName()).info("MiniBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
+                return method.invoke(view, args);
+            }
+        };
+
+        ControllerContext proxyInstance = (ControllerContext) Proxy.newProxyInstance(
                 ControllerContext.class.getClassLoader(),
                 new Class[]{ControllerContext.class},
                 handler);
-        if (isStunned())
-            return;
-        controller.nextStep(proxyView);
+
+        controller.nextStep(proxyInstance);
     }
 
 }

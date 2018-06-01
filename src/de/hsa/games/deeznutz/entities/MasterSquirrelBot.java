@@ -1,9 +1,13 @@
 package de.hsa.games.deeznutz.entities;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.*;
 import de.hsa.games.deeznutz.core.*;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,7 +48,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public XY locate() {
-            return masterSquirrel.getLocation();
+            return getLocation();
         }
 
         @Override
@@ -77,6 +81,17 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public void spawnMiniBot(XY direction, int energy) {
+
+            MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), MasterSquirrelBot.this);
+
+            if (energy <= getEnergy()) {
+                context.insertEntity(miniSquirrelBot);
+                updateEnergy(-energy);
+            }
+
+            //todo: diese ganze ->UNTERKLASSE<- von MasterSquirrel und ihre Methoden muss frei vom "masterSquirrel"-Attribut werden, das ist nicht nötig!!
+            //todo: gleiches beim MiniSquirrelBot
+            /*
             try {
                 if (energy >= masterSquirrel.getEnergy()) {
                     throw new SpawnException("Nicht genug Energie");
@@ -87,11 +102,12 @@ public class MasterSquirrelBot extends MasterSquirrel {
             } catch (SpawnException e) {
                 logger.log(Level.WARNING, e.getMessage());
             }
+            */
         }
 
         @Override
         public void implode(int impactRadius) {
-            //masterSquirrel kann nicht implodieren
+            // masterSquirrel kann nicht implodieren
         }
 
         @Override
@@ -113,16 +129,26 @@ public class MasterSquirrelBot extends MasterSquirrel {
     @Override
     public void nextStep(EntityContext context) {
         super.nextStep(context);
-        ControllerContextImpl view = new ControllerContextImpl(context, this);
-        DebugHandler handler = new DebugHandler(view);
-        ControllerContext proxyView = (ControllerContext) Proxy.newProxyInstance(
+
+        if (isStunned())
+            return;
+
+        ControllerContext view = new ControllerContextImpl(context, this);
+
+        InvocationHandler handler = new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                Logger.getLogger(Launcher.class.getName()).info("MasterBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
+                return method.invoke(view, args);
+            }
+        };
+
+        ControllerContext proxyInstance = (ControllerContext) Proxy.newProxyInstance(
                 ControllerContext.class.getClassLoader(),
                 new Class[]{ControllerContext.class},
                 handler);
 
-        if (isStunned())
-            return;
-        controller.nextStep(proxyView);
+        controller.nextStep(proxyInstance);
     }
 
 }
