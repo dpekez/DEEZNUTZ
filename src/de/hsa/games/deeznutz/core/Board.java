@@ -16,7 +16,7 @@ public class Board {
     public Board(BoardConfig boardConfig) {
 
         this.boardConfig = boardConfig;
-        entitySet = new EntitySet(boardConfig.getHeight() * boardConfig.getWidth());
+        entitySet = new EntitySet();
 
         //fill upper and bottom border with walls
         for (int i = 0; i < boardConfig.getWidth(); i++) {
