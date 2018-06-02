@@ -16,23 +16,11 @@ public interface ControllerContext {
     XY getViewUpperRight();
 
     /**
-     * @return my cell coordinates, i. e. the position of the controlled player entity
-     */
-    XY locate();
-
-    /**
      * @param xy : cell coordinates
      * @return the type of the entity at that position or none
      * @throws OutOfViewException if xy is outside the view
      */
     EntityType getEntityAt(XY xy) throws OutOfViewException;
-
-    /**
-     * @param xy : cell coordinates
-     * @return true, if entity at xy is my master or one of my minis resp.
-     * @throws OutOfViewException if xy is outside the view
-     */
-    boolean isMine(XY xy) throws OutOfViewException;
 
     /**
      * @param direction : one of XY.UP, XY.DOWN, ...
@@ -48,17 +36,29 @@ public interface ControllerContext {
     void spawnMiniBot(XY direction, int energy) throws SpawnException;
 
     /**
+     * @return the current energy of the player entity
+     */
+    int getEnergy();
+
+    /**
+     * @return my cell coordinates, i. e. the position of the controlled player entity
+     */
+    XY locate();
+
+    /**
+     * @param xy : cell coordinates
+     * @return true, if entity at xy is my master or one of my minis resp.
+     * @throws OutOfViewException if xy is outside the view
+     */
+    boolean isMine(XY xy) throws OutOfViewException;
+
+    /**
      * Very destructive event (see specification for details).
      * Can only be called for mini bot, otherwise exception.
      *
      * @param impactRadius : radius of the impact circle
      */
     void implode(int impactRadius);
-
-    /**
-     * @return the current energy of the player entity
-     */
-    int getEnergy();
 
     /**
      * @return the direction where the master can be found

@@ -14,22 +14,46 @@ import java.util.logging.Logger;
 public class MasterSquirrelBot extends MasterSquirrel {
     private static Logger logger = Logger.getLogger(MasterSquirrelBot.class.getName());
 
-    private final BotController controller;
+    private BotControllerFactory botControllerFactory;
+    private BotController botController;
 
-    public MasterSquirrelBot(XY location, BotControllerFactory factory) {
+    public MasterSquirrelBot(XY location, BotControllerFactory botControllerFactory) {
         super(location);
-        setFactory(factory);
-        this.controller = factory.createMasterBotController();
+        this.botControllerFactory = botControllerFactory;
+        this.botController = botControllerFactory.createMasterBotController();
+    }
+
+    @Override
+    public void nextStep(EntityContext context) {
+        super.nextStep(context);
+
+        if (isStunned())
+            return;
+
+        ControllerContext view = new ControllerContextImpl(context);
+
+        InvocationHandler handler = new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                Logger.getLogger(Launcher.class.getName()).info("MasterBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
+                return method.invoke(view, args);
+            }
+        };
+
+        ControllerContext proxyInstance = (ControllerContext) Proxy.newProxyInstance(
+                ControllerContext.class.getClassLoader(),
+                new Class[]{ControllerContext.class},
+                handler);
+
+        botController.nextStep(proxyInstance);
     }
 
     public class ControllerContextImpl implements ControllerContext {
         private EntityContext context;
-        private MasterSquirrel masterSquirrel;
         final int viewDistanceMasterBot = 15;
 
-        public ControllerContextImpl(EntityContext context, MasterSquirrel masterSquirrel) {
+        public ControllerContextImpl(EntityContext context) {
             this.context = context;
-            this.masterSquirrel = masterSquirrel;
         }
 
         @Override
@@ -66,7 +90,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
                 throw new OutOfViewException("Kein entity in Sichtweite (master)");
             }
             try {
-                if (masterSquirrel.isMyChild((MiniSquirrel) context.getEntiy(xy)))
+                if (MasterSquirrelBot.this.isMyChild((MiniSquirrel) context.getEntiy(xy)))
                     return true;
             } catch (Exception e) {
                 return false;
@@ -76,33 +100,16 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public void move(XY direction) {
-            context.tryMove(masterSquirrel, direction);
+            context.tryMove(MasterSquirrelBot.this, direction);
         }
 
         @Override
         public void spawnMiniBot(XY direction, int energy) {
-
-            MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), MasterSquirrelBot.this);
-
             if (energy <= getEnergy()) {
+                MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), MasterSquirrelBot.this, botController);
                 context.insertEntity(miniSquirrelBot);
                 updateEnergy(-energy);
             }
-
-            //todo: diese ganze ->UNTERKLASSE<- von MasterSquirrel und ihre Methoden muss frei vom "masterSquirrel"-Attribut werden, das ist nicht nötig!!
-            //todo gleiches beim MiniSquirrelBot
-            /*
-            try {
-                if (energy >= masterSquirrel.getEnergy()) {
-                    throw new SpawnException("Nicht genug Energie");
-                } else {
-                    MiniSquirrelBot mini = new MiniSquirrelBot(energy, getLocation(), masterSquirrel);
-                    context.insertEntity(mini);
-                }
-            } catch (SpawnException e) {
-                logger.log(Level.WARNING, e.getMessage());
-            }
-            */
         }
 
         @Override
@@ -112,7 +119,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public int getEnergy() {
-            return masterSquirrel.getEnergy();
+            return MasterSquirrelBot.this.getEnergy();
         }
 
         @Override
@@ -124,31 +131,6 @@ public class MasterSquirrelBot extends MasterSquirrel {
         public long getRemainingSteps() {
             return 0;
         }
-    }
-
-    @Override
-    public void nextStep(EntityContext context) {
-        super.nextStep(context);
-
-        if (isStunned())
-            return;
-
-        ControllerContext view = new ControllerContextImpl(context, this);
-
-        InvocationHandler handler = new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Logger.getLogger(Launcher.class.getName()).info("MasterBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
-                return method.invoke(view, args);
-            }
-        };
-
-        ControllerContext proxyInstance = (ControllerContext) Proxy.newProxyInstance(
-                ControllerContext.class.getClassLoader(),
-                new Class[]{ControllerContext.class},
-                handler);
-
-        controller.nextStep(proxyInstance);
     }
 
 }

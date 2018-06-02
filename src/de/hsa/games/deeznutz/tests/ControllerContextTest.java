@@ -39,7 +39,7 @@ public class ControllerContextTest {
 
     @Test
     public void locate() {
-        viewMaster = masterBot.new ControllerContextImpl(context, masterBot);
+        viewMaster = masterBot.new ControllerContextImpl(context);
 
         assertEquals(spawnPositionMasterBot, viewMaster.locate());
     }

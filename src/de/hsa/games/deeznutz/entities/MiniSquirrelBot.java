@@ -2,6 +2,7 @@ package de.hsa.games.deeznutz.entities;
 
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.BotController;
+import de.hsa.games.deeznutz.botapi.BotControllerFactory;
 import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.botapi.OutOfViewException;
 import de.hsa.games.deeznutz.core.*;
@@ -16,21 +17,44 @@ import java.util.logging.Logger;
 public class MiniSquirrelBot extends MiniSquirrel {
     private static Logger logger = Logger.getLogger(MiniSquirrelBot.class.getName());
 
-    private final BotController controller;
+    private BotController botController;
 
-    MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy) {
+    MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy, BotController botController) {
         super(energy, location, daddy);
-        this.controller = daddy.getFactory().createMiniBotController();
+        this.botController = botController;
+    }
+
+    @Override
+    public void nextStep(EntityContext context) {
+        super.nextStep(context);
+
+        if (isStunned())
+            return;
+
+        ControllerContext view = new ControllerContextImpl(context);
+
+        InvocationHandler handler = new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                Logger.getLogger(Launcher.class.getName()).info("MiniBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
+                return method.invoke(view, args);
+            }
+        };
+
+        ControllerContext proxyInstance = (ControllerContext) Proxy.newProxyInstance(
+                ControllerContext.class.getClassLoader(),
+                new Class[]{ControllerContext.class},
+                handler);
+
+        botController.nextStep(proxyInstance);
     }
 
     public class ControllerContextImpl implements ControllerContext {
         final int viewDistanceMiniBot = 10;
         private EntityContext context;
-        private MiniSquirrel miniSquirrel;
 
-        ControllerContextImpl(EntityContext context, MiniSquirrel miniSquirrel) {
+        ControllerContextImpl(EntityContext context) {
             this.context = context;
-            this.miniSquirrel = miniSquirrel;
         }
 
         @Override
@@ -49,7 +73,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public XY locate() {
-            return miniSquirrel.getLocation();
+            return MiniSquirrelBot.this.getLocation();
         }
 
         @Override
@@ -66,7 +90,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
                 throw new OutOfViewException("Daddy not reachable");
             try {
-                return context.getEntityType(xy).equals(miniSquirrel.getDaddy());
+                return context.getEntityType(xy).equals(MiniSquirrelBot.this.getDaddy());
             } catch (Exception e) {
                 return false;
             }
@@ -74,7 +98,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public void move(XY direction) {
-            context.tryMove(miniSquirrel, direction);
+            context.tryMove(MiniSquirrelBot.this, direction);
         }
 
         @Override
@@ -94,7 +118,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
                 for (int y = minY; y < impactRadius; y++) {
                     Entity entity = context.getEntiy(new XY(getLocation().getX() + x, getLocation().getY() + y));
                     int distance = (int) this.locate().distanceFrom(entity.getLocation());
-                    int energyLoss = (200 * (miniSquirrel.getEnergy() / impactArea) * (1 - distance / impactRadius));
+                    int energyLoss = (200 * (MiniSquirrelBot.this.getEnergy() / impactArea) * (1 - distance / impactRadius));
 
                     switch (entity.getEntityType()) {
                         case BAD_BEAST:
@@ -111,7 +135,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
                             break;
                         case MINI_SQUIRREL_BOT:
                         case MINI_SQUIRREL:
-                            if (miniSquirrel.getDaddy() == ((MiniSquirrel) entity).getDaddy())
+                            if (MiniSquirrelBot.this.getDaddy() == ((MiniSquirrel) entity).getDaddy())
                                 continue;
                             entity.updateEnergy(energyLoss);
                             if (entity.getEnergy() <= 0)
@@ -120,7 +144,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
                         case MASTER_SQUIRREL:
                         case MASTER_SQUIRREL_BOT:
                             MasterSquirrel masterSquirrel = (MasterSquirrel) entity;
-                            if (!(masterSquirrel.isMyChild(miniSquirrel)))
+                            if (!(masterSquirrel.isMyChild(MiniSquirrelBot.this)))
                                 if (entity.getEnergy() < -energyLoss)
                                     energyLoss = -entity.getEnergy();
                             entity.updateEnergy(energyLoss);
@@ -128,48 +152,23 @@ public class MiniSquirrelBot extends MiniSquirrel {
                     }
                     totalImplosionEnergy = totalImplosionEnergy - energyLoss;
                 }
-            miniSquirrel.getDaddy().updateEnergy(totalImplosionEnergy);
+            MiniSquirrelBot.this.getDaddy().updateEnergy(totalImplosionEnergy);
         }
 
         @Override
         public int getEnergy() {
-            return miniSquirrel.getEnergy();
+            return MiniSquirrelBot.this.getEnergy();
         }
 
         @Override
         public XY directionOfMaster() {
-            return XYsupport.assignMoveVector(miniSquirrel.getDaddy().getLocation().reduceVector(miniSquirrel.getLocation()));
+            return XYsupport.assignMoveVector(MiniSquirrelBot.this.getDaddy().getLocation().reduceVector(MiniSquirrelBot.this.getLocation()));
         }
 
         @Override
         public long getRemainingSteps() {
             return 0;
         }
-    }
-
-    @Override
-    public void nextStep(EntityContext context) {
-        super.nextStep(context);
-
-        if (isStunned())
-            return;
-
-        ControllerContext view = new ControllerContextImpl(context, this);
-
-        InvocationHandler handler = new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Logger.getLogger(Launcher.class.getName()).info("MiniBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
-                return method.invoke(view, args);
-            }
-        };
-
-        ControllerContext proxyInstance = (ControllerContext) Proxy.newProxyInstance(
-                ControllerContext.class.getClassLoader(),
-                new Class[]{ControllerContext.class},
-                handler);
-
-        controller.nextStep(proxyInstance);
     }
 
 }
