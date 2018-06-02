@@ -13,7 +13,7 @@ public class PotatoMaster implements BotController {
         context.move(XYsupport.generateRandomMoveVector());
 
         try {
-            context.spawnMiniBot(new XY(-1, 0), 200);
+            context.spawnMiniBot(new XY(0, 0), 100);
         } catch (SpawnException e) {
             e.printStackTrace();
         }
