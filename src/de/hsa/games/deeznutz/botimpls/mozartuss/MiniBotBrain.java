@@ -34,24 +34,25 @@ public class MiniBotBrain implements BotController {
         int counterToImplode = 0;
         boolean shouldImpode = false;
 
-        int x = view.locate().getX() + impactRadius;
-        int y = view.locate().getY() + impactRadius;
+        int startX = view.locate().getX() - (impactRadius - 1) / 2;
+        int startY = view.locate().getY() - (impactRadius - 1) / 2;
+        int stopX = view.locate().getX() + (impactRadius - 1) / 2;
+        int stopY = view.locate().getY() + (impactRadius - 1) / 2;
 
         // Begrenzung setzen
-        if (x > view.getViewUpperRight().getX())
-            x = view.getViewUpperRight().getX() - 1;
-        else if (x < view.getViewLowerLeft().getX())
-            x = view.getViewLowerLeft().getX();
+        if (startX < 0)
+            startX = 0;
+        if (startY < 0)
+            startY = 0;
+        if (stopX > view.getViewUpperRight().getX())
+            stopX = view.getViewUpperRight().getX();
+        if (stopY > view.getViewUpperRight().getY())
+            stopY = view.getViewUpperRight().getY();
 
-        if (y < view.getViewUpperRight().getY())
-            y = view.getViewUpperRight().getY() - 1;
-        else if (y > view.getViewLowerLeft().getY())
-            y = view.getViewLowerLeft().getY();
-
-        for (int i = 0; i < impactRadius; i++) {
-            for (int j = 0; j < impactRadius; j++) {
+        for (int x = startX; x < stopX; x++) {
+            for (int y = startY; y < stopY; y++) {
                 try {
-                    EntityType checkEntity = view.getEntityAt(view.locate().addVector(new XY(x, y)));
+                    EntityType checkEntity = view.getEntityAt(new XY(x, y));
                     if (checkEntity == EntityType.GOOD_BEAST || checkEntity == EntityType.GOOD_PLANT) {
                         counterToImplode++;
                     }

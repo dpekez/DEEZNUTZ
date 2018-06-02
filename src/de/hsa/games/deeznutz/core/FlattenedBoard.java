@@ -130,6 +130,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
             case MASTER_SQUIRREL_BOT:
             case MASTER_SQUIRREL:
             case MINI_SQUIRREL:
+                Logger.getLogger(Launcher.class.getName()).info("hitting on Master/mini" + goodBeast);
                 nextEntity.updateEnergy(goodBeast.getEnergy());
                 killAndReplace(goodBeast);
                 break;
@@ -203,6 +204,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 updateFlattenedBoard();
                 break;
             case GOOD_BEAST:
+                Logger.getLogger(Launcher.class.getName()).info("hitting on GoodBeast " + masterSquirrel);
                 masterSquirrel.updateEnergy(nextEntity.getEnergy());
                 killAndReplace(nextEntity);
                 masterSquirrel.move(moveDirection);
