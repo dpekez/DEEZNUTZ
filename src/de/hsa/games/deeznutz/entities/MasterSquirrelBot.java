@@ -46,6 +46,11 @@ public class MasterSquirrelBot extends MasterSquirrel {
         botController.nextStep(proxyInstance);
     }
 
+    @Override
+    public String toString() {
+        return "MasterSquirrelBot{ " + super.toString() + " }";
+    }
+
     public class ControllerContextImpl implements ControllerContext {
         private EntityContext context;
 

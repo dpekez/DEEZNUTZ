@@ -55,6 +55,11 @@ public class MiniSquirrelBot extends MiniSquirrel {
         botController.nextStep(proxyInstance);
     }
 
+    @Override
+    public String toString() {
+        return "MiniSquirrelBot{ " + super.toString() + " }";
+    }
+
     public class ControllerContextImpl implements ControllerContext {
         private EntityContext context;
 

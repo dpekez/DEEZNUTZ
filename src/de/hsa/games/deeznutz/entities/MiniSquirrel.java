@@ -24,6 +24,6 @@ public class MiniSquirrel extends Player {
 
     @Override
     public String toString() {
-        return "MiniSquirrel{ " + super.toString() + " }";
+        return "MiniSquirrel{ daddyID=" + daddy.getId() + " " + super.toString() + " }";
     }
 }
