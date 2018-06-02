@@ -17,16 +17,21 @@ import java.util.logging.Logger;
 public class MiniSquirrelBot extends MiniSquirrel {
     private static Logger logger = Logger.getLogger(MiniSquirrelBot.class.getName());
 
+    private BotControllerFactory botControllerFactory;
     private BotController botController;
 
-    MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy, BotController botController) {
+    MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy, BotControllerFactory botControllerFactory) {
         super(energy, location, daddy);
-        this.botController = botController;
+        this.botControllerFactory = botControllerFactory;
+        this.botController = botControllerFactory.createMiniBotController();
     }
 
     @Override
     public void nextStep(EntityContext context) {
-        super.nextStep(context);
+        // Not needed here, otherwise the minisquirrel would move twice (random + bot move)
+        //super.nextStep(context);
+        // But we still need this little line from the super method
+        updateEnergy(-1);
 
         if (isStunned())
             return;

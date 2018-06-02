@@ -9,6 +9,8 @@ public class dpekezMaster implements BotController {
 
     @Override
     public void nextStep(ControllerContext view) {
+
+        view.move(new XY(-1, 0));
         try {
             view.spawnMiniBot(new XY(-1, 0), 200);
         } catch (SpawnException e) {

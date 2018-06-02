@@ -3,16 +3,13 @@ package de.hsa.games.deeznutz.entities;
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.*;
 import de.hsa.games.deeznutz.core.*;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MasterSquirrelBot extends MasterSquirrel {
-    private static Logger logger = Logger.getLogger(MasterSquirrelBot.class.getName());
 
     private BotControllerFactory botControllerFactory;
     private BotController botController;
@@ -86,7 +83,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public boolean isMine(XY xy) throws OutOfViewException {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-                logger.log(Level.FINER, "Kein Entity in Sichtweite (master)");
+                Logger.getLogger(Launcher.class.getName()).finer("Kein Entity in Sichtweite (master)");
                 throw new OutOfViewException("Kein entity in Sichtweite (master)");
             }
             try {
@@ -106,7 +103,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public void spawnMiniBot(XY direction, int energy) {
             if (energy <= getEnergy()) {
-                MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), MasterSquirrelBot.this, botController);
+                MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), MasterSquirrelBot.this, botControllerFactory);
                 context.insertEntity(miniSquirrelBot);
                 updateEnergy(-energy);
             }
