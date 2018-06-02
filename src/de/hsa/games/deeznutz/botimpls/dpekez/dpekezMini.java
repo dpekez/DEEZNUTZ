@@ -8,8 +8,7 @@ public class dpekezMini implements BotController {
 
     @Override
     public void nextStep(ControllerContext view) {
-        System.out.println("Lol");
-        //view.move(XYsupport.generateRandomMoveVector());
+        view.move(XYsupport.generateRandomMoveVector());
     }
 
 }
