@@ -91,4 +91,15 @@ public class XYsupport {
         }
     }
 
+    public static XY decreaseDistance(XY start, XY target) {
+        int xDiff = target.getX() - start.getX();
+        int yDiff = target.getY() - start.getY();
+        int moveX, moveY;
+
+        moveX = Integer.compare(xDiff, 0);
+        moveY = Integer.compare(yDiff, 0);
+
+        return new XY(moveX, moveY);
+    }
+
 }

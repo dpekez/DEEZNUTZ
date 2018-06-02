@@ -4,7 +4,6 @@ import de.hsa.games.deeznutz.core.EntityType;
 import de.hsa.games.deeznutz.core.XY;
 
 public interface ControllerContext {
-
     /**
      * @return lower left corner of the view rectangle
      */
@@ -16,11 +15,23 @@ public interface ControllerContext {
     XY getViewUpperRight();
 
     /**
+     * @return my cell coordinates, i. e. the position of the controlled player entity
+     */
+    XY locate();
+
+    /**
      * @param xy : cell coordinates
      * @return the type of the entity at that position or none
      * @throws OutOfViewException if xy is outside the view
      */
-    EntityType getEntityAt(XY xy) throws OutOfViewException;
+    EntityType getEntityAt(XY xy);
+
+    /**
+     * @param xy : cell coordinates
+     * @return true, if entity at xy is my master or one of my minis resp.
+     * @throws OutOfViewException if xy is outside the view
+     */
+    boolean isMine(XY xy);
 
     /**
      * @param direction : one of XY.UP, XY.DOWN, ...
@@ -33,24 +44,7 @@ public interface ControllerContext {
      * @param energy    : start energy of the min, at least 100
      * @throws SpawnException if either direction or energy is invalid
      */
-    void spawnMiniBot(XY direction, int energy) throws SpawnException;
-
-    /**
-     * @return the current energy of the player entity
-     */
-    int getEnergy();
-
-    /**
-     * @return my cell coordinates, i. e. the position of the controlled player entity
-     */
-    XY locate();
-
-    /**
-     * @param xy : cell coordinates
-     * @return true, if entity at xy is my master or one of my minis resp.
-     * @throws OutOfViewException if xy is outside the view
-     */
-    boolean isMine(XY xy) throws OutOfViewException;
+    void spawnMiniBot(XY direction, int energy);
 
     /**
      * Very destructive event (see specification for details).
@@ -59,6 +53,11 @@ public interface ControllerContext {
      * @param impactRadius : radius of the impact circle
      */
     void implode(int impactRadius);
+
+    /**
+     * @return the current energy of the player entity
+     */
+    int getEnergy();
 
     /**
      * @return the direction where the master can be found
@@ -77,5 +76,5 @@ public interface ControllerContext {
      */
     default void shout(String text) {
     }
-}
 
+}

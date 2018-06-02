@@ -33,7 +33,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         InvocationHandler handler = new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Logger.getLogger(Launcher.class.getName()).info("MasterBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
+                Logger.getLogger(Launcher.class.getName()).finer("MasterBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
                 return method.invoke(view, args);
             }
         };
@@ -92,15 +92,15 @@ public class MasterSquirrelBot extends MasterSquirrel {
         }
 
         @Override
-        public EntityType getEntityAt(XY xy) throws OutOfViewException {
-            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-                throw new OutOfViewException("Kein Entity in Sichtweite (MasterBot)");
-            }
+        public EntityType getEntityAt(XY xy) {
+            //if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
+            //    throw new OutOfViewException("Kein Entity in Sichtweite (MasterBot)");
+            //}
             return context.getEntityType(xy);
         }
 
         @Override
-        public boolean isMine(XY xy) throws OutOfViewException {
+        public boolean isMine(XY xy) {
             if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
                 Logger.getLogger(Launcher.class.getName()).finer("Kein Entity in Sichtweite (master)");
                 throw new OutOfViewException("Kein entity in Sichtweite (master)");

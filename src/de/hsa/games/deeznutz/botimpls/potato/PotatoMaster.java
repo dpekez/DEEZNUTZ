@@ -12,10 +12,12 @@ public class PotatoMaster implements BotController {
     public void nextStep(ControllerContext context) {
         context.move(XYsupport.generateRandomMoveVector());
 
-        try {
-            context.spawnMiniBot(new XY(0, 0), 100);
-        } catch (SpawnException e) {
-            e.printStackTrace();
+        if (context.getEnergy() >= 1000) {
+            try {
+                context.spawnMiniBot(new XY(0, 0), 100);
+            } catch (SpawnException e) {
+                e.printStackTrace();
+            }
         }
 
     }

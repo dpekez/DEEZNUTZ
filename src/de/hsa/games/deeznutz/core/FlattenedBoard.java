@@ -1,13 +1,12 @@
 package de.hsa.games.deeznutz.core;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.entities.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FlattenedBoard implements BoardView, EntityContext {
-    private static Logger logger = Logger.getLogger(FlattenedBoard.class.getName());
-
     private Board board;
     private Entity[][] cells;
 
@@ -260,11 +259,12 @@ public class FlattenedBoard implements BoardView, EntityContext {
     @Override
     public void kill(Entity entity) {
         board.remove(entity);
+        updateFlattenedBoard();
     }
 
     @Override
     public void killAndReplace(Entity entity) {
-        logger.log(Level.FINE, "Remove and replace " + entity);
+        Logger.getLogger(Launcher.class.getName()).info("Remove and replace " + entity);
         board.remove(entity);
         if (entity instanceof BadBeast)
             board.insert(new BadBeast(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
@@ -274,6 +274,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
             board.insert(new BadPlant(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
         else
             board.insert(new GoodPlant(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
+        updateFlattenedBoard();
     }
 
     @Override

@@ -42,7 +42,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         InvocationHandler handler = new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Logger.getLogger(Launcher.class.getName()).info("MiniBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
+                Logger.getLogger(Launcher.class.getName()).finer("MiniBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
                 return method.invoke(view, args);
             }
         };
@@ -102,10 +102,10 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public EntityType getEntityAt(XY xy) throws OutOfViewException {
-            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-                logger.log(Level.FINER, "No Entity in the searchVector");
-                throw new OutOfViewException("No Entity in the searchVector");
-            }
+            //if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
+            //    logger.log(Level.FINER, "No Entity in the searchVector");
+            //    throw new OutOfViewException("No Entity in the searchVector");
+            //}
             return context.getEntityType(xy);
         }
 
