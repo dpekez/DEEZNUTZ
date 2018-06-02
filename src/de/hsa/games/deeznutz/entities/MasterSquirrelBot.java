@@ -60,15 +60,29 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public XY getViewLowerLeft() {
-            int x = (locate().getX() - VIEW_DISTANCE) < 0 ? 0 : locate().getX() - VIEW_DISTANCE;
-            int y = (locate().getY() - VIEW_DISTANCE) < 0 ? 0 : locate().getY() - VIEW_DISTANCE;
+            int x = getLocation().getX() - (VIEW_DISTANCE - 1) / 2;
+            int y = getLocation().getY() + (VIEW_DISTANCE - 1) / 2;
+
+            if (x < 0)
+                x = 0;
+
+            if (y > context.getSize().getY())
+                y = context.getSize().getY();
+
             return new XY(x, y);
         }
 
         @Override
         public XY getViewUpperRight() {
-            int x = (locate().getX() + VIEW_DISTANCE) > (context.getSize().getX()) ? context.getSize().getX() : locate().getX() + VIEW_DISTANCE;
-            int y = (locate().getY() + VIEW_DISTANCE) > (context.getSize().getY()) ? context.getSize().getY() : locate().getY() + VIEW_DISTANCE;
+            int x = getLocation().getX() + (VIEW_DISTANCE - 1) / 2;
+            int y = getLocation().getY() - (VIEW_DISTANCE - 1) / 2;
+
+            if (x > context.getSize().getX())
+                x = context.getSize().getX();
+
+            if (y < 0)
+                y = 0;
+
             return new XY(x, y);
         }
 
