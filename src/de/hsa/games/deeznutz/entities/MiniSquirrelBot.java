@@ -19,6 +19,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
     private BotControllerFactory botControllerFactory;
     private BotController botController;
+    private static final int VIEW_DISTANCE = 21;
 
     MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy, BotControllerFactory botControllerFactory) {
         super(energy, location, daddy);
@@ -55,7 +56,6 @@ public class MiniSquirrelBot extends MiniSquirrel {
     }
 
     public class ControllerContextImpl implements ControllerContext {
-        final int viewDistanceMiniBot = 10;
         private EntityContext context;
 
         ControllerContextImpl(EntityContext context) {
@@ -64,15 +64,15 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public XY getViewLowerLeft() {
-            int x = (locate().getX() - viewDistanceMiniBot) < 0 ? 0 : locate().getX() - viewDistanceMiniBot;
-            int y = (locate().getY() - viewDistanceMiniBot) < 0 ? 0 : locate().getY() - viewDistanceMiniBot;
+            int x = (locate().getX() - VIEW_DISTANCE) < 0 ? 0 : locate().getX() - VIEW_DISTANCE;
+            int y = (locate().getY() - VIEW_DISTANCE) < 0 ? 0 : locate().getY() - VIEW_DISTANCE;
             return new XY(x, y);
         }
 
         @Override
         public XY getViewUpperRight() {
-            int x = (locate().getX() + viewDistanceMiniBot) > (context.getSize().getX()) ? context.getSize().getX() : locate().getX() + viewDistanceMiniBot;
-            int y = (locate().getY() + viewDistanceMiniBot) > (context.getSize().getY()) ? context.getSize().getY() : locate().getY() + viewDistanceMiniBot;
+            int x = (locate().getX() + VIEW_DISTANCE) > (context.getSize().getX()) ? context.getSize().getX() : locate().getX() + VIEW_DISTANCE;
+            int y = (locate().getY() + VIEW_DISTANCE) > (context.getSize().getY()) ? context.getSize().getY() : locate().getY() + VIEW_DISTANCE;
             return new XY(x, y);
         }
 

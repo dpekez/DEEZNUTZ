@@ -5,14 +5,14 @@ import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.botapi.SpawnException;
 import de.hsa.games.deeznutz.core.XY;
 
-public class dpekezMaster implements BotController {
+public class DpekezMaster implements BotController {
 
     @Override
-    public void nextStep(ControllerContext view) {
+    public void nextStep(ControllerContext context) {
 
-        view.move(new XY(-1, 0));
+        context.move(new XY(-1, 0));
         try {
-            view.spawnMiniBot(new XY(-1, 0), 200);
+            context.spawnMiniBot(new XY(-1, 0), 200);
         } catch (SpawnException e) {
             e.printStackTrace();
         }

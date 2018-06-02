@@ -41,8 +41,8 @@ public class BoardConfig {
         waitingTimeBeast = Integer.parseInt(properties.getProperty("waitingTimeBeast", "4"));
         playerEntityViewDistance = Integer.parseInt(properties.getProperty("playerEntityViewDistance", "6"));
         collisionPointsWithAlienMS = Integer.parseInt(properties.getProperty("collisionPointsWithAlienMS", "150"));
-        mainBotPath = properties.getProperty("mainBotPath", "de.hsa.games.deeznutz.botimpls.mozartuss.BrainFactory");
-        secondaryBotPath = properties.getProperty("secondaryBotPath", "de.hsa.games.deeznutz.botimpls.potato.PotatoControllerFactory");
+        mainBotPath = properties.getProperty("mainBotPath", "de.hsa.games.deeznutz.botimpls.potato.PotatoFactory");
+        secondaryBotPath = properties.getProperty("secondaryBotPath", "de.hsa.games.deeznutz.botimpls.potato.PotatoFactory");
     }
 
     /**

@@ -4,11 +4,11 @@ import de.hsa.games.deeznutz.botapi.BotController;
 import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.core.XYsupport;
 
-public class dpekezMini implements BotController {
+public class DpekezMini implements BotController {
 
     @Override
-    public void nextStep(ControllerContext view) {
-        view.move(XYsupport.generateRandomMoveVector());
+    public void nextStep(ControllerContext context) {
+        context.move(XYsupport.generateRandomMoveVector());
     }
 
 }
