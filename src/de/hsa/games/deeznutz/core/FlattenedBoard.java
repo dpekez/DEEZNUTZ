@@ -3,7 +3,6 @@ package de.hsa.games.deeznutz.core;
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.entities.*;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FlattenedBoard implements BoardView, EntityContext {
@@ -80,30 +79,37 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 miniSquirrel.updateEnergy(nextEntity.getEnergy());
                 miniSquirrel.isStunnedNextRound();
                 break;
+            case BAD_BEAST:
+                break;
             case GOOD_PLANT:
             case BAD_PLANT:
+            case GOOD_BEAST:
+                Logger.getLogger(Launcher.class.getName()).fine("Hitting on Beast " + miniSquirrel);
+
                 miniSquirrel.updateEnergy(nextEntity.getEnergy());
-                killAndReplace(nextEntity);
+
                 if (miniSquirrel.getEnergy() <= 0)
                     kill(miniSquirrel);
-                break;
-            case BAD_BEAST:
-            case GOOD_BEAST:
-                miniSquirrel.updateEnergy(nextEntity.getEnergy());
-                if (miniSquirrel.getEnergy() <= 0) {
-                    kill(miniSquirrel);
-                } else {
-                    miniSquirrel.move(moveDirection);
-                    updateFlattenedBoard();
-                }
+
+                killAndReplace(nextEntity);
+                miniSquirrel.move(moveDirection);
+                updateFlattenedBoard();
                 break;
             case MASTER_SQUIRREL:
+            case MASTER_SQUIRREL_BOT:
+                Logger.getLogger(Launcher.class.getName()).fine("Hitting on master " + miniSquirrel);
+
                 MasterSquirrel masterSquirrel = (MasterSquirrel) nextEntity;
 
                 if (masterSquirrel.isMyChild(miniSquirrel)) {
+                    Logger.getLogger(Launcher.class.getName()).fine("Is my daddy " + miniSquirrel);
+                    Logger.getLogger(Launcher.class.getName()).fine("Daddy energy before:" + masterSquirrel.getEnergy());
                     masterSquirrel.updateEnergy(miniSquirrel.getEnergy());
+                    Logger.getLogger(Launcher.class.getName()).fine("Daddy energy after:" + masterSquirrel.getEnergy());
                     kill(miniSquirrel);
                 } else {
+                    Logger.getLogger(Launcher.class.getName()).fine("Is not my daddy " + miniSquirrel);
+
                     kill(miniSquirrel);
                 }
                 break;
@@ -132,7 +138,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
             case MINI_SQUIRREL:
                 Logger.getLogger(Launcher.class.getName()).fine("Hitting on Master/Mini " + goodBeast);
                 nextEntity.updateEnergy(goodBeast.getEnergy());
-                killAndReplace(goodBeast);
+                //killAndReplace(goodBeast);
                 break;
         }
     }
@@ -192,6 +198,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 killAndReplace(nextEntity);
                 break;
             case MINI_SQUIRREL:
+            case MINI_SQUIRREL_BOT:
                 Logger.getLogger(Launcher.class.getName()).fine("Hitting on MiniSquirrel " + masterSquirrel);
                 MiniSquirrel miniSquirrel = (MiniSquirrel) nextEntity;
                 int energy;
