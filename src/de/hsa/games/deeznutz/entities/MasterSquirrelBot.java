@@ -106,7 +106,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
                 throw new OutOfViewException("Kein entity in Sichtweite (master)");
             }
             try {
-                if (MasterSquirrelBot.this.isMyChild((MiniSquirrel) context.getEntiy(xy)))
+                if (MasterSquirrelBot.this.isMyChild((MiniSquirrel) context.getEntity(xy)))
                     return true;
             } catch (Exception e) {
                 return false;

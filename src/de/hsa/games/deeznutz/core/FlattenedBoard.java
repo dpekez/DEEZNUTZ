@@ -130,7 +130,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
             case MASTER_SQUIRREL_BOT:
             case MASTER_SQUIRREL:
             case MINI_SQUIRREL:
-                Logger.getLogger(Launcher.class.getName()).info("hitting on Master/mini" + goodBeast);
+                Logger.getLogger(Launcher.class.getName()).fine("Hitting on Master/Mini " + goodBeast);
                 nextEntity.updateEnergy(goodBeast.getEnergy());
                 killAndReplace(goodBeast);
                 break;
@@ -192,11 +192,15 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 killAndReplace(nextEntity);
                 break;
             case MINI_SQUIRREL:
+                Logger.getLogger(Launcher.class.getName()).fine("Hitting on MiniSquirrel " + masterSquirrel);
                 MiniSquirrel miniSquirrel = (MiniSquirrel) nextEntity;
                 int energy;
                 if (masterSquirrel.isMyChild(miniSquirrel)) {
+                    Logger.getLogger(Launcher.class.getName()).fine("Is my child " + masterSquirrel);
                     energy = miniSquirrel.getEnergy();
+                    kill(miniSquirrel);
                 } else {
+                    Logger.getLogger(Launcher.class.getName()).fine("Is not my child " + masterSquirrel);
                     energy = board.getConfig().getCollisionPointsWithAlienMS();
                 }
                 masterSquirrel.updateEnergy(energy);
@@ -204,7 +208,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 updateFlattenedBoard();
                 break;
             case GOOD_BEAST:
-                Logger.getLogger(Launcher.class.getName()).info("hitting on GoodBeast " + masterSquirrel);
+                Logger.getLogger(Launcher.class.getName()).fine("Hitting on GoodBeast " + masterSquirrel);
                 masterSquirrel.updateEnergy(nextEntity.getEnergy());
                 killAndReplace(nextEntity);
                 masterSquirrel.move(moveDirection);
@@ -266,7 +270,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
     @Override
     public void killAndReplace(Entity entity) {
-        Logger.getLogger(Launcher.class.getName()).info("Remove and replace " + entity);
+        Logger.getLogger(Launcher.class.getName()).fine("Remove and replace " + entity);
         board.remove(entity);
         if (entity instanceof BadBeast)
             board.insert(new BadBeast(XYsupport.generateRandomLocation(board.getConfig().getBoardSize(), board.getEntities())));
@@ -280,8 +284,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
     }
 
     @Override
-    public Entity getEntiy(XY xy) {
-        return null;
+    public Entity getEntity(XY xy) {
+        return cells[xy.getX()][xy.getY()];
     }
 
     @Override

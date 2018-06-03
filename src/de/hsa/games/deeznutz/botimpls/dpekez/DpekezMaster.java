@@ -57,7 +57,7 @@ public class DpekezMaster implements BotController {
                 break;
         }
 
-        Logger.getLogger(Launcher.class.getName()).info("start: "+ context.locate() + " ziel: " + nearestEntity);
+        Logger.getLogger(Launcher.class.getName()).fine("start: "+ context.locate() + " ziel: " + nearestEntity);
 
         XY moveVector;
 
@@ -65,7 +65,7 @@ public class DpekezMaster implements BotController {
         if (nearestEntity == null) {
             switch (selectedQ) {
                 case 0:
-                    Logger.getLogger(Launcher.class.getName()).info("nicht gut");
+                    Logger.getLogger(Launcher.class.getName()).fine("nicht gut");
                     moveVector = XYsupport.generateRandomMoveVector();
                     break;
                 case 1:
@@ -140,7 +140,7 @@ public class DpekezMaster implements BotController {
             selected = 4;
         }
 
-        Logger.getLogger(Launcher.class.getName()).info(selected + " selected");
+        Logger.getLogger(Launcher.class.getName()).fine(selected + " selected");
         return selected;
     }
 
@@ -162,7 +162,7 @@ public class DpekezMaster implements BotController {
                     quantity += 1;
             }
         }
-        Logger.getLogger(Launcher.class.getName()).info("quantity: " + quantity);
+        Logger.getLogger(Launcher.class.getName()).fine("quantity: " + quantity);
         return quantity;
     }
 
@@ -170,14 +170,16 @@ public class DpekezMaster implements BotController {
         XY nearestEntity = null;
         for (int x = startX; x < stopX; x++) {
             for (int y = startY; y < stopY; y++) {
-                if (context.getEntityAt(new XY(x, y)) != EntityType.GOOD_PLANT && context.getEntityAt(new XY(x, y)) != EntityType.GOOD_BEAST) {
+                if (context.getEntityAt(new XY(x, y)) != EntityType.GOOD_PLANT
+                        && context.getEntityAt(new XY(x, y)) != EntityType.GOOD_BEAST
+                        && context.getEntityAt(new XY(x, y)) != EntityType.MINI_SQUIRREL) {
                     continue;
                 }
                 if (nearestEntity == null) {
-                    Logger.getLogger(Launcher.class.getName()).info("nulled");
+                    Logger.getLogger(Launcher.class.getName()).fine("nulled");
                     nearestEntity = new XY(x, y);
                 } else if (context.locate().distanceFrom(new XY(x, y)) < context.locate().distanceFrom(nearestEntity)) {
-                    Logger.getLogger(Launcher.class.getName()).info("nearer");
+                    Logger.getLogger(Launcher.class.getName()).fine("nearer");
                     nearestEntity = new XY(x, y);
                 }
             }

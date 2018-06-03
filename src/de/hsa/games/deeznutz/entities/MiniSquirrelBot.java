@@ -11,7 +11,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MiniSquirrelBot extends MiniSquirrel {
@@ -132,15 +131,17 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public void implode(int impactRadius) {
+            Logger.getLogger(Launcher.class.getName()).info("Implode Method called");
             if (!(impactRadius >= 2 && impactRadius <= 10))
                 return;
 
             int impactArea = (int) Math.round(Math.pow(impactRadius, 2) * Math.PI);
             int totalImplosionEnergy = 0;
             int minX = -impactRadius, minY = -impactRadius;
+
             for (int x = minX; x < impactRadius; x++)
                 for (int y = minY; y < impactRadius; y++) {
-                    Entity entity = context.getEntiy(new XY(getLocation().getX() + x, getLocation().getY() + y));
+                    Entity entity = context.getEntity(new XY(getLocation().getX() + x, getLocation().getY() + y));
                     int distance = (int) this.locate().distanceFrom(entity.getLocation());
                     int energyLoss = (200 * (MiniSquirrelBot.this.getEnergy() / impactArea) * (1 - distance / impactRadius));
 
