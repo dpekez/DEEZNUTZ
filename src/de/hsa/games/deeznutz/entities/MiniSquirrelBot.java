@@ -134,8 +134,8 @@ public class MiniSquirrelBot extends MiniSquirrel {
             //kann keine MiniSquirrelBot spawnen
         }
 
-        @Override
-        public void implode(int impactRadius) {
+        //@Override
+        public void implodeQuang(int impactRadius) {
             logger.info("Implode Method called");
             if (!(impactRadius >= 2 && impactRadius <= 10))
                 return;
@@ -183,8 +183,8 @@ public class MiniSquirrelBot extends MiniSquirrel {
             context.kill(MiniSquirrelBot.this);
         }
 
-        //@Override
-        public void implodeOld(int impactRadius) {
+        @Override
+        public void implode(int impactRadius) {
             logger.info("Implode Method called");
             if (!(impactRadius >= 2 && impactRadius <= 10))
                 return;
@@ -209,6 +209,8 @@ public class MiniSquirrelBot extends MiniSquirrel {
             for (int x = startX; x < stopX; x++)
                 for (int y = startY; y < stopY; y++) {
                     if (context.getEntity(new XY(x, y)) == null)
+                        continue;
+                    if (x == 0 && y == 0)
                         continue;
 
                     Entity entity = context.getEntity(new XY(x, y));
