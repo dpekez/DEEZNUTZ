@@ -13,6 +13,8 @@ public class DpekezMini implements BotController {
 
     private int refreshSelector;
     private int selectedQ;
+    private boolean startEnergyNotSet = true;
+    private int startEnergy;
 
     public DpekezMini() {
         refreshSelector = 0;
@@ -21,6 +23,15 @@ public class DpekezMini implements BotController {
 
     @Override
     public void nextStep(ControllerContext context) {
+
+        if (startEnergyNotSet)
+            startEnergy = context.getEnergy();
+
+        if (context.getEnergy() >= startEnergy + 1000) {
+            Logger.getLogger(Launcher.class.getName()).info("Looking for master");
+            context.move(context.directionOfMaster());
+            return;
+        }
 
         // check implode condition
         //if (implodeCondition(context, 5)) {
@@ -146,9 +157,9 @@ public class DpekezMini implements BotController {
         for (int x = startX; x < stopX; x++) {
             for (int y = startY; y < stopY; y++) {
                 if (context.getEntityAt(new XY(x, y)) == EntityType.GOOD_BEAST)
-                    quantity += 4;
-                if (context.getEntityAt(new XY(x, y)) == EntityType.GOOD_PLANT)
                     quantity += 3;
+                if (context.getEntityAt(new XY(x, y)) == EntityType.GOOD_PLANT)
+                    quantity += 5;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.BAD_BEAST)
                     quantity -= 2;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.BAD_PLANT)
