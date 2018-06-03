@@ -183,6 +183,79 @@ public class MiniSquirrelBot extends MiniSquirrel {
             context.kill(MiniSquirrelBot.this);
         }
 
+        //@Override
+        public void implodeOld(int impactRadius) {
+            logger.info("Implode Method called");
+            if (!(impactRadius >= 2 && impactRadius <= 10))
+                return;
+
+            int startX = locate().getX() - (impactRadius - 1) / 2;
+            int startY = locate().getY() - (impactRadius - 1) / 2;
+            int stopX = locate().getX() + (impactRadius - 1) / 2;
+            int stopY = locate().getY() + (impactRadius - 1) / 2;
+
+            if (startX < 0)
+                startX = 0;
+            if (startY < 0)
+                startY = 0;
+            if (stopX > getViewUpperRight().getX())
+                stopX = getViewUpperRight().getX();
+            if (stopY > getViewLowerLeft().getY())
+                stopY = getViewLowerLeft().getY();
+
+            int impactArea = (int) Math.round(Math.pow(impactRadius, 2) * Math.PI);
+            int totalImplosionEnergy = 0;
+
+            for (int x = startX; x < stopX; x++)
+                for (int y = startY; y < stopY; y++) {
+                    if (context.getEntity(new XY(x, y)) == null)
+                        continue;
+
+                    Entity entity = context.getEntity(new XY(x, y));
+
+                    int distance = (int) this.locate().distanceFrom(entity.getLocation());
+                    int energyLoss = (200 * (MiniSquirrelBot.this.getEnergy() / impactArea) * (1 - distance / impactRadius));
+
+                    switch (entity.getEntityType()) {
+                        case BAD_BEAST:
+                        case BAD_PLANT:
+                            logger.fine("Imploding on Entity ID: " + entity.getId());
+                            entity.updateEnergy(-energyLoss);
+                            if (entity.getEnergy() >= 0)
+                                context.killAndReplace(entity);
+                            break;
+                        case GOOD_PLANT:
+                        case GOOD_BEAST:
+                            logger.fine("Imploding on Entity ID: " + entity.getId());
+                            entity.updateEnergy(energyLoss);
+                            if (entity.getEnergy() <= 0)
+                                context.killAndReplace(entity);
+                            break;
+                        case MINI_SQUIRREL_BOT:
+                        case MINI_SQUIRREL:
+                            if (MiniSquirrelBot.this.getDaddy() == ((MiniSquirrel) entity).getDaddy())
+                                continue;
+                            logger.fine("Imploding on Entity ID: " + entity.getId());
+                            entity.updateEnergy(energyLoss);
+                            if (entity.getEnergy() <= 0)
+                                context.killAndReplace(entity);
+                            break;
+                        case MASTER_SQUIRREL:
+                        case MASTER_SQUIRREL_BOT:
+                            MasterSquirrel masterSquirrel = (MasterSquirrel) entity;
+                            if (!(masterSquirrel.isMyChild(MiniSquirrelBot.this)))
+                                if (entity.getEnergy() < -energyLoss)
+                                    energyLoss = -entity.getEnergy();
+                            logger.fine("Imploding on Entity ID: " + entity.getId());
+                            entity.updateEnergy(energyLoss);
+                            break;
+                    }
+                    totalImplosionEnergy = totalImplosionEnergy - energyLoss;
+                    logger.fine("Imploding: Total implosion energy: " + totalImplosionEnergy);
+                }
+            MiniSquirrelBot.this.getDaddy().updateEnergy(totalImplosionEnergy);
+        }
+
         @Override
         public int getEnergy() {
             return MiniSquirrelBot.this.getEnergy();
