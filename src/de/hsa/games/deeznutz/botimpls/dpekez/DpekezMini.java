@@ -38,7 +38,7 @@ public class DpekezMini implements BotController {
 
 
         if (context.getEnergy() >= startEnergy + 2000) {
-            logger.info("Looking for master");
+            logger.fine("Looking for master");
             context.move(context.directionOfMaster());
             return;
         }
