@@ -33,7 +33,7 @@ public class DpekezMaster implements BotController {
             int miniEnergy = (int)(context.getEnergy()*0.1);
             if (miniEnergy >= maxMiniEnergy)
                 miniEnergy = maxMiniEnergy;
-            context.spawnMiniBot(XYsupport.generateRandomMoveVector(), miniEnergy);
+            context.spawnMiniBot(XY.ZERO_ZERO, miniEnergy);
         }
 
         // set quadrant selector refresh rate
@@ -96,24 +96,28 @@ public class DpekezMaster implements BotController {
 
         // bad beast evasion
         if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.BAD_BEAST) {
+            logger.fine("Evading bad beast.");
             refreshSelector = -5;
             moveVector = badBeastEvader(moveVector);
         }
 
         // bad plant evasion
         else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.BAD_PLANT) {
+            logger.fine("Evading bad plant.");
             refreshSelector = -5;
             moveVector = badPlantEvader(moveVector);
         }
 
         // wall evasion
         else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.WALL) {
+            logger.fine("Evading wall.");
             refreshSelector = -5;
             moveVector = wallEvader(moveVector);
         }
 
         // enemy evasion
-        else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.MASTER_SQUIRREL) {
+        else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.MASTER_SQUIRREL_BOT) {
+            logger.fine("Evading enemy.");
             refreshSelector = -5;
             moveVector = enemyEvader(moveVector);
         }
@@ -158,6 +162,8 @@ public class DpekezMaster implements BotController {
                     quantity += 4;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.GOOD_PLANT)
                     quantity += 3;
+                if (context.getEntityAt(new XY(x, y)) == EntityType.MINI_SQUIRREL)
+                    quantity -= 5;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.BAD_BEAST)
                     quantity -= 2;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.BAD_PLANT)
@@ -168,7 +174,7 @@ public class DpekezMaster implements BotController {
                     quantity += 1;
             }
         }
-        logger.fine("quantity: " + quantity);
+        logger.fine("Quantity: " + quantity);
         return quantity;
     }
 
@@ -182,11 +188,11 @@ public class DpekezMaster implements BotController {
                     continue;
                 }
                 if (nearestEntity == null) {
-                    logger.fine("nulled");
                     nearestEntity = new XY(x, y);
+                    logger.fine("Found first near entity: " + nearestEntity);
                 } else if (context.locate().distanceFrom(new XY(x, y)) < context.locate().distanceFrom(nearestEntity)) {
-                    logger.fine("nearer");
                     nearestEntity = new XY(x, y);
+                    logger.fine("Found nearer entity: " + nearestEntity);
                 }
             }
         }

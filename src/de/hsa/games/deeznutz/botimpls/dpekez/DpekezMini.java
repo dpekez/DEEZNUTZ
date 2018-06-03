@@ -108,24 +108,28 @@ public class DpekezMini implements BotController {
 
         // bad beast evasion
         if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.BAD_BEAST) {
+            logger.fine("Evading bad beast.");
             refreshSelector = -5;
             moveVector = badBeastEvader(moveVector);
         }
 
         // bad plant evasion
         else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.BAD_PLANT) {
+            logger.fine("Evading bad plant.");
             refreshSelector = -5;
             moveVector = badPlantEvader(moveVector);
         }
 
         // wall evasion
         else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.WALL) {
+            logger.fine("Evading wall.");
             refreshSelector = -5;
             moveVector = wallEvader(moveVector);
         }
 
         // enemy evasion
-        else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.MASTER_SQUIRREL) {
+        else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.MASTER_SQUIRREL_BOT) {
+            logger.fine("Evading enemy.");
             refreshSelector = -5;
             moveVector = enemyEvader(moveVector);
         }
@@ -273,7 +277,7 @@ public class DpekezMini implements BotController {
             }
         }
         logger.fine("Entities inside impact radius: " + entitiesInsideImpactRadius);
-        return (entitiesInsideImpactRadius >= 1);
+        return (entitiesInsideImpactRadius >= 2);
     }
 
 }
