@@ -15,11 +15,13 @@ public class DpekezMaster implements BotController {
     private int refreshSelector;
     private int selectedQ;
     private int miniSpawnThreshhold;
+    private int maxMiniEnergy;
 
     public DpekezMaster() {
         refreshSelector = 0;
         selectedQ = 1;
-        miniSpawnThreshhold = 2500;
+        miniSpawnThreshhold = 2000;
+        maxMiniEnergy = 2000;
     }
 
     @Override
@@ -27,8 +29,11 @@ public class DpekezMaster implements BotController {
 
         // spawn mini
         if (context.getEnergy() >= miniSpawnThreshhold) {
-            miniSpawnThreshhold += 1500;
-            context.spawnMiniBot(XY.LEFT, (int)(context.getEnergy()*0.1));
+            miniSpawnThreshhold += 1000;
+            int miniEnergy = (int)(context.getEnergy()*0.1);
+            if (miniEnergy >= maxMiniEnergy)
+                miniEnergy = maxMiniEnergy;
+            context.spawnMiniBot(XYsupport.generateRandomMoveVector(), miniEnergy);
         }
 
         // set quadrant selector refresh rate

@@ -31,19 +31,22 @@ public class DpekezMini implements BotController {
             return;
         }
 
-        if (startEnergyNotSet)
+        if (startEnergyNotSet) {
             startEnergy = context.getEnergy();
+            startEnergyNotSet = false;
+        }
 
-        if (context.getEnergy() >= startEnergy + 1000) {
+
+        if (context.getEnergy() >= startEnergy + 2000) {
             logger.info("Looking for master");
             context.move(context.directionOfMaster());
             return;
         }
 
         // check implode condition
-        if (implodeCondition(context, 5)) {
-            context.implode(5);
-        }
+        //if (implodeCondition(context, 5)) {
+        //    context.implode(5);
+        //}
 
         // set quadrant selector refresh rate
         if (refreshSelector <= 0) {
