@@ -16,14 +16,20 @@ public class DpekezMini implements BotController {
     private int selectedQ;
     private boolean startEnergyNotSet = true;
     private int startEnergy;
+    private int standStill;
 
     public DpekezMini() {
         refreshSelector = 0;
         selectedQ = 1;
+        standStill = 5;
     }
 
     @Override
     public void nextStep(ControllerContext context) {
+        if (standStill > 0) {
+            standStill--;
+            return;
+        }
 
         if (startEnergyNotSet)
             startEnergy = context.getEnergy();
@@ -35,9 +41,9 @@ public class DpekezMini implements BotController {
         }
 
         // check implode condition
-        //if (implodeCondition(context, 5)) {
-        //    context.implode(5);
-        //}
+        if (implodeCondition(context, 5)) {
+            context.implode(5);
+        }
 
         // set quadrant selector refresh rate
         if (refreshSelector <= 0) {
