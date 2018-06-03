@@ -1,5 +1,6 @@
 package de.hsa.games.deeznutz.botimpls.mozartuss;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.BotController;
 import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.botapi.SpawnException;
@@ -10,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MasterBotBrain implements BotController {
-    private final static Logger logger = Logger.getLogger(MasterBotBrain.class.getName());
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private int energyToReachForSpawn = 400;
 
@@ -28,7 +29,7 @@ public class MasterBotBrain implements BotController {
                 }
             }
         } catch (SpawnException e) {
-            logger.log(Level.WARNING, "Unable zo spawn");
+            logger.warning("Unable to pawn MiniSquirrel (Brain)");
         }
     }
 }

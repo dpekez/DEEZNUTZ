@@ -6,6 +6,7 @@ import de.hsa.games.deeznutz.core.XY;
 import java.util.logging.Logger;
 
 public abstract class Entity {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private static int lastID = -1;
     private int id;
@@ -36,7 +37,7 @@ public abstract class Entity {
     }
 
     public void updateEnergy(int energy) {
-        Logger.getLogger(Launcher.class.getName()).finer("Entity with ID " + id + " (" + location + ") got: " + energy);
+        logger.finer("Entity with ID " + id + " (" + location + ") got: " + energy);
         this.energy += energy;
     }
 

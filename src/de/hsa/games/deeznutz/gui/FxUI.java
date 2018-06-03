@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import java.util.logging.Logger;
 
 public class FxUI extends Scene implements UI {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private static final double CELL_SIZE = 15;
     private static MoveCommand command;
@@ -80,7 +81,7 @@ public class FxUI extends Scene implements UI {
                             throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.game.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
                         }
                     } catch (NotEnoughEnergyException e) {
-                        Logger.getLogger(Launcher.class.getName()).warning(e.getMessage());
+                        logger.warning(e.getMessage());
                     }
 
                     break;

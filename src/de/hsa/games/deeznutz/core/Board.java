@@ -1,5 +1,6 @@
 package de.hsa.games.deeznutz.core;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.BotControllerFactory;
 import de.hsa.games.deeznutz.entities.*;
 
@@ -8,7 +9,7 @@ import java.util.logging.Logger;
 
 public class Board {
 
-    private static Logger logger = Logger.getLogger(Board.class.getName());
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
     private EntitySet entitySet;
     private BoardConfig boardConfig;
     private HandOperatedMasterSquirrel masterSquirrel;
@@ -85,14 +86,15 @@ public class Board {
             BotControllerFactory factory = (BotControllerFactory) Class.forName(botPath).newInstance();
             return new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
         } catch (ClassNotFoundException e) {
-            logger.log(Level.SEVERE, "Factory wurde nicht gefunden");
+            logger.severe("Factory wurde nicht gefunden");
         } catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
+            logger.severe(e.getMessage());
         }
         return null;
     }
 
     void insertMasterSquirrel(HandOperatedMasterSquirrel masterSquirrel) {
+        logger.finest("Insert MasterSquirrel");
         this.masterSquirrel = masterSquirrel;
         insert(masterSquirrel);
     }
@@ -102,6 +104,7 @@ public class Board {
     }
 
     public void insertMiniSquirrel(int energy, XY direction, MasterSquirrel daddy) {
+        logger.finest("Insert MiniSquirrel");
         XY location = masterSquirrel.getLocation().addVector(direction);
         if (masterSquirrel.getEnergy() >= energy) {
             masterSquirrel.updateEnergy(-energy);

@@ -1,5 +1,6 @@
 package de.hsa.games.deeznutz.botimpls.mozartuss;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.BotController;
 import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.botapi.OutOfViewException;
@@ -9,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MiniBotBrain implements BotController {
-    private static Logger logger = Logger.getLogger(MiniBotBrain.class.getName());
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     @Override
     public void nextStep(ControllerContext view) {
@@ -17,7 +18,7 @@ public class MiniBotBrain implements BotController {
         boolean shouldImplode = implodeCondition(view, impactRadius);
 
         if (shouldImplode) {
-            logger.log(Level.INFO, "MiniSquirrelBot implode!");
+            logger.info("MiniSquirrelBot implode!");
             view.implode(impactRadius);
         }
 
@@ -57,7 +58,7 @@ public class MiniBotBrain implements BotController {
                         counterToImplode++;
                     }
                 } catch (OutOfViewException e) {
-                    logger.log(Level.FINEST, "No Entity in the searchVector");
+                    logger.finer("No Entity in the searchVector");
                 }
             }
         }

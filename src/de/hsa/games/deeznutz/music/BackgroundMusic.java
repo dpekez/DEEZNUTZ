@@ -1,12 +1,15 @@
 package de.hsa.games.deeznutz.music;
 
+import de.hsa.games.deeznutz.Launcher;
+
 import javax.sound.sampled.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BackgroundMusic {
-    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+
     public static BackgroundMusic backgroundMusic = new BackgroundMusic("bolt.wav");
     private Clip clip;
 
@@ -16,7 +19,7 @@ public class BackgroundMusic {
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
         } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-            logger.log(Level.SEVERE, "A exception was thrown", e);
+            logger.severe(e.getMessage());
         }
     }
 

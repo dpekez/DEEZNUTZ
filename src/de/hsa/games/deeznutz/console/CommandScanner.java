@@ -1,5 +1,7 @@
 package de.hsa.games.deeznutz.console;
 
+import de.hsa.games.deeznutz.Launcher;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -7,7 +9,7 @@ import java.util.logging.Logger;
 
 
 class CommandScanner {
-    private static Logger logger = Logger.getLogger(CommandScanner.class.getName());
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private CommandTypeInfo[] commandTypeInfos;
     private BufferedReader inputReader;
@@ -23,12 +25,12 @@ class CommandScanner {
         String userInput = null;
         try {
             userInput = inputReader.readLine();
-            logger.log(Level.FINEST, "Input : " + userInput);
+            logger.finest("Input : " + userInput);
         } catch (IOException e) {
             try {
                 throw new ScanException("Input reader ERROR");
             } catch (ScanException ex) {
-                logger.log(Level.WARNING, ex.getMessage());
+                logger.warning(ex.getMessage());
             }
         }
 
@@ -53,7 +55,7 @@ class CommandScanner {
             try {
                 throw new ScanException("parameters wrong");
             } catch (ScanException ex) {
-                logger.log(Level.WARNING, ex.getMessage());
+                logger.warning(ex.getMessage());
             }
         }
         return new Command(command, parameters);

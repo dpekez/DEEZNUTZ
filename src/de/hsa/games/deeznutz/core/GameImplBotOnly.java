@@ -1,10 +1,15 @@
 package de.hsa.games.deeznutz.core;
 
 import de.hsa.games.deeznutz.Game;
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.console.ConsoleUI;
 import de.hsa.games.deeznutz.entities.MasterSquirrelBot;
 
+import java.util.logging.Logger;
+
 public class GameImplBotOnly extends Game {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+
     private MasterSquirrelBot mainMasterSquirrelBot;
     private MasterSquirrelBot secondaryMasterSquirrelBot;
     private String mainMasterSquirrelBotInfo;
@@ -19,7 +24,9 @@ public class GameImplBotOnly extends Game {
         mainMasterSquirrelBot = state.getBoard().createBot(boardConfig.getMainBotPath());
         secondaryMasterSquirrelBot = state.getBoard().createBot(boardConfig.getSecondaryBotPath());
         state.getBoard().insert(mainMasterSquirrelBot);
+        logger.finer("Insert first MasterSquirrelBot");
         state.getBoard().insert(secondaryMasterSquirrelBot);
+        logger.finer("Insert second MasterSquirrelBot");
         mainMasterSquirrelBotInfo = boardConfig.getMainBotPath();
         secondaryMasterSquirrelBotInfo = boardConfig.getSecondaryBotPath();
     }

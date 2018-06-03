@@ -1,5 +1,6 @@
 package de.hsa.games.deeznutz.botimpls.mozartuss;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.botapi.OutOfViewException;
 import de.hsa.games.deeznutz.core.EntityType;
@@ -10,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BotBrain {
-    private final static Logger logger = Logger.getLogger(BotBrain.class.getName());
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     static XY moveToNearestGoodEntity(ControllerContext context) {
         XY moveDirection = XY.ZERO_ZERO;
@@ -53,7 +54,7 @@ public class BotBrain {
         int maxY = context.getViewUpperRight().getY();
 
         try {
-            XY nearestEntity = new XY(16, 16);
+            XY nearestEntity = new XY(20, 15);
             for (int x = minX; x < maxX; x++) {
                 for (int y = minY; y < maxY; y++) {
                     if (context.getEntityAt(new XY(x, y)) == type) {
@@ -66,7 +67,7 @@ public class BotBrain {
             }
             return nearestEntity;
         } catch (OutOfViewException e) {
-            logger.log(Level.WARNING, "No Entity in the searchVector");
+            logger.finer("No Entity in vektor");
         }
         return null;
     }
@@ -81,7 +82,7 @@ public class BotBrain {
                     return false;
             }
         } catch (OutOfViewException e) {
-            logger.log(Level.WARNING, "No Entity in the searchVector");
+            logger.finer("No Entity in Spawnfield");
         }
         return false;
     }

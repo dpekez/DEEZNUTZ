@@ -6,6 +6,7 @@ import de.hsa.games.deeznutz.core.XY;
 import java.util.logging.Logger;
 
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     public HandOperatedMasterSquirrel(XY location) {
         super(location);
@@ -16,7 +17,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
         super.nextStep(context);
 
         if (isStunned()) {
-            Logger.getLogger(Launcher.class.getName()).info("MasterSquirrel is stunned");
+            logger.info("MasterSquirrel is stunned");
             return;
         }
 

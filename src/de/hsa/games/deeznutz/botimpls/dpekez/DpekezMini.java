@@ -10,6 +10,7 @@ import de.hsa.games.deeznutz.core.XYsupport;
 import java.util.logging.Logger;
 
 public class DpekezMini implements BotController {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private int refreshSelector;
     private int selectedQ;
@@ -28,7 +29,7 @@ public class DpekezMini implements BotController {
             startEnergy = context.getEnergy();
 
         if (context.getEnergy() >= startEnergy + 1000) {
-            Logger.getLogger(Launcher.class.getName()).info("Looking for master");
+            logger.info("Looking for master");
             context.move(context.directionOfMaster());
             return;
         }
@@ -65,7 +66,7 @@ public class DpekezMini implements BotController {
                 break;
         }
 
-        Logger.getLogger(Launcher.class.getName()).fine("start: "+ context.locate() + " ziel: " + nearestEntity);
+        logger.fine("start: " + context.locate() + " ziel: " + nearestEntity);
 
         XY moveVector;
 
@@ -73,7 +74,7 @@ public class DpekezMini implements BotController {
         if (nearestEntity == null) {
             switch (selectedQ) {
                 case 0:
-                    Logger.getLogger(Launcher.class.getName()).fine("nicht gut");
+                    logger.fine("nicht gut");
                     moveVector = XYsupport.generateRandomMoveVector();
                     break;
                 case 1:
@@ -148,7 +149,7 @@ public class DpekezMini implements BotController {
             selected = 4;
         }
 
-        Logger.getLogger(Launcher.class.getName()).fine(selected + " selected");
+        logger.fine(selected + " selected");
         return selected;
     }
 
@@ -170,7 +171,7 @@ public class DpekezMini implements BotController {
                     quantity += 1;
             }
         }
-        Logger.getLogger(Launcher.class.getName()).fine("quantity: " + quantity);
+        logger.fine("quantity: " + quantity);
         return quantity;
     }
 
@@ -182,10 +183,10 @@ public class DpekezMini implements BotController {
                     continue;
                 }
                 if (nearestEntity == null) {
-                    Logger.getLogger(Launcher.class.getName()).fine("nulled");
+                    logger.fine("nulled");
                     nearestEntity = new XY(x, y);
                 } else if (context.locate().distanceFrom(new XY(x, y)) < context.locate().distanceFrom(nearestEntity)) {
-                    Logger.getLogger(Launcher.class.getName()).fine("nearer");
+                    logger.fine("nearer");
                     nearestEntity = new XY(x, y);
                 }
             }
@@ -247,22 +248,22 @@ public class DpekezMini implements BotController {
         if (stopY > context.getViewLowerLeft().getY())
             stopY = context.getViewLowerLeft().getY();
 
-        Logger.getLogger(Launcher.class.getName()).finest("startX:" + startX + " stopX:" + stopX + " startY:" + startY + " stopY:" + stopY);
+        logger.finest("startX:" + startX + " stopX:" + stopX + " startY:" + startY + " stopY:" + stopY);
 
         for (int x = startX; x < stopX; x++) {
             for (int y = startY; y < stopY; y++) {
                 try {
                     EntityType checkEntity = context.getEntityAt(new XY(x, y));
                     if (checkEntity == EntityType.GOOD_BEAST || checkEntity == EntityType.GOOD_PLANT) {
-                        Logger.getLogger(Launcher.class.getName()).fine("Found Entity inside implosion vector.");
+                        logger.fine("Found Entity inside implosion vector.");
                         entitiesInsideImpactRadius++;
                     }
                 } catch (OutOfViewException e) {
-                    Logger.getLogger(Launcher.class.getName()).fine("No Entity inside of implode search vector.");
+                    logger.fine("No Entity inside of implode search vector.");
                 }
             }
         }
-        Logger.getLogger(Launcher.class.getName()).fine("Entities inside impact radius: " + entitiesInsideImpactRadius);
+        logger.fine("Entities inside impact radius: " + entitiesInsideImpactRadius);
         return (entitiesInsideImpactRadius >= 1);
     }
 

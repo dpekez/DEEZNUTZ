@@ -1,9 +1,13 @@
 package de.hsa.games.deeznutz.core;
 
+import de.hsa.games.deeznutz.Launcher;
+
 import java.io.*;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class BoardConfig {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private final int width;
     private final int height;
@@ -26,7 +30,7 @@ public class BoardConfig {
             Reader reader = new FileReader(propertiesFile);
             properties.load(reader);
         } catch (IOException e){
-            // todo: logger
+            logger.warning(e.getMessage());
         }
 
         width = Integer.parseInt(properties.getProperty("width", "45"));
@@ -71,7 +75,7 @@ public class BoardConfig {
             Writer writer = new FileWriter(propertiesFile);
             properties.store(writer, "DEEZNUTZ");
         } catch (IOException e){
-            //todo: logger
+            logger.warning(e.getMessage());
         }
     }
 

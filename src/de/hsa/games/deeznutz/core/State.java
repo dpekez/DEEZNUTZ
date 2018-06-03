@@ -1,10 +1,12 @@
 package de.hsa.games.deeznutz.core;
 
+import de.hsa.games.deeznutz.Launcher;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class State {
-    private static final Logger logger = Logger.getLogger(State.class.getName());
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private int highScore;
     private Board board;
@@ -23,16 +25,17 @@ public class State {
     }
 
     public void update() {
-        logger.log(Level.FINEST, "start update from State");
+        logger.finest("update FlattenedBoard");
         board.update(flattenedBoard());
 
         if (board.getMasterSquirrel() != null) {
             if (board.getMasterSquirrel().getEnergy() > highScore)
+                logger.finest("update HighScore");
                 highScore = board.getMasterSquirrel().getEnergy();
         }
     }
 
-    public FlattenedBoard flattenedBoard() {
+    FlattenedBoard flattenedBoard() {
         return new FlattenedBoard(board);
     }
 }

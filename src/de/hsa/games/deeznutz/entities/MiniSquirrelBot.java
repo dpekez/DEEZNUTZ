@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class MiniSquirrelBot extends MiniSquirrel {
-    private static Logger logger = Logger.getLogger(MiniSquirrelBot.class.getName());
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private BotControllerFactory botControllerFactory;
     private BotController botController;
@@ -41,7 +41,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         InvocationHandler handler = new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Logger.getLogger(Launcher.class.getName()).finer("MiniBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
+                logger.finest("MiniBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
                 return method.invoke(view, args);
             }
         };
@@ -102,7 +102,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         @Override
         public EntityType getEntityAt(XY target) throws OutOfViewException {
             if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
-                Logger.getLogger(Launcher.class.getName()).finer("No Entity in the searchVector");
+                logger.finer("No Entity in the searchVector");
                 throw new OutOfViewException("No Entity in the searchVector");
             }
             return context.getEntityType(target);
@@ -111,7 +111,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         @Override
         public boolean isMine(XY target) throws OutOfViewException {
             if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
-                Logger.getLogger(Launcher.class.getName()).finer("Daddy not reachable");
+                logger.finer("Daddy not reachable");
                 throw new OutOfViewException("Daddy not reachable");
             }
             try {
@@ -133,7 +133,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public void implode(int impactRadius) {
-            Logger.getLogger(Launcher.class.getName()).info("Implode Method called");
+            logger.info("Implode Method called");
             if (!(impactRadius >= 2 && impactRadius <= 10))
                 return;
 

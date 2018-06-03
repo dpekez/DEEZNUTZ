@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class MasterSquirrelBot extends MasterSquirrel {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private BotControllerFactory botControllerFactory;
     private BotController botController;
@@ -33,7 +34,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         InvocationHandler handler = new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Logger.getLogger(Launcher.class.getName()).finer("MasterBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
+                logger.finest("MasterBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
                 return method.invoke(view, args);
             }
         };
@@ -94,6 +95,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public EntityType getEntityAt(XY target) {
             if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
+                logger.finer("No Entity in searchVecotr");
                 throw new OutOfViewException("Kein Entity in Sichtweite (MasterBot)");
             }
             return context.getEntityType(target);
@@ -102,7 +104,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public boolean isMine(XY target) {
             if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
-                Logger.getLogger(Launcher.class.getName()).finer("Kein Entity in Sichtweite (master)");
+                logger.finer("No Entity in searchVector");
                 throw new OutOfViewException("Kein entity in Sichtweite (master)");
             }
             try {

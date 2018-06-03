@@ -10,6 +10,7 @@ import de.hsa.games.deeznutz.core.XYsupport;
 import java.util.logging.Logger;
 
 public class DpekezMaster implements BotController {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private int refreshSelector;
     private int selectedQ;
@@ -57,7 +58,7 @@ public class DpekezMaster implements BotController {
                 break;
         }
 
-        Logger.getLogger(Launcher.class.getName()).fine("start: "+ context.locate() + " ziel: " + nearestEntity);
+        logger.fine("start: " + context.locate() + " ziel: " + nearestEntity);
 
         XY moveVector;
 
@@ -65,7 +66,7 @@ public class DpekezMaster implements BotController {
         if (nearestEntity == null) {
             switch (selectedQ) {
                 case 0:
-                    Logger.getLogger(Launcher.class.getName()).fine("nicht gut");
+                    logger.fine("nicht gut");
                     moveVector = XYsupport.generateRandomMoveVector();
                     break;
                 case 1:
@@ -140,7 +141,7 @@ public class DpekezMaster implements BotController {
             selected = 4;
         }
 
-        Logger.getLogger(Launcher.class.getName()).fine(selected + " selected");
+        logger.fine(selected + " selected");
         return selected;
     }
 
@@ -162,7 +163,7 @@ public class DpekezMaster implements BotController {
                     quantity += 1;
             }
         }
-        Logger.getLogger(Launcher.class.getName()).fine("quantity: " + quantity);
+        logger.fine("quantity: " + quantity);
         return quantity;
     }
 
@@ -176,10 +177,10 @@ public class DpekezMaster implements BotController {
                     continue;
                 }
                 if (nearestEntity == null) {
-                    Logger.getLogger(Launcher.class.getName()).fine("nulled");
+                    logger.fine("nulled");
                     nearestEntity = new XY(x, y);
                 } else if (context.locate().distanceFrom(new XY(x, y)) < context.locate().distanceFrom(nearestEntity)) {
-                    Logger.getLogger(Launcher.class.getName()).fine("nearer");
+                    logger.fine("nearer");
                     nearestEntity = new XY(x, y);
                 }
             }
