@@ -6,7 +6,7 @@ import de.hsa.games.deeznutz.botapi.ControllerContext;
 import de.hsa.games.deeznutz.botapi.OutOfViewException;
 import de.hsa.games.deeznutz.core.EntityType;
 import de.hsa.games.deeznutz.core.XY;
-import java.util.logging.Level;
+
 import java.util.logging.Logger;
 
 public class MiniBotBrain implements BotController {
@@ -14,7 +14,7 @@ public class MiniBotBrain implements BotController {
 
     @Override
     public void nextStep(ControllerContext view) {
-        int impactRadius = 3;
+        int impactRadius = 5;
         boolean shouldImplode = implodeCondition(view, impactRadius);
 
         if (shouldImplode) {
@@ -62,7 +62,7 @@ public class MiniBotBrain implements BotController {
                 }
             }
         }
-        if (counterToImplode >= 3)
+        if (counterToImplode >= 1)
             shouldImpode = true;
         return shouldImpode;
     }
