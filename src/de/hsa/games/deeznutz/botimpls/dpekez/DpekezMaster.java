@@ -26,7 +26,7 @@ public class DpekezMaster implements BotController {
 
         // spawn mini
         if (context.getEnergy() >= miniSpawnThreshhold) {
-            miniSpawnThreshhold *= 2;
+            miniSpawnThreshhold += 1500;
             context.spawnMiniBot(XY.LEFT, (int)(context.getEnergy()*0.1));
         }
 

@@ -100,20 +100,22 @@ public class MiniSquirrelBot extends MiniSquirrel {
         }
 
         @Override
-        public EntityType getEntityAt(XY xy) throws OutOfViewException {
-            //if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-            //    logger.log(Level.FINER, "No Entity in the searchVector");
-            //    throw new OutOfViewException("No Entity in the searchVector");
-            //}
-            return context.getEntityType(xy);
+        public EntityType getEntityAt(XY target) throws OutOfViewException {
+            if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
+                Logger.getLogger(Launcher.class.getName()).finer("No Entity in the searchVector");
+                throw new OutOfViewException("No Entity in the searchVector");
+            }
+            return context.getEntityType(target);
         }
 
         @Override
-        public boolean isMine(XY xy) throws OutOfViewException {
-            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight()))
+        public boolean isMine(XY target) throws OutOfViewException {
+            if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
+                Logger.getLogger(Launcher.class.getName()).finer("Daddy not reachable");
                 throw new OutOfViewException("Daddy not reachable");
+            }
             try {
-                return context.getEntityType(xy).equals(MiniSquirrelBot.this.getDaddy());
+                return context.getEntityType(target).equals(MiniSquirrelBot.this.getDaddy());
             } catch (Exception e) {
                 return false;
             }

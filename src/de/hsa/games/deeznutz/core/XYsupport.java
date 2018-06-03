@@ -58,6 +58,16 @@ public class XYsupport {
         return (m.getX() >= lL.getX()) && (m.getX() <= uR.getX()) && (m.getY() >= lL.getY()) && (m.getY() <= uR.getY());
     }
 
+    public static boolean isInRange(XY start, XY target, int viewDistance) {
+        if (Math.abs(start.getX() - target.getX()) > (viewDistance - 1) / 2) {
+            return false;
+        } else if (Math.abs(start.getY() - target.getY()) > (viewDistance - 1) / 2) {
+            return false;
+        }
+
+        return true;
+    }
+
     public static XY assignMoveVector(XY xy) {
         int newX, newY;
         int oldX = xy.getX();

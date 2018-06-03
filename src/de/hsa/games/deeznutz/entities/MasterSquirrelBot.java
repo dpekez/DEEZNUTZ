@@ -92,21 +92,21 @@ public class MasterSquirrelBot extends MasterSquirrel {
         }
 
         @Override
-        public EntityType getEntityAt(XY xy) {
-            //if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
-            //    throw new OutOfViewException("Kein Entity in Sichtweite (MasterBot)");
-            //}
-            return context.getEntityType(xy);
+        public EntityType getEntityAt(XY target) {
+            if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
+                throw new OutOfViewException("Kein Entity in Sichtweite (MasterBot)");
+            }
+            return context.getEntityType(target);
         }
 
         @Override
-        public boolean isMine(XY xy) {
-            if (!XYsupport.isInRange(xy, getViewLowerLeft(), getViewUpperRight())) {
+        public boolean isMine(XY target) {
+            if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
                 Logger.getLogger(Launcher.class.getName()).finer("Kein Entity in Sichtweite (master)");
                 throw new OutOfViewException("Kein entity in Sichtweite (master)");
             }
             try {
-                if (MasterSquirrelBot.this.isMyChild((MiniSquirrel) context.getEntity(xy)))
+                if (MasterSquirrelBot.this.isMyChild((MiniSquirrel) context.getEntity(target)))
                     return true;
             } catch (Exception e) {
                 return false;
