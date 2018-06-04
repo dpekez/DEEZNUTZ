@@ -6,6 +6,7 @@ import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
 import de.hsa.games.deeznutz.UI;
 import de.hsa.games.deeznutz.core.*;
 import de.hsa.games.deeznutz.entities.MasterSquirrel;
+import de.hsa.games.deeznutz.entities.MiniSquirrel;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -71,12 +72,13 @@ public class FxUI extends Scene implements UI {
                         int energy = 100;
                         int x = 1;
                         int y = 0;
-
                         MasterSquirrel daddy = fxUI.game.getState().getBoard().getMasterSquirrel();
                         XY direction = new XY(x, y);
 
                         if (fxUI.game.getState().getBoard().getMasterSquirrel().getEnergy() >= energy) {
-                            fxUI.game.getState().getBoard().insertMiniSquirrel(energy, direction, daddy);
+                            MiniSquirrel mini = new MiniSquirrel(energy, direction, daddy);
+                            fxUI.game.getState().getBoard().insert(mini);
+                            daddy.updateEnergy(-energy);
                         } else {
                             throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.game.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
                         }

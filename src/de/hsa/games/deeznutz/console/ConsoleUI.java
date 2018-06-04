@@ -6,6 +6,7 @@ import de.hsa.games.deeznutz.core.MoveCommand;
 import de.hsa.games.deeznutz.core.State;
 import de.hsa.games.deeznutz.core.XY;
 import de.hsa.games.deeznutz.entities.MasterSquirrel;
+import de.hsa.games.deeznutz.entities.MiniSquirrel;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -135,29 +136,12 @@ public class ConsoleUI implements UI {
         MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
         XY direction = new XY(x, y);
         if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
-            state.getBoard().insertMiniSquirrel(energy, direction, daddy);
+            MiniSquirrel mini = new MiniSquirrel(energy, direction, daddy);
+            state.getBoard().insert(mini);
+            daddy.updateEnergy(-energy);
         } else {
             logger.warning("Not enough energy to spawn MiniSquirrel");
             throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
-        }
-    }
-
-    @Deprecated
-    public void spawnMiniSquirrel(Object[] parameters) {
-        logger.info("Spawn a MiniSquirrel");
-        try {
-            int energy = (Integer) parameters[0];
-            XY direction = new XY((Integer) parameters[1], (Integer) parameters[2]);
-            MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
-            if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
-                state.getBoard().insertMiniSquirrel(energy, direction, daddy);
-            } else {
-                logger.warning("Not enough energy to spawn MiniSquirrel");
-                throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (state.getBoard().getMasterSquirrel().getEnergy()) + " Energie");
-            }
-        } catch (NotEnoughEnergyException e) {
-            e.getMessage();
-            logger.warning(e.getMessage());
         }
     }
 

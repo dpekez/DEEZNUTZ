@@ -11,12 +11,14 @@ public class Board {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
     private BoardConfig boardConfig;
     private ArrayList<Entity> entities;
+    private ArrayList<MasterSquirrel> masters;
     private HandOperatedMasterSquirrel masterSquirrel;
 
     public Board(BoardConfig boardConfig) {
 
         this.boardConfig = boardConfig;
         entities = new ArrayList<>();
+        masters = new ArrayList<>();
 
         //fill upper and bottom border with walls
         for (int i = 0; i < boardConfig.getWidth(); i++) {
@@ -103,23 +105,19 @@ public class Board {
         return null;
     }
 
-    void insertMasterSquirrel(HandOperatedMasterSquirrel masterSquirrel) {
+    void insertHandOperatedMasterSquirrel(HandOperatedMasterSquirrel masterSquirrel) {
         logger.finest("Insert MasterSquirrel");
         this.masterSquirrel = masterSquirrel;
+
+        // insert in masters container
+        masters.add(masterSquirrel);
+
+        // insert in main container
         insert(masterSquirrel);
     }
 
     public MasterSquirrel getMasterSquirrel() {
         return masterSquirrel;
-    }
-
-    public void insertMiniSquirrel(int energy, XY direction, MasterSquirrel daddy) {
-        logger.finest("Insert MiniSquirrel");
-        XY location = masterSquirrel.getLocation().addVector(direction);
-        if (masterSquirrel.getEnergy() >= energy) {
-            masterSquirrel.updateEnergy(-energy);
-            insert(new MiniSquirrel(energy, location, daddy));
-        }
     }
 
     public FlattenedBoard flatten() { //todo: wozu brauchen wir das?
@@ -129,11 +127,12 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Entity entity: entities) {
-            if (entity != null) {
-                s.append(entity).append("\n");
-            }
-        }
+        s.append("Main Container:\n");
+        for (Entity entity: entities)
+            s.append(entity).append("\n");
+        s.append("Masters Only Container:\n");
+        for (Entity entity: masters)
+            s.append(entity).append("\n");
         return s.toString();
     }
 

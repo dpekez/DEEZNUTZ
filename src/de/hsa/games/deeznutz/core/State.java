@@ -2,9 +2,7 @@ package de.hsa.games.deeznutz.core;
 
 import de.hsa.games.deeznutz.Launcher;
 
-import java.util.Collections;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class State {
