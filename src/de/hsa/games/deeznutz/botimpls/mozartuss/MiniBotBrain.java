@@ -23,7 +23,7 @@ public class MiniBotBrain implements BotController {
         }
 
         XY move = BotBrain.moveToNearestGoodEntity(view);
-        if (view.getEnergy() < 4000) {
+        if (view.getEnergy() < 300) {
             view.move(move);
         } else {
             move = view.directionOfMaster();

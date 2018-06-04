@@ -29,10 +29,12 @@ public class BotBrain {
         else nearestPositive = nearestGP;
 
         if (context.locate().distanceFrom(nearestBB) < 1) {
+            logger.finer("flee from badBeast");
             if ((context.locate().distanceFrom(nearestPositive) > context.locate().distanceFrom(nearestBB))) {
                 moveDirection = XYsupport.decreaseDistance(nearestBB, context.locate());
             }
         } else if ((context.locate().distanceFrom(nearestPositive)) < 16) {
+            logger.finer("shrink the distance between Squirrel and positiveEntities");
             moveDirection = XYsupport.decreaseDistance(context.locate(), nearestPositive);
         } else if ((context.locate().distanceFrom(nearestBP)) < 1) {
             moveDirection = XYsupport.decreaseDistance(nearestBP, context.locate());
@@ -58,6 +60,7 @@ public class BotBrain {
     }
 
     public static XY nearestEntity(ControllerContext context, EntityType type) {
+        logger.finer("searching for the nearest entities");
         XY position = context.locate();
         int minX = context.getViewLowerLeft().getX();
         int minY = context.getViewUpperRight().getY();
@@ -78,7 +81,7 @@ public class BotBrain {
             }
             return nearestEntity;
         } catch (OutOfViewException e) {
-            logger.finer("No Entity in vektor");
+            logger.finer("No Entity in vector");
         }
         return null;
     }
@@ -93,7 +96,7 @@ public class BotBrain {
                     return false;
             }
         } catch (OutOfViewException e) {
-            logger.finer("No Entity in Spawnfield");
+            logger.finer("No Entity in spawnfield");
         }
         return false;
     }
