@@ -14,10 +14,6 @@ public class BotBrain {
 
     static XY moveToNearestGoodEntity(ControllerContext context) {
         XY moveDirection = XY.ZERO_ZERO;
-        XY nearestMasterBot = BotBrain.nearestEntity(context, EntityType.MASTER_SQUIRREL_BOT);
-        XY nearestMaster = BotBrain.nearestEntity(context, EntityType.MASTER_SQUIRREL);
-        XY nearestMini = (BotBrain.nearestEntity(context, EntityType.MINI_SQUIRREL));
-        XY nearestMiniBot = (BotBrain.nearestEntity(context, EntityType.MINI_SQUIRREL_BOT));
         XY nearestBP = BotBrain.nearestEntity(context, EntityType.BAD_PLANT);
         XY nearestBB = BotBrain.nearestEntity(context, EntityType.BAD_BEAST);
         XY nearestGB = BotBrain.nearestEntity(context, EntityType.GOOD_BEAST);
@@ -40,21 +36,8 @@ public class BotBrain {
             moveDirection = XYsupport.decreaseDistance(nearestBP, context.locate());
         } else if ((context.locate().distanceFrom(nearestWW)) < 1) {
             moveDirection = XYsupport.decreaseDistance(nearestWW, context.locate());
-        } else if ((context.locate().distanceFrom(nearestMiniBot)) < 16) {
-            moveDirection = XYsupport.decreaseDistance(context.locate(), nearestMiniBot);
-        } else if ((context.locate().distanceFrom(nearestMini)) < 16) {
-            moveDirection = XYsupport.decreaseDistance(context.locate(), nearestMini);
-        } else if ((context.locate().distanceFrom(nearestMasterBot)) < 2) {
-            moveDirection = XYsupport.decreaseDistance(nearestMasterBot, context.locate());
-        } else if ((context.locate().distanceFrom(nearestMaster)) < 2) {
-            moveDirection = XYsupport.decreaseDistance(nearestMaster, context.locate());
         } else {
-            if ((context.locate().distanceFrom(new XY((context.getViewUpperRight().getX() / 2), (context.getViewLowerLeft().getY() / 2)))) <
-                    (context.locate().distanceFrom(new XY((context.getViewLowerLeft().getX() / 2), (context.getViewUpperRight().getY() / 2))))) {
-                moveDirection = XYsupport.decreaseDistance(context.locate(), new XY(context.getViewLowerLeft().getX(), context.getViewUpperRight().getY()));
-            } else {
-                moveDirection = XYsupport.decreaseDistance(context.locate(), new XY(context.getViewUpperRight().getX(), context.getViewLowerLeft().getY()));
-            }
+            moveDirection = XYsupport.generateRandomMoveVector();
         }
         return moveDirection;
     }

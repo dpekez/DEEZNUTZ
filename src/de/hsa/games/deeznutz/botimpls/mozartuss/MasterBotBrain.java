@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class MasterBotBrain implements BotController {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    private int energyToReachForSpawn = 400;
+    private int energyToReachForSpawn = 2000;
 
     @Override
     public void nextStep(ControllerContext view) {
@@ -24,12 +24,12 @@ public class MasterBotBrain implements BotController {
             } else {
                 XY spawnDirection = XYsupport.generateRandomMoveVector();
                 if (BotBrain.checkSpawnField(view, view.locate().addVector(spawnDirection))) {
-                    view.spawnMiniBot(spawnDirection, 100);
-                    energyToReachForSpawn = energyToReachForSpawn + 1000;
+                    view.spawnMiniBot(spawnDirection, 500);
+                    energyToReachForSpawn = energyToReachForSpawn + 2000;
                 }
             }
         } catch (SpawnException e) {
-            logger.warning("Unable to pawn MiniSquirrel (Brain)");
+            logger.warning("Unable to spawn MiniSquirrel (Brain)");
         }
     }
 }

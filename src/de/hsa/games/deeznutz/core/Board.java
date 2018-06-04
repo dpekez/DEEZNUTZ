@@ -91,7 +91,7 @@ public class Board {
         return boardConfig;
     }
 
-    void insertMaster(MasterSquirrel masterSquirrel) {
+    public void insertMaster(MasterSquirrel masterSquirrel) {
         logger.finest("Inserting MasterSquirrel...");
 
         // insert in masters container

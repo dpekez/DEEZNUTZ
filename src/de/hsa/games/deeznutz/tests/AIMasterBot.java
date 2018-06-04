@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class KiMasterBot {
+public class AIMasterBot {
     private MasterSquirrelBot.ControllerContextImpl controllerContext;
 
     @Before

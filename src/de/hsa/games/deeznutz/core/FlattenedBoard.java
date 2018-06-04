@@ -11,7 +11,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
     private Board board;
     private Entity[][] cells;
 
-    FlattenedBoard(Board board) {
+    public FlattenedBoard(Board board) {
         this.board = board;
         updateFlattenedBoard();
     }
@@ -79,10 +79,15 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 break;
             case WALL:
                 miniSquirrel.updateEnergy(nextEntity.getEnergy());
-                miniSquirrel.isStunnedNextRound();
+                miniSquirrel.stun();
                 break;
             case BAD_BEAST:
+                miniSquirrel.updateEnergy(nextEntity.getEnergy());
+                ((BadBeast) nextEntity).bite();
+                if (((BadBeast) nextEntity).getBitesLeft() == 0)
+                    killAndReplace(nextEntity);
                 break;
+
             case GOOD_PLANT:
             case BAD_PLANT:
             case GOOD_BEAST:

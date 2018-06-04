@@ -1,11 +1,16 @@
 package de.hsa.games.deeznutz;
 
+import de.hsa.games.deeznutz.console.ScanException;
+import de.hsa.games.deeznutz.core.BoardConfig;
+import de.hsa.games.deeznutz.core.GameImpl;
+import de.hsa.games.deeznutz.core.GameImplBotOnly;
+import de.hsa.games.deeznutz.core.GameImplBotUser;
 import de.hsa.games.deeznutz.gui.FxUI;
 import de.hsa.games.deeznutz.music.BackgroundMusic;
-import de.hsa.games.deeznutz.console.ScanException;
-import de.hsa.games.deeznutz.core.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -113,8 +118,10 @@ public class Launcher extends Application {
 
         game.setUi(fxUI);
         fxUI.setGame(game);
+        primaryStage.isAlwaysOnTop();
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("DEEZNUTZ");
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         fxUI.getWindow().setOnCloseRequest(evt -> {
             logger.info("End GUI Game");

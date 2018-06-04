@@ -42,7 +42,9 @@ public class BadBeast extends Character {
     public int getBitesLeft() {
         return this.bitesLeft;
     }
-
+    public int getStepCount() {
+        return this.stepCount;
+    }
     @Override
     public String toString() {
         return "BadBeast{ " + super.toString() + " }";

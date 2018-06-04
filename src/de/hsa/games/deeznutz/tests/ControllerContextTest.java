@@ -1,3 +1,4 @@
+
 import de.hsa.games.deeznutz.botapi.BotControllerFactory;
 import de.hsa.games.deeznutz.botimpls.mozartuss.BrainFactory;
 import de.hsa.games.deeznutz.core.Board;
@@ -12,7 +13,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ControllerContextTest {
+/*public class ControllerContextTest {
 
     MasterSquirrelBot masterBot;
     MasterSquirrel master;
@@ -30,7 +31,7 @@ public class ControllerContextTest {
     public void init() {
         masterBot = new MasterSquirrelBot(spawnPositionMasterBot, factory);
 
-        board.createBot(boardConfig.getMainBotPath());
+      //  board.insertMaster(boardConfig.getMainBotPath());
     }
 
     public void tearDown() {
@@ -45,4 +46,4 @@ public class ControllerContextTest {
     }
 
 
-}
+}*/

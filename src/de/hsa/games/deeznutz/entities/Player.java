@@ -5,7 +5,7 @@ import de.hsa.games.deeznutz.core.XY;
 
 public abstract class Player extends Character {
 
-    private int stunnedRounds = 0;
+    public int stunnedRounds = 0;
 
     Player(int energy, XY xy) {
         super(energy, xy);
@@ -21,7 +21,7 @@ public abstract class Player extends Character {
             stunnedRounds--;
     }
 
-    boolean isStunned() {
+    public boolean isStunned() {
         return stunnedRounds > 0;
     }
 

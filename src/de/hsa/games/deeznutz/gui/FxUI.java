@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class FxUI extends Scene implements UI {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    private static final double CELL_SIZE = 15;
+    private static final double CELL_SIZE = 25;
     private static MoveCommand command;
     private final Label msgLabel;
     private final Canvas boardCanvas;
@@ -85,7 +85,6 @@ public class FxUI extends Scene implements UI {
                     } catch (NotEnoughEnergyException e) {
                         logger.warning(e.getMessage());
                     }
-
                     break;
                 case Q:
                 case ESCAPE:
