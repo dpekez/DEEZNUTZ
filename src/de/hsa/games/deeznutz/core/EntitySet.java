@@ -1,10 +1,13 @@
 package de.hsa.games.deeznutz.core;
 
+import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.entities.Character;
 import de.hsa.games.deeznutz.entities.Entity;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class EntitySet {
+    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
     private ArrayList<Entity> entities;
 
     EntitySet() {
@@ -12,10 +15,12 @@ public class EntitySet {
     }
 
     void add(Entity entity) {
+        logger.fine("Entity ID: " + entity.getId() + " Energy: " + entity.getEnergy() + " Loc: " + entity.getLocation() + " inserted.");
         entities.add(entity);
     }
 
     void remove(Entity entity) {
+        logger.fine("Entity ID: " + entity.getId() + " Energy: " + entity.getEnergy() + " Loc: " + entity.getLocation() + " removed.");
         entities.remove(entity);
     }
 

@@ -111,7 +111,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
                     kill(miniSquirrel);
                 } else {
                     logger.fine("Is not my daddy " + miniSquirrel);
-
                     kill(miniSquirrel);
                 }
                 break;
@@ -211,6 +210,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 } else {
                     logger.fine("Is not my child " + masterSquirrel);
                     energy = board.getConfig().getCollisionPointsWithAlienMS();
+                    kill(nextEntity);
                 }
                 masterSquirrel.updateEnergy(energy);
                 masterSquirrel.move(moveDirection);
