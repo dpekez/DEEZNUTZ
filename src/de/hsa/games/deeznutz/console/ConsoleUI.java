@@ -136,7 +136,7 @@ public class ConsoleUI implements UI {
         MasterSquirrel daddy = state.getBoard().getMasterSquirrel();
         XY direction = new XY(x, y);
         if (state.getBoard().getMasterSquirrel().getEnergy() >= energy) {
-            MiniSquirrel mini = new MiniSquirrel(energy, direction, daddy);
+            MiniSquirrel mini = new MiniSquirrel(energy, daddy.getLocation().addVector(direction), daddy);
             state.getBoard().insert(mini);
             daddy.updateEnergy(-energy);
         } else {
