@@ -193,7 +193,8 @@ public class DpekezMini implements BotController {
         XY nearestEntity = null;
         for (int x = startX; x < stopX; x++) {
             for (int y = startY; y < stopY; y++) {
-                if (context.getEntityAt(new XY(x, y)) != EntityType.GOOD_PLANT && context.getEntityAt(new XY(x, y)) != EntityType.GOOD_BEAST) {
+                if (context.getEntityAt(new XY(x, y)) != EntityType.GOOD_PLANT
+                        && context.getEntityAt(new XY(x, y)) != EntityType.GOOD_BEAST) {
                     continue;
                 }
                 if (nearestEntity == null) {
