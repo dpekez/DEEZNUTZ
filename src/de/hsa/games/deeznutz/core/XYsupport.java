@@ -36,7 +36,7 @@ public class XYsupport {
      * @return the random location
      */
 
-    static XY generateRandomLocation(XY boardSize, Entity[] entities) {
+    public static XY generateRandomLocation(XY boardSize, Entity[] entities) {
         Random random = new Random();
         boolean isNotEmpty;
         XY xy;

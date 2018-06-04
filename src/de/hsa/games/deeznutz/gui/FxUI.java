@@ -72,15 +72,15 @@ public class FxUI extends Scene implements UI {
                         int energy = 100;
                         int x = 1;
                         int y = 0;
-                        MasterSquirrel daddy = fxUI.game.getState().getBoard().getMasterSquirrel();
+                        MasterSquirrel daddy = fxUI.game.getState().getBoard().getMainMasterSquirrel();
                         XY direction = new XY(x, y);
 
-                        if (fxUI.game.getState().getBoard().getMasterSquirrel().getEnergy() >= energy) {
+                        if (fxUI.game.getState().getBoard().getMainMasterSquirrel().getEnergy() >= energy) {
                             MiniSquirrel mini = new MiniSquirrel(energy, daddy.getLocation().addVector(direction), daddy);
                             fxUI.game.getState().getBoard().insert(mini);
                             daddy.updateEnergy(-energy);
                         } else {
-                            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.game.getState().getBoard().getMasterSquirrel().getEnergy()) + " Energie");
+                            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.game.getState().getBoard().getMainMasterSquirrel().getEnergy()) + " Energie");
                         }
                     } catch (NotEnoughEnergyException e) {
                         logger.warning(e.getMessage());

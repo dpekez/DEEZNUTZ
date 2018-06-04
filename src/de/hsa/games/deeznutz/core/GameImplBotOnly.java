@@ -21,11 +21,11 @@ public class GameImplBotOnly extends Game {
         ui = new ConsoleUI(state, threaded);
 
         // create and insert bots
-        mainMasterSquirrelBot = state.getBoard().createBot(boardConfig.getMainBotPath());
-        secondaryMasterSquirrelBot = state.getBoard().createBot(boardConfig.getSecondaryBotPath());
-        state.getBoard().insert(mainMasterSquirrelBot);
+        mainMasterSquirrelBot = createBot(boardConfig.getMainBotPath());
+        secondaryMasterSquirrelBot = createBot(boardConfig.getSecondaryBotPath());
+        state.getBoard().insertMaster(mainMasterSquirrelBot);
         logger.finer("Insert first MasterSquirrelBot");
-        state.getBoard().insert(secondaryMasterSquirrelBot);
+        state.getBoard().insertMaster(secondaryMasterSquirrelBot);
         logger.finer("Insert second MasterSquirrelBot");
         mainMasterSquirrelBotInfo = boardConfig.getMainBotPath();
         secondaryMasterSquirrelBotInfo = boardConfig.getSecondaryBotPath();

@@ -24,12 +24,12 @@ public class GameImplBotUser extends Game {
         // create and insert hand operated squirrel
         masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
         logger.finer("Insert HandOperatedMasterSquirrel");
-        state.getBoard().insertHandOperatedMasterSquirrel(masterSquirrel);
+        state.getBoard().insertMaster(masterSquirrel);
 
         // create and insert bot
-        mainMasterSquirrelBot = state.getBoard().createBot(boardConfig.getMainBotPath());
+        mainMasterSquirrelBot = createBot(boardConfig.getMainBotPath());
         logger.finer("Insert main MasterSquirrelBot");
-        state.getBoard().insert(mainMasterSquirrelBot);
+        state.getBoard().insertMaster(mainMasterSquirrelBot);
         mainMasterSquirrelBotInfo = boardConfig.getMainBotPath();
     }
 

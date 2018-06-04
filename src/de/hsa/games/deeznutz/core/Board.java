@@ -1,7 +1,6 @@
 package de.hsa.games.deeznutz.core;
 
 import de.hsa.games.deeznutz.Launcher;
-import de.hsa.games.deeznutz.botapi.BotControllerFactory;
 import de.hsa.games.deeznutz.entities.*;
 import de.hsa.games.deeznutz.entities.Character;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ public class Board {
     private BoardConfig boardConfig;
     private ArrayList<Entity> entities;
     private ArrayList<MasterSquirrel> masters;
-    private HandOperatedMasterSquirrel masterSquirrel;
 
     public Board(BoardConfig boardConfig) {
 
@@ -89,25 +87,12 @@ public class Board {
         return newArray;
     }
 
-    BoardConfig getConfig() {
+    public BoardConfig getConfig() {
         return boardConfig;
     }
 
-    public MasterSquirrelBot createBot(String botPath) {
-        try {
-            BotControllerFactory factory = (BotControllerFactory) Class.forName(botPath).newInstance();
-            return new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory);
-        } catch (ClassNotFoundException e) {
-            logger.severe("Factory wurde nicht gefunden");
-        } catch (IllegalAccessException | InstantiationException e) {
-            logger.severe(e.getMessage());
-        }
-        return null;
-    }
-
-    void insertHandOperatedMasterSquirrel(HandOperatedMasterSquirrel masterSquirrel) {
-        logger.finest("Insert MasterSquirrel");
-        this.masterSquirrel = masterSquirrel;
+    void insertMaster(MasterSquirrel masterSquirrel) {
+        logger.finest("Inserting MasterSquirrel...");
 
         // insert in masters container
         masters.add(masterSquirrel);
@@ -116,8 +101,12 @@ public class Board {
         insert(masterSquirrel);
     }
 
-    public MasterSquirrel getMasterSquirrel() {
-        return masterSquirrel;
+    public MasterSquirrel getMainMasterSquirrel() {
+        return masters.get(0);
+    }
+
+    public MasterSquirrel getSecondaryMasterSquirrel() {
+        return masters.get(1);
     }
 
     public FlattenedBoard flatten() { //todo: wozu brauchen wir das?
@@ -127,11 +116,7 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("Main Container:\n");
         for (Entity entity: entities)
-            s.append(entity).append("\n");
-        s.append("Masters Only Container:\n");
-        for (Entity entity: masters)
             s.append(entity).append("\n");
         return s.toString();
     }
