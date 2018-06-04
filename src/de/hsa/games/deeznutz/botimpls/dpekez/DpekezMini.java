@@ -46,6 +46,7 @@ public class DpekezMini implements BotController {
         // check implode condition
         //if (implodeCondition(context, 5)) {
         //    context.implode(5);
+        //    return;
         //}
 
         // set quadrant selector refresh rate

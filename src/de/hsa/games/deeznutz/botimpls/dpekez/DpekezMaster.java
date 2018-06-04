@@ -20,7 +20,7 @@ public class DpekezMaster implements BotController {
     public DpekezMaster() {
         refreshSelector = 0;
         selectedQ = 1;
-        miniSpawnThreshhold = 2000;
+        miniSpawnThreshhold = 1000;
         maxMiniEnergy = 2000;
     }
 
@@ -34,6 +34,7 @@ public class DpekezMaster implements BotController {
             if (miniEnergy >= maxMiniEnergy)
                 miniEnergy = maxMiniEnergy;
             context.spawnMiniBot(XY.ZERO_ZERO, miniEnergy);
+            return;
         }
 
         // set quadrant selector refresh rate
@@ -184,7 +185,7 @@ public class DpekezMaster implements BotController {
             for (int y = startY; y < stopY; y++) {
                 if (context.getEntityAt(new XY(x, y)) != EntityType.GOOD_PLANT
                         && context.getEntityAt(new XY(x, y)) != EntityType.GOOD_BEAST
-                        && context.getEntityAt(new XY(x, y)) != EntityType.MINI_SQUIRREL) {
+                        /*&& context.getEntityAt(new XY(x, y)) != EntityType.MINI_SQUIRREL*/) {
                     continue;
                 }
                 if (nearestEntity == null) {
