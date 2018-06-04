@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class Board {
-
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
     private BoardConfig boardConfig;
     private ArrayList<Entity> entities;
@@ -53,19 +52,14 @@ public class Board {
         }
     }
 
-    void update(EntityContext context) {
-        moveEntities(context);
-    }
-
     /**
      * Moving all entities inside of ArrayList.
      * Checking if entity is a character since only characters have a nextStep() implementation.
      */
-    private void moveEntities(EntityContext entityContext) {
-        for (Entity entity: new ArrayList<>(entities)) {
+    void update(EntityContext entityContext) {
+        for (Entity entity: new ArrayList<>(entities))
             if (entity instanceof Character)
                 ((Character) entity).nextStep(entityContext);
-        }
     }
 
     public void insert(Entity entity) {
@@ -87,16 +81,10 @@ public class Board {
     public Entity[] getEntities() {
         Entity[] newArray = new Entity[entities.size()];
         int index = 0;
-        for (Entity entity: entities) {
-            if (entity != null) {
+        for (Entity entity: entities)
+            if (entity != null)
                 newArray[index++] = entity;
-            }
-        }
         return newArray;
-    }
-
-    public FlattenedBoard flatten() { //todo: wozu brauchen wir das?
-        return new FlattenedBoard(this);
     }
 
     BoardConfig getConfig() {
@@ -134,6 +122,11 @@ public class Board {
         }
     }
 
+    public FlattenedBoard flatten() { //todo: wozu brauchen wir das?
+        return new FlattenedBoard(this);
+    }
+
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (Entity entity: entities) {
