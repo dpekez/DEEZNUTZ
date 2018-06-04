@@ -10,7 +10,7 @@ public class State {
     private Board board;
     private Map<String, Integer> highScore;
 
-    State(BoardConfig boardConfig) {
+    public State(BoardConfig boardConfig) {
         board = new Board(boardConfig);
     }
 

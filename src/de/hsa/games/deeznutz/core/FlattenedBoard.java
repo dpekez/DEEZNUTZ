@@ -16,7 +16,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
         updateFlattenedBoard();
     }
 
-    private void updateFlattenedBoard() {
+    public void updateFlattenedBoard() {
         BoardConfig config = board.getConfig();
         Entity[][] newFlatBoard = new Entity[config.getWidth()][config.getHeight()];
 
@@ -83,11 +83,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 break;
             case BAD_BEAST:
                 miniSquirrel.updateEnergy(nextEntity.getEnergy());
-                ((BadBeast) nextEntity).bite();
-                if (((BadBeast) nextEntity).getBitesLeft() == 0)
-                    killAndReplace(nextEntity);
+                killAndReplace(nextEntity);
                 break;
-
             case GOOD_PLANT:
             case BAD_PLANT:
             case GOOD_BEAST:
@@ -194,9 +191,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 break;
             case BAD_BEAST:
                 masterSquirrel.updateEnergy(nextEntity.getEnergy());
-                ((BadBeast) nextEntity).bite();
-                if (((BadBeast) nextEntity).getBitesLeft() == 0)
-                    killAndReplace(nextEntity);
+                killAndReplace(nextEntity);
                 break;
             case GOOD_PLANT:
             case BAD_PLANT:
