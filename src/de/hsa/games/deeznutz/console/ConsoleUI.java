@@ -96,7 +96,8 @@ public class ConsoleUI implements UI {
     @SuppressWarnings("unused")
     public void all() {
         logger.info("Print all entities and their location");
-        System.out.println(state.getBoard().getEntitySet());
+        //todo fail from entityset switchover
+        //System.out.println(state.getBoard().getEntitySet());
     }
 
     @SuppressWarnings("unused")

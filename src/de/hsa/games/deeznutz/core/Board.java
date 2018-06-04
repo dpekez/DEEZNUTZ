@@ -3,21 +3,24 @@ package de.hsa.games.deeznutz.core;
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.BotControllerFactory;
 import de.hsa.games.deeznutz.entities.*;
+import de.hsa.games.deeznutz.entities.Character;
 
-import java.util.logging.Level;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class Board {
 
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
-    private EntitySet entitySet;
+    //private EntitySet entitySet;
     private BoardConfig boardConfig;
+    private ArrayList<Entity> entities;
     private HandOperatedMasterSquirrel masterSquirrel;
 
     public Board(BoardConfig boardConfig) {
 
         this.boardConfig = boardConfig;
-        entitySet = new EntitySet();
+        //entitySet = new EntitySet();
+        entities = new ArrayList<>();
 
         //fill upper and bottom border with walls
         for (int i = 0; i < boardConfig.getWidth(); i++) {
@@ -54,32 +57,73 @@ public class Board {
     }
 
     void update(EntityContext context) {
-        entitySet.moveEntities(context);
+        moveEntities(context);
     }
+
+    void add(Entity entity) {
+        logger.fine("Entity ID: " + entity.getId() + " Energy: " + entity.getEnergy() + " Loc: " + entity.getLocation() + " inserted.");
+        entities.add(entity);
+    }
+
+    void remove(Entity entity) {
+        logger.fine("Entity ID: " + entity.getId() + " Energy: " + entity.getEnergy() + " Loc: " + entity.getLocation() + " removed.");
+        entities.remove(entity);
+    }
+
+    /**
+     * Moving all entities inside of EntitySet.
+     * Checking if entity is a character since only characters have a nextStep() implementation.
+     */
+    void moveEntities(EntityContext entityContext) {
+        for (Entity entity: new ArrayList<>(entities)) {
+            if (entity instanceof Character)
+                ((Character) entity).nextStep(entityContext);
+        }
+    }
+
+    /**
+     * Generating a copy of the EntitySet array.
+     * Used by Board.class, XY.class, etc.
+     *
+     * @return the newly generated array set instead of the reference
+     */
+    Entity[] getEntitySetArray() {
+        Entity[] newArray = new Entity[entities.size()];
+        int index = 0;
+        for (Entity entity: entities) {
+            if (entity != null) {
+                newArray[index++] = entity;
+            }
+        }
+        return newArray;
+    }
+
+
 
     public FlattenedBoard flatten() { //todo: wozu brauchen wir das?
         return new FlattenedBoard(this);
     }
 
-    void remove(Entity e) {
-        entitySet.remove(e);
+    void removeOld(Entity e) {
+        remove(e);
     }
 
     public void insert(Entity e) {
-        entitySet.add(e);
+        add(e);
     }
 
     public Entity[] getEntities() {
-        return entitySet.getEntitySetArray();
+        return getEntitySetArray();
     }
 
     BoardConfig getConfig() {
         return boardConfig;
     }
 
-    public EntitySet getEntitySet() {
-        return entitySet;
-    }
+    //public EntitySet getEntitySet() {
+        //return entitySet;
+        //todo fail from entityset switchover
+    //}
 
     public MasterSquirrelBot createBot(String botPath) {
         try {
@@ -110,6 +154,16 @@ public class Board {
             masterSquirrel.updateEnergy(-energy);
             insert(new MiniSquirrel(energy, location, daddy));
         }
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Entity entity: entities) {
+            if (entity != null) {
+                s.append(entity).append("\n");
+            }
+        }
+        return s.toString();
     }
 
 }
