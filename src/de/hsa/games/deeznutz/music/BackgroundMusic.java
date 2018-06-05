@@ -1,19 +1,16 @@
 package de.hsa.games.deeznutz.music;
 
 import de.hsa.games.deeznutz.Launcher;
-
 import javax.sound.sampled.*;
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BackgroundMusic {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    public static BackgroundMusic backgroundMusic = new BackgroundMusic("bolt.wav");
     private Clip clip;
 
-    private BackgroundMusic(String fileName) {
+    public BackgroundMusic(String fileName) {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic.class.getResource(fileName));
             clip = AudioSystem.getClip();
@@ -36,4 +33,5 @@ public class BackgroundMusic {
                 }).start();
             }
     }
+
 }

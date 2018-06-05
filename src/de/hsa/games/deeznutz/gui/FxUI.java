@@ -7,6 +7,7 @@ import de.hsa.games.deeznutz.UI;
 import de.hsa.games.deeznutz.core.*;
 import de.hsa.games.deeznutz.entities.MasterSquirrel;
 import de.hsa.games.deeznutz.entities.MiniSquirrel;
+import de.hsa.games.deeznutz.music.BackgroundMusic;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -27,12 +28,15 @@ public class FxUI extends Scene implements UI {
     private final Label msgLabel;
     private final Canvas boardCanvas;
     private Game game;
+    private BackgroundMusic backgroundMusic;
 
 
     private FxUI(Parent parent, Canvas boardCanvas, Label msgLabel) {
         super(parent);
         this.msgLabel = msgLabel;
         this.boardCanvas = boardCanvas;
+        BackgroundMusic backgroundMusic = new BackgroundMusic("bolt.wav");
+        backgroundMusic.loop();
     }
 
     public static FxUI createInstance(XY boardSize) {
@@ -101,6 +105,9 @@ public class FxUI extends Scene implements UI {
                     // todo: graphical help window
                     // or simple console print out
                     break;
+                case L:
+                    // todo: toggle background music
+                    break;
             }
         };
     }
@@ -133,6 +140,11 @@ public class FxUI extends Scene implements UI {
     private void PrintEntity(BoardView view, GraphicsContext gc, int x, int y) {
         if (view.getEntityType(x, y) != null) {
             switch (view.getEntityType(x, y)) {
+                case NOTHING:
+                    // looks ugly with circle entities, keep in code since it speeds switchcase up in most cases
+                    //gc.setFill(Color.WHEAT);
+                    //gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                    break;
                 case MASTER_SQUIRREL:
                     gc.setFill(Color.BLACK);
                     gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);

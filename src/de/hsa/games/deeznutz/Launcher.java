@@ -6,10 +6,8 @@ import de.hsa.games.deeznutz.core.GameImpl;
 import de.hsa.games.deeznutz.core.GameImplBotOnly;
 import de.hsa.games.deeznutz.core.GameImplBotUser;
 import de.hsa.games.deeznutz.gui.FxUI;
-import de.hsa.games.deeznutz.music.BackgroundMusic;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.util.Scanner;
 import java.util.Timer;
@@ -114,14 +112,12 @@ public class Launcher extends Application {
         logger.info("Starting GUI...");
 
         FxUI fxUI = FxUI.createInstance(boardConfig.getBoardSize());
-        BackgroundMusic.backgroundMusic.loop();
 
         game.setUi(fxUI);
         fxUI.setGame(game);
         primaryStage.isAlwaysOnTop();
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("DEEZNUTZ");
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         fxUI.getWindow().setOnCloseRequest(evt -> {
             game.state.saveHighscores();
