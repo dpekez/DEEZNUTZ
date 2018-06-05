@@ -4,18 +4,19 @@ import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.entities.*;
 import de.hsa.games.deeznutz.entities.Character;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class Board {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
     private BoardConfig boardConfig;
+    private int gameTime;
     private ArrayList<Entity> entities;
     private ArrayList<MasterSquirrel> masters;
 
     public Board(BoardConfig boardConfig) {
 
         this.boardConfig = boardConfig;
+        this.gameTime = boardConfig.getGameDuration();
         entities = new ArrayList<>();
         masters = new ArrayList<>();
 
@@ -114,8 +115,20 @@ public class Board {
         return new FlattenedBoard(this);
     }
 
-    public ArrayList<MasterSquirrel> getMasters() {
+    ArrayList<MasterSquirrel> getMasters() {
         return masters;
+    }
+
+    int getGameTime() {
+        return gameTime;
+    }
+
+    void reducegameTime(){
+        gameTime--;
+    }
+
+    public String printGameTime(){
+        return "\n RemainingGameTime: " + getGameTime();
     }
 
     @Override

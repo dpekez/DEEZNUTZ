@@ -43,7 +43,7 @@ public class GameImplBotOnly extends Game {
 
     @Override
     public String message() {
-        return mainMasterSquirrelBotInfo + " Energy: " + mainMasterSquirrelBot.getEnergy() + "\nVS.\n" +
+        return mainMasterSquirrelBotInfo + " Energy: " + mainMasterSquirrelBot.getEnergy() + "\n" +
                 secondaryMasterSquirrelBotInfo + " Energy: " + secondaryMasterSquirrelBot.getEnergy();
     }
 

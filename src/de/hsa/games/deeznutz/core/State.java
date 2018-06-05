@@ -28,13 +28,22 @@ public class State {
 
     public void update() {
         logger.finest("Update FlattenedBoard.");
-        board.update(flattenedBoard());
+        if (board.getGameTime() != 0) {
+            board.update(flattenedBoard());
 
-        updateHighscores();
+            updateHighscores();
+
+            board.reducegameTime();
+        }else{
+            saveHighscores();
+            printHighscores();
+            System.exit(0);
+        }
+
     }
 
     private void updateHighscores() {
-        for (Entity entity: board.getMasters()) {
+        for (Entity entity : board.getMasters()) {
             if (!highScores.containsKey(entity.getName()))
                 highScores.put(entity.getName(), entity.getEnergy());
             if (highScores.get(entity.getName()) < entity.getEnergy())
@@ -47,7 +56,7 @@ public class State {
 
         properties.putAll(highScores);
 
-        for (HashMap.Entry<String,Integer> entry: highScores.entrySet()) {
+        for (HashMap.Entry<String, Integer> entry : highScores.entrySet()) {
             properties.put(entry.getKey(), entry.getValue().toString());
         }
 
@@ -69,7 +78,7 @@ public class State {
             logger.warning("Loading highscores file failed!");
         }
 
-        for (String key: properties.stringPropertyNames()) {
+        for (String key : properties.stringPropertyNames()) {
             highScores.put(key, Integer.parseInt(properties.getProperty(key)));
         }
     }

@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class FxUI extends Scene implements UI {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    private static final double CELL_SIZE = 25;
+    private static final double CELL_SIZE = 20;
     private static MoveCommand command;
     private final Label msgLabel;
     private final Canvas boardCanvas;
@@ -186,7 +186,7 @@ public class FxUI extends Scene implements UI {
     }
 
     private void message(final String msg) {
-        String message = msg + game.message();
+        String message = msg + game.message() + game.state.getBoard().printGameTime();
         Platform.runLater(() -> msgLabel.setText(message));
     }
 
