@@ -7,12 +7,9 @@ import static org.junit.Assert.*;
 
 
 public class FlattenedBoardTest {
-    private BoardConfig boardConfig = new BoardConfig("default.properties");
+    private BoardConfig boardConfig = new BoardConfig("test.properties");
     private Board board = new Board(boardConfig);
     private EntityContext context = new FlattenedBoard(board);
-
-
-
 
     private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8), "hand1");
     private HandOperatedMasterSquirrel handOperatedMasterSquirrel2 = new HandOperatedMasterSquirrel(new XY(8, 7), "hand2");
@@ -29,7 +26,6 @@ public class FlattenedBoardTest {
         board.insertMaster(handOperatedMasterSquirrel3);
         board.insertMaster(handOperatedMasterSquirrel4);
         board.insert(miniSquirrel);
-
     }
 
     @Test
@@ -120,6 +116,7 @@ public class FlattenedBoardTest {
         //   Y
 
         context.tryMove(handOperatedMasterSquirrel2, XY.DOWN);
+
         assertEquals(new XY(8, 8), handOperatedMasterSquirrel2.getLocation());
     }
 
@@ -280,7 +277,7 @@ public class FlattenedBoardTest {
         context.killAndReplace(badPlant);
         assertEquals(context.getEntityType(badPlant.getLocation()),EntityType.NOTHING);
 
-        //Count the quantity of BadPlants
+        //Count the quantity of BadPlants on the Board
 
         for (int x = 0; x < context.getSize().getX(); x++) {
             for (int y = 0; y < context.getSize().getY(); y++) {
@@ -292,15 +289,30 @@ public class FlattenedBoardTest {
 
         //There is one more BadPlant because of the insert of BadPlant4
 
-        assertEquals(boardConfig.getBadPlantQuant() + 1,badPlantCount);
+        assertEquals(1,badPlantCount);
     }
 
     @Test
     public void killEntity(){
+        int badPlantCount = 0;
         GoodPlant goodPlant = new GoodPlant(new XY(17, 27));
         board.insert(goodPlant);
 
         context.kill(goodPlant);
+
+        //scanning the whole Board for BadPlants
+
+        for (int x = 0; x < context.getSize().getX(); x++) {
+            for (int y = 0; y < context.getSize().getY(); y++) {
+                if (context.getEntityType(new XY(x, y)) == EntityType.BAD_PLANT) {
+                    badPlantCount++;
+                }
+            }
+        }
+
+        //There is no BadPlant left
+
+        assertSame(0,badPlantCount);
 
         //There is Nothing at this location because the GoodPlant was killed and removed
 
