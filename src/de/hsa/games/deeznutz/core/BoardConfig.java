@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 public class BoardConfig {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
+    private int gameDuration;
     private final int width;
     private final int height;
     private final XY boardSize;
@@ -37,6 +38,7 @@ public class BoardConfig {
         height = Integer.parseInt(properties.getProperty("height", "30"));
         // boardSize is dynamically generated, no need to load/save from/to properties file
         boardSize = new XY(width, height);
+        gameDuration = Integer.parseInt(properties.getProperty("gameDuration","500"));
         wallQuant = Integer.parseInt(properties.getProperty("wallQuant", "10"));
         badPlantQuant = Integer.parseInt(properties.getProperty("badPlantQuant", "5"));
         badBeastQuant = Integer.parseInt(properties.getProperty("badBeastQuant", "5"));
@@ -59,6 +61,7 @@ public class BoardConfig {
 
         properties.setProperty("width", "" + width);
         properties.setProperty("height", "" + height);
+        properties.setProperty("gameDuration","" + gameDuration);
         properties.setProperty("wallQuant", "" + wallQuant);
         properties.setProperty("badPlantQuant", "" + badPlantQuant);
         properties.setProperty("badBeastQuant", "" + badBeastQuant);
@@ -93,6 +96,10 @@ public class BoardConfig {
 
     int getHeight() {
         return height;
+    }
+
+    public int getGameDuration(){
+        return gameDuration;
     }
 
     int getWallQuant() {

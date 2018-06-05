@@ -14,7 +14,7 @@ public class MiniBotBrain implements BotController {
 
     @Override
     public void nextStep(ControllerContext view) {
-        int impactRadius = 5;
+        int impactRadius = 10;
         boolean shouldImplode = implodeCondition(view, impactRadius);
 
         if (shouldImplode) {
@@ -31,40 +31,39 @@ public class MiniBotBrain implements BotController {
         }
     }
 
-    private boolean implodeCondition(ControllerContext view, int impactRadius) {
-        int counterToImplode = 0;
-        boolean shouldImpode = false;
+    private boolean implodeCondition(ControllerContext context, int impactRadius) {
+        int entitiesCounter = 0;
 
-        int startX = view.locate().getX() - (impactRadius - 1) / 2;
-        int startY = view.locate().getY() - (impactRadius - 1) / 2;
-        int stopX = view.locate().getX() + (impactRadius - 1) / 2;
-        int stopY = view.locate().getY() + (impactRadius - 1) / 2;
+        int startX = context.locate().getX() - (impactRadius - 1) / 2;
+        int startY = context.locate().getY() - (impactRadius - 1) / 2;
+        int stopX = context.locate().getX() + (impactRadius - 1) / 2;
+        int stopY = context.locate().getY() + (impactRadius - 1) / 2;
 
-        // Begrenzung setzen
         if (startX < 0)
             startX = 0;
         if (startY < 0)
             startY = 0;
-        if (stopX > view.getViewUpperRight().getX())
-            stopX = view.getViewUpperRight().getX();
-        if (stopY > view.getViewUpperRight().getY())
-            stopY = view.getViewUpperRight().getY();
+        if (stopX > context.getViewUpperRight().getX())
+            stopX = context.getViewUpperRight().getX();
+        if (stopY > context.getViewLowerLeft().getY())
+            stopY = context.getViewLowerLeft().getY();
+
+        logger.finest("startX:" + startX + " stopX:" + stopX + " startY:" + startY + " stopY:" + stopY);
 
         for (int x = startX; x < stopX; x++) {
             for (int y = startY; y < stopY; y++) {
                 try {
-                    EntityType checkEntity = view.getEntityAt(new XY(x, y));
+                    EntityType checkEntity = context.getEntityAt(new XY(x, y));
                     if (checkEntity == EntityType.GOOD_BEAST || checkEntity == EntityType.GOOD_PLANT) {
-                        counterToImplode++;
+                        entitiesCounter++;
                     }
                 } catch (OutOfViewException e) {
-                    logger.finer("No Entity in the searchVector");
+                    logger.fine("No Entity inside of implode search vector.");
                 }
             }
         }
-        if (counterToImplode >= 1)
-            shouldImpode = true;
-        return shouldImpode;
+        logger.fine("Entities inside impact radius: " + entitiesCounter);
+        return (entitiesCounter >= 4);
     }
 
 }
