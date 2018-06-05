@@ -115,7 +115,6 @@ public class Launcher extends Application {
 
         game.setUi(fxUI);
         fxUI.setGame(game);
-        primaryStage.isAlwaysOnTop();
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("DEEZNUTZ");
 
