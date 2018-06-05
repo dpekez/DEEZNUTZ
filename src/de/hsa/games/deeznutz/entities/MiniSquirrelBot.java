@@ -134,55 +134,6 @@ public class MiniSquirrelBot extends MiniSquirrel {
             //kann keine MiniSquirrelBot spawnen
         }
 
-        //@Override
-        public void implodeQuang(int impactRadius) {
-            logger.info("Implode Method called");
-            if (!(impactRadius >= 2 && impactRadius <= 10))
-                return;
-
-            float impactArea = (float) (Math.pow(impactRadius, 2) * Math.PI);
-            int collectedEnergy = 0;
-            for (int x = -impactRadius; x < impactRadius; x++) {
-                for (int y = -impactRadius; y < impactRadius; y++) {
-                    if (x == 0 && y == 0)
-                        continue;
-
-                    Entity entitytoCheck = context.getEntity(new XY(getLocation().getX() + x, getLocation().getY() + y));
-                    if (entitytoCheck == null)
-                        continue;
-                    if (entityFriendly(MiniSquirrelBot.this, entitytoCheck))
-                        continue;
-
-                    int distance = (int) this.locate().distanceFrom(entitytoCheck.getLocation());
-                    double energyLoss = (200 * (MiniSquirrelBot.this.getEnergy() / impactArea) * (1 - distance / impactRadius));
-                    energyLoss = energyLoss < 0 ? 0 : energyLoss;
-                    collectedEnergy += collectedEnergyOfEntity(energyLoss, entitytoCheck);
-                    EntityType entityType = entitytoCheck.getEntityType();
-
-                    switch (entityType) {
-                        case WALL:
-                            break;
-                        case BAD_PLANT:
-                        case BAD_BEAST:
-                        case GOOD_BEAST:
-                        case GOOD_PLANT:
-                            if (entitytoCheck.getEnergy() == 0) {
-                                context.killAndReplace(entitytoCheck);
-                            }
-                            break;
-                        case MINI_SQUIRREL:
-                        case MASTER_SQUIRREL_BOT:
-                            if (entitytoCheck.getEnergy() == 0) {
-                                context.kill(entitytoCheck);
-                            }
-                    }
-                }
-            }
-
-            MiniSquirrelBot.this.getDaddy().updateEnergy(collectedEnergy);
-            context.kill(MiniSquirrelBot.this);
-        }
-
         @Override
         public void implode(int impactRadius) {
             logger.info("Implode Method called");
@@ -272,49 +223,6 @@ public class MiniSquirrelBot extends MiniSquirrel {
         public long getRemainingSteps() {
             return 0;
         }
-    }
-
-    private boolean entityFriendly(Entity entity, Entity entitytoCheck) {
-
-        if (entity.getEntityType() == EntityType.MASTER_SQUIRREL_BOT) {
-            MasterSquirrel masterSquirrelOfMiniSquirrel = ((MiniSquirrel) entity).getDaddy();
-
-            switch (entitytoCheck.getEntityType()) {
-                case MASTER_SQUIRREL:
-                    return masterSquirrelOfMiniSquirrel.equals(entitytoCheck);
-                case MINI_SQUIRREL:
-                    return masterSquirrelOfMiniSquirrel.equals(((MiniSquirrel) entitytoCheck).getDaddy());
-                case WALL:
-                case NOTHING:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    private int collectedEnergyOfEntity(double energyLoss, Entity entity) {
-        int energyCollected;
-        EntityType entityType = entity.getEntityType();
-
-        switch (entityType) {
-            case BAD_BEAST:
-            case BAD_PLANT:
-                entity.updateEnergy((int) energyLoss);
-            case WALL:
-                energyCollected = 0;
-                break;
-            case MASTER_SQUIRREL:
-            case MASTER_SQUIRREL_BOT:
-                energyCollected = (int) energyLoss;
-                entity.updateEnergy(-(int) energyLoss);
-                break;
-            default:
-                energyCollected = (int) energyLoss > entity.getEnergy() ? entity.getEnergy() : (int) energyLoss;
-                entity.updateEnergy(-(int) energyLoss);
-        }
-        return energyCollected;
     }
 
 }

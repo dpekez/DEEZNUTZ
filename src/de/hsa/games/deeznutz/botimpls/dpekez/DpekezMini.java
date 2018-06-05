@@ -43,11 +43,11 @@ public class DpekezMini implements BotController {
             return;
         }
 
-        // check implode condition
-        //if (implodeCondition(context, 5)) {
-        //    context.implode(5);
-        //    return;
-        //}
+         //check implode condition
+        if (implodeCondition(context, 10)) {
+            context.implode(10);
+            return;
+        }
 
         // set quadrant selector refresh rate
         if (refreshSelector <= 0) {
