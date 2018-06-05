@@ -126,6 +126,7 @@ public class Launcher extends Application {
         });
 
         primaryStage.show();
+        primaryStage.toFront();
         startGame(true, game);
     }
 

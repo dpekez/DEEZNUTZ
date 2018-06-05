@@ -4,7 +4,6 @@ import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.entities.*;
 import de.hsa.games.deeznutz.entities.Character;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class Board {

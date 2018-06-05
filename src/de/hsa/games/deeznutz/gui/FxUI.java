@@ -93,6 +93,7 @@ public class FxUI extends Scene implements UI {
                 case Q:
                 case ESCAPE:
                     fxUI.game.state.saveHighscores();
+                    logger.info("End GUI Game.");
                     System.exit(0);
                     break;
                 case T:
