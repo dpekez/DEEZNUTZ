@@ -16,7 +16,7 @@ public class State {
     private Board board;
     private HashMap<String, Integer> highScores;
 
-    State(BoardConfig boardConfig) {
+    public State(BoardConfig boardConfig) {
         board = new Board(boardConfig);
         highScores = new HashMap<>();
         loadHighscores();

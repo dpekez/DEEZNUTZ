@@ -1,12 +1,9 @@
-package de.hsa.games.deeznutz.tests;
-
 import de.hsa.games.deeznutz.core.*;
 import de.hsa.games.deeznutz.entities.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class FlattenedBoardTest {
@@ -14,9 +11,14 @@ public class FlattenedBoardTest {
     private Board board = new Board(boardConfig);
     private EntityContext context = new FlattenedBoard(board);
 
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8), "testbot1");
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel2 = new HandOperatedMasterSquirrel(new XY(8, 7), "testbot2");
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel3 = new HandOperatedMasterSquirrel(new XY(24, 18), "testbot3");
+
+
+
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8));
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel2 = new HandOperatedMasterSquirrel(new XY(8, 7));
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel3 = new HandOperatedMasterSquirrel(new XY(24, 18));
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel4 = new HandOperatedMasterSquirrel(new XY(23, 28));
+
     private MiniSquirrel miniSquirrel = new MiniSquirrel(200, new XY(18, 17), handOperatedMasterSquirrel2);
 
     @Before
@@ -25,7 +27,9 @@ public class FlattenedBoardTest {
         board.insertMaster(handOperatedMasterSquirrel);
         board.insertMaster(handOperatedMasterSquirrel2);
         board.insertMaster(handOperatedMasterSquirrel3);
+        board.insertMaster(handOperatedMasterSquirrel4);
         board.insert(miniSquirrel);
+
     }
 
     @Test
@@ -44,7 +48,7 @@ public class FlattenedBoardTest {
     }
 
     @Test
-    public void masterCollisionWithBadBeast() {
+    public void badBeastBiteMasterSquirrel() {
         BadBeast badBeast = new BadBeast(new XY(8, 9));
         board.insert(badBeast);
 
@@ -80,13 +84,17 @@ public class FlattenedBoardTest {
         //BadBeast decrease Energy of Player (1000 - 150)
         //And BadBeast decrease his BiteCounter (7 -> 6)
 
-        context.tryMove(handOperatedMasterSquirrel2, XY.DOWN);
+        for (int i = 0; i < 4; i++) {
+            badBeast.nextStep(context);
+        }
 
         assertEquals(850, handOperatedMasterSquirrel2.getEnergy());
         assertEquals(6, badBeast.getBitesLeft());
 
         for (int i = badBeast.getBitesLeft(); i > 0; i--) {
-            context.tryMove(handOperatedMasterSquirrel2, XY.DOWN);
+            for (int j = 0; j < 4; j++) {
+                badBeast.nextStep(context);
+            }
         }
 
         //BadBeast die after 7 Bites
@@ -116,7 +124,7 @@ public class FlattenedBoardTest {
     }
 
     @Test
-    public void miniCollisionWithBadBeast() {
+    public void badBeastBiteMiniSquirrel() {
         BadBeast badBeast = new BadBeast(new XY(20, 19));
         board.insert(badBeast);
 
@@ -199,7 +207,7 @@ public class FlattenedBoardTest {
     }
 
     @Test
-    public void goodEntityFlee() {
+    public void goodEntityTryToFlee() {
         GoodBeast goodBeast = new GoodBeast(new XY(25, 19));
         board.insert(goodBeast);
 
@@ -231,6 +239,72 @@ public class FlattenedBoardTest {
         //   Y
 
         assertTrue(secondDestination > firstDestination);
+
+    }
+
+    @Test
+    public void masterSquirrelEatBadBeast() {
+        BadBeast badBeast = new BadBeast(new XY(24, 27));
+        board.insert(badBeast);
+
+        //The Position of both entities
+        //      21 22  23 24 25 26 27 X
+        //   26  .  .  .  .  .  .  .
+        //   27  .  .  .  B  .  .  .
+        //   28  .  .  M  .  .  .  .
+        //   29  .  .  .  .  .  .  .
+        //   30  .  .  .  .  .  .  .
+        //   Y
+
+        context.tryMove(handOperatedMasterSquirrel4, XY.ZERO_ZERO);
+        assertEquals(1000, handOperatedMasterSquirrel4.getEnergy());
+
+        //The HandOperatedMasterSquirrel kill the BadBeast.
+        //He get +(-150) energy
+
+        context.tryMove(handOperatedMasterSquirrel4, XY.RIGHT_UP);
+        assertEquals(850, handOperatedMasterSquirrel4.getEnergy());
+        assertSame(EntityType.NOTHING, context.getEntityType(new XY(24, 28)));
+
+        context.tryMove(handOperatedMasterSquirrel4, XY.RIGHT_UP);
+        assertEquals(badBeast.getLocation(), handOperatedMasterSquirrel4.getLocation());
+    }
+
+    @Test
+    public void killAndreplace() {
+        BadPlant badPlant = new BadPlant(new XY(13, 18));
+        board.insert(badPlant);
+
+        int badPlantCount = 0;
+
+        context.killAndReplace(badPlant);
+        assertEquals(context.getEntityType(badPlant.getLocation()),EntityType.NOTHING);
+
+        //Count the quantity of BadPlants
+
+        for (int x = 0; x < context.getSize().getX(); x++) {
+            for (int y = 0; y < context.getSize().getY(); y++) {
+                if (context.getEntityType(new XY(x, y)) == EntityType.BAD_PLANT) {
+                    badPlantCount++;
+                }
+            }
+        }
+
+        //There is one more BadPlant because of the insert of BadPlant4
+
+        assertEquals(boardConfig.getBadPlantQuant() + 1,badPlantCount);
+    }
+
+    @Test
+    public void killEntity(){
+        GoodPlant goodPlant = new GoodPlant(new XY(17, 27));
+        board.insert(goodPlant);
+
+        context.kill(goodPlant);
+
+        //There is Nothing at this location because the GoodPlant was killed and removed
+
+        assertSame(context.getEntityType(goodPlant.getLocation()),EntityType.NOTHING);
 
     }
 }
