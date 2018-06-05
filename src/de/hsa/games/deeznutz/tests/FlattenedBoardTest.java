@@ -14,10 +14,10 @@ public class FlattenedBoardTest {
 
 
 
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8));
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel2 = new HandOperatedMasterSquirrel(new XY(8, 7));
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel3 = new HandOperatedMasterSquirrel(new XY(24, 18));
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel4 = new HandOperatedMasterSquirrel(new XY(23, 28));
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8), "hand1");
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel2 = new HandOperatedMasterSquirrel(new XY(8, 7), "hand2");
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel3 = new HandOperatedMasterSquirrel(new XY(24, 18), "hand3");
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel4 = new HandOperatedMasterSquirrel(new XY(23, 28), "hand4");
 
     private MiniSquirrel miniSquirrel = new MiniSquirrel(200, new XY(18, 17), handOperatedMasterSquirrel2);
 
