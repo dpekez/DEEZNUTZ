@@ -16,8 +16,8 @@ public class MasterSquirrelBot extends MasterSquirrel {
     private BotController botController;
     private static final int VIEW_DISTANCE = 31;
 
-    public MasterSquirrelBot(XY location, BotControllerFactory botControllerFactory) {
-        super(location);
+    public MasterSquirrelBot(XY location, BotControllerFactory botControllerFactory, String name) {
+        super(location, name);
         this.botControllerFactory = botControllerFactory;
         this.botController = botControllerFactory.createMasterBotController();
     }

@@ -5,6 +5,7 @@ public enum GameCommandType implements CommandTypeInfo {
     HELP("help", "print this help"),
     EXIT("exit", "quit this program"),
     ALL("all", "print all entities"),
+    HS("hs", "prints highscores"),
     LEFT("a", "move left"),
     UP("w", "move up"),
     DOWN("s", "move down"),

@@ -100,7 +100,7 @@ public class Launcher extends Application {
             };
 
             System.out.println("Get ready to rumble!");
-            timer.schedule(timerTask, 2000, 1);
+            timer.schedule(timerTask, 1000, 1);
             game.ui.multiThreadCommandProcess();
         } else {
             logger.info("Starting Game Singlethreaded...");
@@ -121,9 +121,10 @@ public class Launcher extends Application {
         primaryStage.isAlwaysOnTop();
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("DEEZNUTZ");
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         fxUI.getWindow().setOnCloseRequest(evt -> {
+            game.state.saveHighscores();
             logger.info("End GUI Game");
             System.exit(-1);
         });

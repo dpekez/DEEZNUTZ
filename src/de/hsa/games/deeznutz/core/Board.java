@@ -113,6 +113,10 @@ public class Board {
         return new FlattenedBoard(this);
     }
 
+    public ArrayList<MasterSquirrel> getMasters() {
+        return masters;
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

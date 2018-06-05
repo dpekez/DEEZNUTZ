@@ -7,11 +7,12 @@ import de.hsa.games.deeznutz.core.XYsupport;
 public class BadBeast extends Character {
 
     private static final int DEFAULT_ENERGY = -150;
+    private static final String DEFAULT_NAME = "badbeast";
     private int stepCount = 0;
     private int bitesLeft;
 
     public BadBeast(XY location) {
-        super(DEFAULT_ENERGY, location);
+        super(DEFAULT_ENERGY, location, DEFAULT_NAME);
         this.bitesLeft = 7;
     }
 
@@ -49,4 +50,5 @@ public class BadBeast extends Character {
     public String toString() {
         return "BadBeast{ " + super.toString() + " }";
     }
+
 }

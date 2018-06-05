@@ -82,6 +82,7 @@ public class ConsoleUI implements UI {
     @SuppressWarnings("unused")
     public void exit() {
         logger.info("Exit program");
+        state.saveHighscores();
         System.exit(0);
     }
 
@@ -97,6 +98,11 @@ public class ConsoleUI implements UI {
     public void all() {
         logger.info("Print all entities and their location");
         System.out.println(state.getBoard());
+    }
+
+    @SuppressWarnings("unused")
+    public void hs() {
+        state.printHighscores();
     }
 
     @SuppressWarnings("unused")

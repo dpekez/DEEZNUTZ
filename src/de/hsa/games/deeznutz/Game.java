@@ -68,7 +68,7 @@ public abstract class Game {
     protected MasterSquirrelBot createBot(String botPath) {
         try {
             BotControllerFactory factory = (BotControllerFactory) Class.forName(botPath).newInstance();
-            return new MasterSquirrelBot(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()), factory);
+            return new MasterSquirrelBot(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()), factory, botPath);
         } catch (ClassNotFoundException e) {
             logger.severe("Factory wurde nicht gefunden");
         } catch (IllegalAccessException | InstantiationException e) {

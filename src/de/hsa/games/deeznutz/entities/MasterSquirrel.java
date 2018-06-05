@@ -8,9 +8,8 @@ public abstract class MasterSquirrel extends Player {
     private static final int DEFAULT_ENERGY = 1000;
     MoveCommand moveCommand;
 
-    MasterSquirrel(XY location) {
-        super(DEFAULT_ENERGY, location);
-
+    MasterSquirrel(XY location, String name) {
+        super(DEFAULT_ENERGY, location, name);
     }
 
     @Override
@@ -29,9 +28,9 @@ public abstract class MasterSquirrel extends Player {
         return this == squirrelToCheck.getDaddy();
     }
 
-
     @Override
     public String toString() {
         return "MasterSquirrel{ " + super.toString() + '}';
     }
+
 }

@@ -88,11 +88,14 @@ public class FxUI extends Scene implements UI {
                     break;
                 case Q:
                 case ESCAPE:
+                    fxUI.game.state.saveHighscores();
                     System.exit(0);
                     break;
+                case T:
+                    fxUI.game.state.printHighscores();
+                    break;
                 case X:
-                    // todo: graphical entity window
-                    // or simple console print out
+                    System.out.println(fxUI.game.state.getBoard());
                     break;
                 case H:
                     // todo: graphical help window

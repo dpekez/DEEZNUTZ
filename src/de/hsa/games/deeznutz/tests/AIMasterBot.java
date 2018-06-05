@@ -16,7 +16,7 @@ public class AIMasterBot {
     @Before
     public void setup() {
         Board board = new Board(new BoardConfig("default.properties"));
-        MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(new XY(15, 25), new BrainFactory());
+        MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(new XY(15, 25), new BrainFactory(), board.getConfig().getMainBotPath());
         GoodBeast goodbeastOne = new GoodBeast(new XY(15, 15));
         GoodBeast goodbeastTwo = new GoodBeast(new XY(5, 5));
         BadBeast badBeastOne = new BadBeast(new XY(16, 16));

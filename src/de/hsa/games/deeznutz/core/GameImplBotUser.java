@@ -22,7 +22,7 @@ public class GameImplBotUser extends Game {
         ui = new ConsoleUI(state, threaded);
 
         // create and insert hand operated squirrel
-        masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
+        masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()), "Player");
         logger.finer("Insert HandOperatedMasterSquirrel");
         state.getBoard().insertMaster(masterSquirrel);
 

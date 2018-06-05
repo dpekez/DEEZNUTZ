@@ -7,8 +7,8 @@ public abstract class Player extends Character {
 
     public int stunnedRounds = 0;
 
-    Player(int energy, XY xy) {
-        super(energy, xy);
+    Player(int energy, XY xy, String name) {
+        super(energy, xy, name);
     }
 
     public void stun() {

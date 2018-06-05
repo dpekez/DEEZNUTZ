@@ -5,8 +5,8 @@ import de.hsa.games.deeznutz.core.XY;
 
 public abstract class Character extends Entity {
 
-    Character(int energy, XY xy) {
-        super(energy, xy);
+    Character(int energy, XY xy, String name) {
+        super(energy, xy, name);
     }
 
     public abstract void nextStep(EntityContext entityContext);

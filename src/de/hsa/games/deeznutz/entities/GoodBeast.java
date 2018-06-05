@@ -7,10 +7,11 @@ import de.hsa.games.deeznutz.core.XYsupport;
 public class GoodBeast extends Character {
 
     private static final int DEFAULT_ENERGY = 200;
+    private static final String DEFAULT_NAME = "goodbeast";
     private int stepCount = 0;
 
     public GoodBeast(XY location) {
-        super(DEFAULT_ENERGY, location);
+        super(DEFAULT_ENERGY, location, DEFAULT_NAME);
     }
 
     @SuppressWarnings("Duplicates")

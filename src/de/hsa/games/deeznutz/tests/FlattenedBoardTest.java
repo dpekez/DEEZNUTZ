@@ -14,9 +14,9 @@ public class FlattenedBoardTest {
     private Board board = new Board(boardConfig);
     private EntityContext context = new FlattenedBoard(board);
 
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8));
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel2 = new HandOperatedMasterSquirrel(new XY(8, 7));
-    private HandOperatedMasterSquirrel handOperatedMasterSquirrel3 = new HandOperatedMasterSquirrel(new XY(24, 18));
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8), "testbot1");
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel2 = new HandOperatedMasterSquirrel(new XY(8, 7), "testbot2");
+    private HandOperatedMasterSquirrel handOperatedMasterSquirrel3 = new HandOperatedMasterSquirrel(new XY(24, 18), "testbot3");
     private MiniSquirrel miniSquirrel = new MiniSquirrel(200, new XY(18, 17), handOperatedMasterSquirrel2);
 
     @Before

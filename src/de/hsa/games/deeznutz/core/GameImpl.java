@@ -13,7 +13,7 @@ public class GameImpl extends Game {
         super.threaded = threaded;
         ui = new ConsoleUI(state, threaded);
 
-        masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()));
+        masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()), "Player");
         state.getBoard().insertMaster(masterSquirrel);
     }
 

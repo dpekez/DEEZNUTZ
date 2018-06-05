@@ -12,11 +12,13 @@ public abstract class Entity {
     private int id;
     private int energy;
     private XY location;
+    private String name;
 
-    public Entity(int energy, XY location) {
+    public Entity(int energy, XY location, String name) {
         this.id = ++lastID;
         this.energy = energy;
         this.location = location;
+        this.name = name;
     }
 
     public int getId() {
@@ -43,6 +45,10 @@ public abstract class Entity {
 
     public void move(XY vector) {
         location = location.addVector(vector);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String toString() {

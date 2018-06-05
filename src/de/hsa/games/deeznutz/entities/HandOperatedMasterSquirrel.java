@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    public HandOperatedMasterSquirrel(XY location) {
-        super(location);
+    public HandOperatedMasterSquirrel(XY location, String name) {
+        super(location, name);
     }
 
     @Override
