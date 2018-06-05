@@ -249,10 +249,10 @@ public class DpekezMini implements BotController {
     private boolean implodeCondition(ControllerContext context, int impactRadius) {
         int entitiesInsideImpactRadius = 0;
 
-        int startX = context.locate().getX() - (impactRadius - 1) / 2;
-        int startY = context.locate().getY() - (impactRadius - 1) / 2;
-        int stopX = context.locate().getX() + (impactRadius - 1) / 2;
-        int stopY = context.locate().getY() + (impactRadius - 1) / 2;
+        int startX = context.locate().getX() - impactRadius;
+        int startY = context.locate().getY() - impactRadius;
+        int stopX = context.locate().getX() + impactRadius;
+        int stopY = context.locate().getY() + impactRadius;
 
         if (startX < 0)
             startX = 0;
@@ -279,7 +279,7 @@ public class DpekezMini implements BotController {
             }
         }
         logger.fine("Entities inside impact radius: " + entitiesInsideImpactRadius);
-        return (entitiesInsideImpactRadius >= 2);
+        return (entitiesInsideImpactRadius >= 4);
     }
 
 }

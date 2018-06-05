@@ -140,10 +140,10 @@ public class MiniSquirrelBot extends MiniSquirrel {
             if (!(impactRadius >= 2 && impactRadius <= 10))
                 return;
 
-            int startX = locate().getX() - (impactRadius - 1) / 2;
-            int startY = locate().getY() - (impactRadius - 1) / 2;
-            int stopX = locate().getX() + (impactRadius - 1) / 2;
-            int stopY = locate().getY() + (impactRadius - 1) / 2;
+            int startX = locate().getX() - impactRadius;
+            int startY = locate().getY() - impactRadius;
+            int stopX = locate().getX() + impactRadius;
+            int stopY = locate().getY() + impactRadius;
 
             if (startX < 0)
                 startX = 0;
