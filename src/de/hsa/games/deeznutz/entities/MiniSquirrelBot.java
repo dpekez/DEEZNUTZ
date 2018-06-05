@@ -221,7 +221,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public long getRemainingSteps() {
-            return 0;
+            return context.getRemainingTime();
         }
     }
 
