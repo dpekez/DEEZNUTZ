@@ -157,7 +157,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
             int impactArea = (int) Math.round(Math.pow(impactRadius, 2) * Math.PI);
             int totalImplosionEnergy = 0;
 
-            for (int x = startX; x < stopX; x++)
+            for (int x = startX; x < stopX; x++) {
                 for (int y = startY; y < stopY; y++) {
                     if (context.getEntity(new XY(x, y)) == null)
                         continue;
@@ -203,10 +203,12 @@ public class MiniSquirrelBot extends MiniSquirrel {
                             entity.updateEnergy(energyLoss);
                             break;
                     }
-                    totalImplosionEnergy = totalImplosionEnergy - energyLoss;
-                    logger.fine("Imploding: Total implosion energy: " + totalImplosionEnergy);
+                    totalImplosionEnergy = totalImplosionEnergy + energyLoss;
                 }
+            }
+            logger.info("Imploding: Total implosion energy: " + totalImplosionEnergy);
             MiniSquirrelBot.this.getDaddy().updateEnergy(totalImplosionEnergy);
+            context.kill(MiniSquirrelBot.this);
         }
 
         @Override
