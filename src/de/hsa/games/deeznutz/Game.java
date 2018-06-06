@@ -1,10 +1,7 @@
 package de.hsa.games.deeznutz;
 
-import de.hsa.games.deeznutz.botapi.BotControllerFactory;
 import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.core.State;
-import de.hsa.games.deeznutz.core.XYsupport;
-import de.hsa.games.deeznutz.entities.MasterSquirrelBot;
 import java.util.logging.Logger;
 
 public abstract class Game {
@@ -51,6 +48,7 @@ public abstract class Game {
 
     private void update() {
         state.update();
+
     }
 
     public State getState() {
@@ -64,17 +62,5 @@ public abstract class Game {
     public abstract void processInput() throws ScanException;
 
     public abstract String message();
-
-    protected MasterSquirrelBot createBot(String botPath) {
-        try {
-            BotControllerFactory factory = (BotControllerFactory) Class.forName(botPath).newInstance();
-            return new MasterSquirrelBot(XYsupport.generateRandomLocation(state.getBoard().getConfig().getBoardSize(), state.getBoard().getEntities()), factory, botPath);
-        } catch (ClassNotFoundException e) {
-            logger.severe("Factory wurde nicht gefunden");
-        } catch (IllegalAccessException | InstantiationException e) {
-            logger.severe(e.getMessage());
-        }
-        return null;
-    }
 
 }

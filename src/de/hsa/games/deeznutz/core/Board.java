@@ -1,6 +1,7 @@
 package de.hsa.games.deeznutz.core;
 
 import de.hsa.games.deeznutz.Launcher;
+import de.hsa.games.deeznutz.botapi.BotControllerFactory;
 import de.hsa.games.deeznutz.entities.*;
 import de.hsa.games.deeznutz.entities.Character;
 import java.util.ArrayList;
@@ -9,16 +10,27 @@ import java.util.logging.Logger;
 public class Board {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
     private BoardConfig boardConfig;
-    private int gameTime;
     private ArrayList<Entity> entities;
     private ArrayList<MasterSquirrel> masters;
 
-    public Board(BoardConfig boardConfig) {
-
-        this.boardConfig = boardConfig;
-        this.gameTime = boardConfig.getGameDuration();
+    public Board() {
+        this.boardConfig = Launcher.boardConfig;
         entities = new ArrayList<>();
         masters = new ArrayList<>();
+
+        switch (boardConfig.getPlayerMode()) {
+            case 1:
+                insertMaster(new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), "Player"));
+                break;
+            case 2:
+                insertMaster(new HandOperatedMasterSquirrel(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), "Player"));
+                insertMaster(createBot(boardConfig.getMainBotPath()));
+                break;
+            case 3:
+                insertMaster(createBot(boardConfig.getMainBotPath()));
+                insertMaster(createBot(boardConfig.getSecondaryBotPath()));
+                break;
+        }
 
         //fill upper and bottom border with walls
         for (int i = 0; i < boardConfig.getWidth(); i++) {
@@ -119,16 +131,16 @@ public class Board {
         return masters;
     }
 
-    int getGameTime() {
-        return gameTime;
-    }
-
-    void reducegameTime(){
-        gameTime--;
-    }
-
-    public String printGameTime(){
-        return "\n RemainingGameTime: " + getGameTime();
+    private MasterSquirrelBot createBot(String botPath) {
+        try {
+            BotControllerFactory factory = (BotControllerFactory) Class.forName(botPath).newInstance();
+            return new MasterSquirrelBot(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities()), factory, botPath);
+        } catch (ClassNotFoundException e) {
+            logger.severe("Factory wurde nicht gefunden");
+        } catch (IllegalAccessException | InstantiationException e) {
+            logger.severe(e.getMessage());
+        }
+        return null;
     }
 
     @Override

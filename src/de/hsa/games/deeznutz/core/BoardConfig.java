@@ -9,10 +9,13 @@ import java.util.logging.Logger;
 public class BoardConfig {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    private int gameDuration;
     private final int width;
     private final int height;
     private final XY boardSize;
+    private final int gameMode;
+    private final int playerMode;
+    private final int gameDuration;
+    private final int gameRounds;
     private final int wallQuant;
     private final int badPlantQuant;
     private final int badBeastQuant;
@@ -38,7 +41,10 @@ public class BoardConfig {
         height = Integer.parseInt(properties.getProperty("height", "30"));
         // boardSize is dynamically generated, no need to load/save from/to properties file
         boardSize = new XY(width, height);
-        gameDuration = Integer.parseInt(properties.getProperty("gameDuration","500"));
+        gameMode = Integer.parseInt(properties.getProperty("gameMode", "3"));
+        playerMode = Integer.parseInt(properties.getProperty("playerMode", "3"));
+        gameDuration = Integer.parseInt(properties.getProperty("gameDuration","50"));
+        gameRounds = Integer.parseInt(properties.getProperty("gameRounds","2"));
         wallQuant = Integer.parseInt(properties.getProperty("wallQuant", "10"));
         badPlantQuant = Integer.parseInt(properties.getProperty("badPlantQuant", "5"));
         badBeastQuant = Integer.parseInt(properties.getProperty("badBeastQuant", "5"));
@@ -61,7 +67,10 @@ public class BoardConfig {
 
         properties.setProperty("width", "" + width);
         properties.setProperty("height", "" + height);
-        properties.setProperty("gameDuration","" + gameDuration);
+        properties.setProperty("gameMode", "" + gameMode);
+        properties.setProperty("playerMode", "" + playerMode);
+        properties.setProperty("gameDuration", "" + gameDuration);
+        properties.setProperty("gameRounds", "" + gameRounds);
         properties.setProperty("wallQuant", "" + wallQuant);
         properties.setProperty("badPlantQuant", "" + badPlantQuant);
         properties.setProperty("badBeastQuant", "" + badBeastQuant);
@@ -82,6 +91,14 @@ public class BoardConfig {
         }
     }
 
+    public int getGameMode() {
+        return gameMode;
+    }
+
+    public int getPlayerMode() {
+        return playerMode;
+    }
+
     public String getMainBotPath() {
         return mainBotPath;
     }
@@ -96,6 +113,10 @@ public class BoardConfig {
 
     int getHeight() {
         return height;
+    }
+
+    public int getGameRounds() {
+        return gameRounds;
     }
 
     public int getGameDuration(){

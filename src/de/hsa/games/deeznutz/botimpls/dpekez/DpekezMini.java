@@ -17,11 +17,13 @@ public class DpekezMini implements BotController {
     private boolean startEnergyNotSet = true;
     private int startEnergy;
     private int standStill;
+    private int implodeThreshold;
 
     public DpekezMini() {
         refreshSelector = 0;
         selectedQ = 1;
-        standStill = 5;
+        standStill = 0;
+        implodeThreshold = 6;
     }
 
     @Override
@@ -43,11 +45,11 @@ public class DpekezMini implements BotController {
             return;
         }
 
-         //check implode condition
-        if (implodeCondition(context, 10)) {
+        //check implode condition
+        /*if (implodeCondition(context, 10)) {
             context.implode(10);
             return;
-        }
+        }*/
 
         // set quadrant selector refresh rate
         if (refreshSelector <= 0) {
@@ -279,7 +281,7 @@ public class DpekezMini implements BotController {
             }
         }
         logger.fine("Entities inside impact radius: " + entitiesInsideImpactRadius);
-        return (entitiesInsideImpactRadius >= 4);
+        return (entitiesInsideImpactRadius >= implodeThreshold);
     }
 
 }

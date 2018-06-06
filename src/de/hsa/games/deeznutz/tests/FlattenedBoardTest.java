@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class FlattenedBoardTest {
     private BoardConfig boardConfig = new BoardConfig("test.properties");
-    private Board board = new Board(boardConfig);
+    private Board board = new Board();
     private EntityContext context = new FlattenedBoard(board);
 
     private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8), "hand1");
@@ -289,7 +289,7 @@ public class FlattenedBoardTest {
 
         //There is one more BadPlant because of the insert of BadPlant4
 
-        assertEquals(1,badPlantCount);
+        assertEquals(13,badPlantCount);
     }
 
     @Test
@@ -312,7 +312,7 @@ public class FlattenedBoardTest {
 
         //There is no BadPlant left
 
-        assertSame(0,badPlantCount);
+        assertSame(12,badPlantCount);
 
         //There is Nothing at this location because the GoodPlant was killed and removed
 

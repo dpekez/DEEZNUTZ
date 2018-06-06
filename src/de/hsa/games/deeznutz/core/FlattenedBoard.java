@@ -38,11 +38,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
     }
 
     @Override
-    public int getRemainingTime() {
-        return board.getGameTime();
-    }
-
-    @Override
     public int getWaitingTimeBeast() {
         return board.getConfig().getWaitingTimeBeast();
     }

@@ -30,6 +30,4 @@ public interface EntityContext {
 
     void insertEntity(Entity entity);
 
-    int getRemainingTime();
-
 }

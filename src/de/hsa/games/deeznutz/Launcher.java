@@ -8,8 +8,6 @@ import de.hsa.games.deeznutz.core.GameImplBotUser;
 import de.hsa.games.deeznutz.gui.FxUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
@@ -18,8 +16,7 @@ public class Launcher extends Application {
     private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private static Launcher launcher = new Launcher();
-    private static BoardConfig boardConfig = new BoardConfig("default.properties");
-    private Scanner scanner = new Scanner(System.in);
+    public static final BoardConfig boardConfig = new BoardConfig("default.properties");
     private static Game game;
 
     public static void main(String[] args) {
@@ -27,8 +24,7 @@ public class Launcher extends Application {
     }
 
     private void menu() {
-        System.out.println("Choose Game Mode: [1] Multithr. Console [2] Singlethr. Console [3] GUI [4] Exit");
-        switch (scanner.nextInt()) {
+        switch (boardConfig.getGameMode()) {
             case 1:
                 logger.info("Game Type: Multithreaded Console");
                 fighterMenu(true, "console");
@@ -41,19 +37,11 @@ public class Launcher extends Application {
                 logger.info("Game Type: GUI");
                 fighterMenu(true, "gui");
                 break;
-            case 4:
-                logger.info("Game-Menu Exit");
-                System.exit(0);
-            default:
-                logger.info("Choosing Game Type: GUI");
-                fighterMenu(true, "gui");
-                break;
         }
     }
 
     private void fighterMenu(boolean threaded, String display) {
-        System.out.println("Choose Fight Mode: [1] Single [2] Against Bot [3] Bot only [4] Exit");
-        switch (scanner.nextInt()) {
+        switch (boardConfig.getPlayerMode()) {
             case 1:
                 logger.info("Fight Mode: Single");
                 game = new GameImpl(threaded, boardConfig);
@@ -65,13 +53,6 @@ public class Launcher extends Application {
             case 3:
                 logger.info("Fight Mode: Bots only");
                 game = new GameImplBotOnly(threaded, boardConfig);
-                break;
-            case 4:
-                logger.info("Fighter-Menu Exit");
-                System.exit(0);
-            default:
-                logger.info("Choosing Fight Mode: Single");
-                game = new GameImpl(threaded, boardConfig);
                 break;
         }
 
@@ -98,7 +79,7 @@ public class Launcher extends Application {
             };
 
             System.out.println("Get ready to rumble!");
-            timer.schedule(timerTask, 1000, 1);
+            timer.schedule(timerTask, 0, 1);
             game.ui.multiThreadCommandProcess();
         } else {
             logger.info("Starting Game Singlethreaded...");
@@ -121,7 +102,7 @@ public class Launcher extends Application {
         fxUI.getWindow().setOnCloseRequest(evt -> {
             game.state.saveHighscores();
             logger.info("End GUI Game");
-            System.exit(-1);
+            System.exit(0);
         });
 
         primaryStage.show();

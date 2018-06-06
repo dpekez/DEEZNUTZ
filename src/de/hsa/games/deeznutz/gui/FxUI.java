@@ -96,6 +96,9 @@ public class FxUI extends Scene implements UI {
                     logger.info("End GUI Game.");
                     System.exit(0);
                     break;
+                case P:
+                    fxUI.game.state.togglePause();
+                    break;
                 case T:
                     fxUI.game.state.printHighscores();
                     break;
@@ -187,7 +190,7 @@ public class FxUI extends Scene implements UI {
     }
 
     private void message(final String msg) {
-        String message = msg + game.message() + game.state.getBoard().printGameTime();
+        String message = msg + game.message() + "\n Remaining Rounds: " + game.state.getGameRounds() + " Remaining Time: " + game.state.getGameDuration() + ((game.state.isGamePause()) ? " -PAUSED-" : "");
         Platform.runLater(() -> msgLabel.setText(message));
     }
 

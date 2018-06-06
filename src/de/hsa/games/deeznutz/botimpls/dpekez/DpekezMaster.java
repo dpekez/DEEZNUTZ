@@ -15,13 +15,15 @@ public class DpekezMaster implements BotController {
     private int refreshSelector;
     private int selectedQ;
     private int miniSpawnThreshhold;
+    private int miniSpawnThreshholdStepper;
     private int maxMiniEnergy;
 
     public DpekezMaster() {
         refreshSelector = 0;
         selectedQ = 1;
         miniSpawnThreshhold = 1500;
-        maxMiniEnergy = 1000;
+        miniSpawnThreshholdStepper = 1000;
+        maxMiniEnergy = 2000;
     }
 
     @Override
@@ -29,11 +31,18 @@ public class DpekezMaster implements BotController {
 
         // spawn mini
         if (context.getEnergy() >= miniSpawnThreshhold) {
-            miniSpawnThreshhold += 1000;
+            logger.info("Trying to spawn Mini.");
+            miniSpawnThreshhold += miniSpawnThreshholdStepper;
+            miniSpawnThreshholdStepper *= 0.5;
             int miniEnergy = (int)(context.getEnergy()*0.1);
             if (miniEnergy >= maxMiniEnergy)
                 miniEnergy = maxMiniEnergy;
-            context.spawnMiniBot(XY.ZERO_ZERO, miniEnergy);
+            XY pos = new XY(getMiniSpawnPosition(context).getX(), getMiniSpawnPosition(context).getY());
+            if (pos != XY.ZERO_ZERO) {
+                logger.info("Spawning Mini.");
+                context.spawnMiniBot(pos, miniEnergy);
+            }
+            return;
         }
 
         // set quadrant selector refresh rate
@@ -236,6 +245,32 @@ public class DpekezMaster implements BotController {
             return XY.RIGHT;
         else
             return XYsupport.generateRandomMoveVector();
+    }
+
+    private XY getMiniSpawnPosition(ControllerContext context) {
+        logger.fine("Searching Mini Spawn Position from: " + context.locate());
+        XY moveVector;
+        boolean isEmpty;
+        int maxMiniSpawnPositionSearchTries = 8;
+
+        do {
+            if (--maxMiniSpawnPositionSearchTries == 0) {
+                logger.warning("No Mini Spawn Position found!");
+                return XY.ZERO_ZERO;
+            }
+
+            isEmpty = false;
+            moveVector = XYsupport.generateRandomMoveVector();
+
+            if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.NOTHING) {
+                isEmpty = true;
+                logger.fine("Found Mini Spawn Position: " + context.locate().addVector(moveVector));
+            }
+
+        } while (!isEmpty);
+
+        logger.fine("Found Mini Spawn Direction: " + moveVector);
+        return moveVector;
     }
 
 }

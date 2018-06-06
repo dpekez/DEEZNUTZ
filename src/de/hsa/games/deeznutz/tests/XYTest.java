@@ -35,7 +35,7 @@ public class XYTest {
     @Test
     public void equals() {
         assertEquals(test1, new XY(10, 10));
-        assertEquals(test1, new XY(15, 10));
+        assertEquals(test2, new XY(20, 25));
 
     }
 }

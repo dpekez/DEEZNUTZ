@@ -1,7 +1,6 @@
 import de.hsa.games.deeznutz.botimpls.mozartuss.BrainFactory;
 import de.hsa.games.deeznutz.botimpls.mozartuss.BotBrain;
 import de.hsa.games.deeznutz.core.Board;
-import de.hsa.games.deeznutz.core.BoardConfig;
 import de.hsa.games.deeznutz.core.EntityType;
 import de.hsa.games.deeznutz.core.XY;
 import de.hsa.games.deeznutz.entities.*;
@@ -15,7 +14,7 @@ public class AIMasterBot {
 
     @Before
     public void setup() {
-        Board board = new Board(new BoardConfig("default.properties"));
+        Board board = new Board();
         MasterSquirrelBot masterSquirrelBot = new MasterSquirrelBot(new XY(15, 25), new BrainFactory(), board.getConfig().getMainBotPath());
         GoodBeast goodbeastOne = new GoodBeast(new XY(15, 15));
         GoodBeast goodbeastTwo = new GoodBeast(new XY(5, 5));
