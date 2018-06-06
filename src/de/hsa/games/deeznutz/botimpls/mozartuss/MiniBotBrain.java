@@ -14,7 +14,7 @@ public class MiniBotBrain implements BotController {
 
     @Override
     public void nextStep(ControllerContext view) {
-        int impactRadius = 10;
+        int impactRadius = 5;
         boolean shouldImplode = implodeCondition(view, impactRadius);
 
         if (shouldImplode) {
@@ -34,10 +34,10 @@ public class MiniBotBrain implements BotController {
     private boolean implodeCondition(ControllerContext context, int impactRadius) {
         int entitiesCounter = 0;
 
-        int startX = context.locate().getX() - (impactRadius - 1) / 2;
-        int startY = context.locate().getY() - (impactRadius - 1) / 2;
-        int stopX = context.locate().getX() + (impactRadius - 1) / 2;
-        int stopY = context.locate().getY() + (impactRadius - 1) / 2;
+        int startX = context.locate().getX() - impactRadius;
+        int startY = context.locate().getY() - impactRadius;
+        int stopX = context.locate().getX() + impactRadius;
+        int stopY = context.locate().getY() + impactRadius;
 
         if (startX < 0)
             startX = 0;
@@ -62,6 +62,7 @@ public class MiniBotBrain implements BotController {
                 }
             }
         }
+
         logger.fine("Entities inside impact radius: " + entitiesCounter);
         return (entitiesCounter >= 4);
     }

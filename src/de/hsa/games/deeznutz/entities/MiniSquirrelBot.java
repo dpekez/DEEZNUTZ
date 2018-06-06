@@ -170,17 +170,21 @@ public class MiniSquirrelBot extends MiniSquirrel {
                     int energyLoss = (200 * (MiniSquirrelBot.this.getEnergy() / impactArea) * (1 - distance / impactRadius));
 
                     switch (entity.getEntityType()) {
+                        case WALL:
+                            energyLoss = 0;
+                            break;
                         case BAD_BEAST:
                         case BAD_PLANT:
                             logger.fine("Imploding on Entity ID: " + entity.getId());
-                            entity.updateEnergy(-energyLoss);
+                            entity.updateEnergy(energyLoss);
+                            energyLoss = 0;
                             if (entity.getEnergy() >= 0)
                                 context.killAndReplace(entity);
                             break;
                         case GOOD_PLANT:
                         case GOOD_BEAST:
                             logger.fine("Imploding on Entity ID: " + entity.getId());
-                            entity.updateEnergy(energyLoss);
+                            entity.updateEnergy(-energyLoss);
                             if (entity.getEnergy() <= 0)
                                 context.killAndReplace(entity);
                             break;
@@ -189,7 +193,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
                             if (MiniSquirrelBot.this.getDaddy() == ((MiniSquirrel) entity).getDaddy())
                                 continue;
                             logger.fine("Imploding on Entity ID: " + entity.getId());
-                            entity.updateEnergy(energyLoss);
+                            entity.updateEnergy(-energyLoss);
                             if (entity.getEnergy() <= 0)
                                 context.killAndReplace(entity);
                             break;
@@ -197,18 +201,20 @@ public class MiniSquirrelBot extends MiniSquirrel {
                         case MASTER_SQUIRREL_BOT:
                             MasterSquirrel masterSquirrel = (MasterSquirrel) entity;
                             if (!(masterSquirrel.isMyChild(MiniSquirrelBot.this)))
-                                if (entity.getEnergy() < -energyLoss)
-                                    energyLoss = -entity.getEnergy();
+                                if (entity.getEnergy() < -energyLoss) {
+                                    energyLoss = entity.getEnergy();
+                                    updateEnergy(-energyLoss);
+                                }
+
                             logger.fine("Imploding on Entity ID: " + entity.getId());
-                            entity.updateEnergy(energyLoss);
                             break;
                     }
                     totalImplosionEnergy = totalImplosionEnergy + energyLoss;
                 }
             }
             logger.info("Imploding: Total implosion energy: " + totalImplosionEnergy);
-            MiniSquirrelBot.this.getDaddy().updateEnergy(totalImplosionEnergy);
             context.kill(MiniSquirrelBot.this);
+            MiniSquirrelBot.this.getDaddy().updateEnergy(totalImplosionEnergy);
         }
 
         @Override
