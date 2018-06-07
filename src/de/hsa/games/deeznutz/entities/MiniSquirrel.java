@@ -5,8 +5,8 @@ import de.hsa.games.deeznutz.core.XY;
 import de.hsa.games.deeznutz.core.XYsupport;
 
 public class MiniSquirrel extends Player {
-    private final MasterSquirrel daddy;
     private static final String DEFAULT_NAME = "minisquirrel";
+    private final MasterSquirrel daddy;
 
     public MiniSquirrel(int energy, XY location, MasterSquirrel daddy) {
         super(energy, location, DEFAULT_NAME);

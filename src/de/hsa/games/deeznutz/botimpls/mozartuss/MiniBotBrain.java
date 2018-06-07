@@ -10,7 +10,9 @@ import de.hsa.games.deeznutz.core.XY;
 import java.util.logging.Logger;
 
 public class MiniBotBrain implements BotController {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
+
+    private BotBrain brain = new BotBrain();
 
     @Override
     public void nextStep(ControllerContext view) {
@@ -22,7 +24,7 @@ public class MiniBotBrain implements BotController {
             view.implode(impactRadius);
         }
 
-        XY move = BotBrain.moveToNearestGoodEntity(view);
+        XY move = brain.moveToNearestGoodEntity(view);
         if (view.getEnergy() < 300) {
             view.move(move);
         } else {

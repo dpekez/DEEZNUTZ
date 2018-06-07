@@ -14,8 +14,8 @@ public class GameImpl extends Game {
 
     @Override
     public void processInput() throws ScanException {
-            MoveCommand moveCommand = ui.getCommand();
-            state.getBoard().getMainMasterSquirrel().setMoveCommand(moveCommand);
+        MoveCommand moveCommand = ui.getCommand();
+        state.getBoard().getMainMasterSquirrel().setMoveCommand(moveCommand);
     }
 
     @Override

@@ -55,45 +55,13 @@ public class XYsupport {
     }
 
     public static boolean isInRange(XY start, XY target, int viewDistance) {
-        if (Math.abs(start.getX() - target.getX()) > (viewDistance - 1) / 2) {
-            return false;
-        } else if (Math.abs(start.getY() - target.getY()) > (viewDistance - 1) / 2) {
+        if (Math.abs(start.getX() - target.getX()) > (viewDistance - 1) / 2 ||
+                (Math.abs(start.getY() - target.getY()) > (viewDistance - 1) / 2)) {
             return false;
         }
+
 
         return true;
-    }
-
-    public static XY assignMoveVector(XY xy) {
-        int oldX = xy.getX();
-        int oldY = xy.getY();
-        if (oldX == 0) {
-            if (oldY == 0)
-                return XY.ZERO_ZERO;
-            else if (oldY < 0) {
-                return XY.UP;
-            } else {
-                return XY.DOWN;
-            }
-        } else if (oldY == 0) {
-            if (oldX < 0) {
-                return XY.LEFT;
-            } else {
-                return XY.RIGHT;
-            }
-        } else if (oldX < 0) {
-            if (oldY < 0) {
-                return XY.LEFT_UP;
-            } else {
-                return XY.LEFT_DOWN;
-            }
-        } else {
-            if (oldY < 0) {
-                return XY.RIGHT_UP;
-            } else {
-                return XY.RIGHT_DOWN;
-            }
-        }
     }
 
     public static XY decreaseDistance(XY start, XY target) {
@@ -105,6 +73,32 @@ public class XYsupport {
         moveY = Integer.compare(yDiff, 0);
 
         return new XY(moveX, moveY);
+    }
+
+    public static XY viewLowerLeft(EntityContext context, int viewDistance, XY location) {
+        int x = location.getX() - (viewDistance - 1) / 2;
+        int y = location.getY() + (viewDistance - 1) / 2;
+
+        if (x < 0)
+            x = 0;
+
+        if (y > context.getSize().getY())
+            y = context.getSize().getY();
+
+        return new XY(x, y);
+    }
+
+    public static XY viewUpperRight(EntityContext context, int viewDistance, XY location) {
+        int x = location.getX() + (viewDistance - 1) / 2;
+        int y = location.getY() - (viewDistance - 1) / 2;
+
+        if (x > context.getSize().getX())
+            x = context.getSize().getX();
+
+        if (y < 0)
+            y = 0;
+
+        return new XY(x, y);
     }
 
 }

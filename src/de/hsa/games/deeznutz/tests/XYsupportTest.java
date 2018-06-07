@@ -2,7 +2,6 @@ import de.hsa.games.deeznutz.core.XY;
 import de.hsa.games.deeznutz.core.XYsupport;
 import de.hsa.games.deeznutz.entities.BadBeast;
 import de.hsa.games.deeznutz.entities.Entity;
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -82,27 +81,9 @@ public class XYsupportTest {
     }
 
     @Test
-    public void testAssignMoveVector() {
-        XY vectorToAssign1 = XYsupport.assignMoveVector(new XY(10, 9));
-
-        //decrease x:10 -> x:1 and y:9 -> y:1
-        //so we get the Vector x:1 y:1 = XY:RIGHT_DOWN
-
-        Assert.assertSame(vectorToAssign1, XY.RIGHT_DOWN);
-
-
-        XY vectorToAssign2 = XYsupport.assignMoveVector(new XY(-3, -12));
-
-        //decrease x:-3 -> x:-1 and y:-12 -> y:-1
-        //so we get the Vector x:-1 y:-1 = XY:LEFT_UP
-
-        Assert.assertSame(vectorToAssign2, XY.LEFT_UP);
-    }
-
-    @Test
     public void testDecreaseDistance() {
         XY start1 = new XY(3, 5);
-        XY start2 = new XY(3,9);
+        XY start2 = new XY(3, 9);
 
         XY target = new XY(5, 7);
 
@@ -111,18 +92,18 @@ public class XYsupportTest {
 
 
         assertEquals(moveVector1, new XY(1, 1));
-        assertEquals(moveVector2, new XY(1,-1));
+        assertEquals(moveVector2, new XY(1, -1));
     }
 
     @Test
     public void testIsInRange() {
-        XY start = new XY(3,3);
-        XY target1 = new XY(6,6);
-        XY target2 = new XY(4,5);
+        XY start = new XY(3, 3);
+        XY target1 = new XY(6, 6);
+        XY target2 = new XY(4, 5);
         int viewDistance = 6;
 
-        assertTrue(XYsupport.isInRange(start,target2,viewDistance));
-        assertFalse(XYsupport.isInRange(start,target1,viewDistance));
+        assertTrue(XYsupport.isInRange(start, target2, viewDistance));
+        assertFalse(XYsupport.isInRange(start, target1, viewDistance));
 
     }
 }

@@ -9,7 +9,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class BoardConfig {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private final int fps;
     private final int width;
@@ -36,7 +36,7 @@ public class BoardConfig {
         try {
             logger.info("Loading boardconfig from file.");
             properties.load(new FileInputStream(propertiesFile));
-        } catch (IOException e){
+        } catch (IOException e) {
             logger.warning("Loading boardconfig failed, using default config!");
         }
 
@@ -47,8 +47,8 @@ public class BoardConfig {
         boardSize = new XY(width, height);
         gameMode = Integer.parseInt(properties.getProperty("gameMode", "3"));
         playerMode = Integer.parseInt(properties.getProperty("playerMode", "3"));
-        gameDuration = Integer.parseInt(properties.getProperty("gameDuration","700"));
-        gameRounds = Integer.parseInt(properties.getProperty("gameRounds","3"));
+        gameDuration = Integer.parseInt(properties.getProperty("gameDuration", "700"));
+        gameRounds = Integer.parseInt(properties.getProperty("gameRounds", "3"));
         wallQuant = Integer.parseInt(properties.getProperty("wallQuant", "25"));
         badPlantQuant = Integer.parseInt(properties.getProperty("badPlantQuant", "12"));
         badBeastQuant = Integer.parseInt(properties.getProperty("badBeastQuant", "10"));
@@ -90,7 +90,7 @@ public class BoardConfig {
         try {
             logger.info("Writing boardconfig to file.");
             properties.store(new FileOutputStream(propertiesFile), "DEEZNUTZ");
-        } catch (IOException e){
+        } catch (IOException e) {
             logger.warning("Writing boardconfig failed!");
         }
     }
@@ -127,7 +127,7 @@ public class BoardConfig {
         return gameRounds;
     }
 
-    public int getGameDuration(){
+    public int getGameDuration() {
         return gameDuration;
     }
 

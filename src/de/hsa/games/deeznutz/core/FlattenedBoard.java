@@ -6,7 +6,7 @@ import de.hsa.games.deeznutz.entities.*;
 import java.util.logging.Logger;
 
 public class FlattenedBoard implements BoardView, EntityContext {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private Board board;
     private Entity[][] cells;
@@ -16,7 +16,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
         updateFlattenedBoard();
     }
 
-    public void updateFlattenedBoard() {
+    private void updateFlattenedBoard() {
         BoardConfig config = board.getConfig();
         Entity[][] newFlatBoard = new Entity[config.getWidth()][config.getHeight()];
 
@@ -197,9 +197,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 masterSquirrel.stun();
                 break;
             case BAD_BEAST:
-                masterSquirrel.updateEnergy(nextEntity.getEnergy());
-                killAndReplace(nextEntity);
-                break;
             case GOOD_PLANT:
             case BAD_PLANT:
                 masterSquirrel.updateEnergy(nextEntity.getEnergy());

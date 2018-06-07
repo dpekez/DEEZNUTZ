@@ -1,8 +1,15 @@
 package de.hsa.games.deeznutz.entities;
 
 import de.hsa.games.deeznutz.Launcher;
-import de.hsa.games.deeznutz.botapi.*;
-import de.hsa.games.deeznutz.core.*;
+import de.hsa.games.deeznutz.botapi.BotController;
+import de.hsa.games.deeznutz.botapi.BotControllerFactory;
+import de.hsa.games.deeznutz.botapi.ControllerContext;
+import de.hsa.games.deeznutz.botapi.OutOfViewException;
+import de.hsa.games.deeznutz.core.EntityContext;
+import de.hsa.games.deeznutz.core.EntityType;
+import de.hsa.games.deeznutz.core.XY;
+import de.hsa.games.deeznutz.core.XYsupport;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -10,11 +17,10 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class MasterSquirrelBot extends MasterSquirrel {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
-
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final int VIEW_DISTANCE = 31;
     private BotControllerFactory botControllerFactory;
     private BotController botController;
-    private static final int VIEW_DISTANCE = 31;
 
     public MasterSquirrelBot(XY location, BotControllerFactory botControllerFactory, String name) {
         super(location, name);
@@ -61,30 +67,12 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public XY getViewLowerLeft() {
-            int x = getLocation().getX() - (VIEW_DISTANCE - 1) / 2;
-            int y = getLocation().getY() + (VIEW_DISTANCE - 1) / 2;
-
-            if (x < 0)
-                x = 0;
-
-            if (y > context.getSize().getY())
-                y = context.getSize().getY();
-
-            return new XY(x, y);
+            return XYsupport.viewLowerLeft(context, VIEW_DISTANCE, locate());
         }
 
         @Override
         public XY getViewUpperRight() {
-            int x = getLocation().getX() + (VIEW_DISTANCE - 1) / 2;
-            int y = getLocation().getY() - (VIEW_DISTANCE - 1) / 2;
-
-            if (x > context.getSize().getX())
-                x = context.getSize().getX();
-
-            if (y < 0)
-                y = 0;
-
-            return new XY(x, y);
+            return XYsupport.viewUpperRight(context, VIEW_DISTANCE, locate());
         }
 
         @Override

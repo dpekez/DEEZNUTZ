@@ -4,6 +4,7 @@ import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.botapi.BotControllerFactory;
 import de.hsa.games.deeznutz.entities.*;
 import de.hsa.games.deeznutz.entities.Character;
+
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -70,11 +71,11 @@ public class Board {
         }
     }
 
-    public int getGameDurationLeft() {
+    int getGameDurationLeft() {
         return gameDurationLeft;
     }
 
-    public void setGameDurationLeft(int gameDurationLeft) {
+    void setGameDurationLeft(int gameDurationLeft) {
         this.gameDurationLeft = gameDurationLeft;
     }
 
@@ -83,7 +84,7 @@ public class Board {
      * Checking if entity is a character since only characters have a nextStep() implementation.
      */
     void update(EntityContext entityContext) {
-        for (Entity entity: new ArrayList<>(entities))
+        for (Entity entity : new ArrayList<>(entities))
             if (entity instanceof Character)
                 ((Character) entity).nextStep(entityContext);
     }
@@ -107,13 +108,13 @@ public class Board {
     public Entity[] getEntities() {
         Entity[] newArray = new Entity[entities.size()];
         int index = 0;
-        for (Entity entity: entities)
+        for (Entity entity : entities)
             if (entity != null)
                 newArray[index++] = entity;
         return newArray;
     }
 
-    public BoardConfig getConfig() {
+    BoardConfig getConfig() {
         return boardConfig;
     }
 
@@ -131,7 +132,7 @@ public class Board {
         return masters.get(0);
     }
 
-    public MasterSquirrel getSecondaryMasterSquirrel() {
+    MasterSquirrel getSecondaryMasterSquirrel() {
         try {
             return masters.get(1);
         } catch (Exception e) {
@@ -160,12 +161,12 @@ public class Board {
         return null;
     }
 
-    public void setImplosionRadius(int radius) {
-        implosionRadius = radius;
-    }
-
     public int getImplosionRadius() {
         return implosionRadius;
+    }
+
+    public void setImplosionRadius(int radius) {
+        implosionRadius = radius;
     }
 
     public void addImplodingMinis(MiniSquirrel mini) {
@@ -183,7 +184,7 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Entity entity: entities)
+        for (Entity entity : entities)
             s.append(entity).append("\n");
         return s.toString();
     }

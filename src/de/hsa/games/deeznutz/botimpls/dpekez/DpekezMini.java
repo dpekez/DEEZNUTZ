@@ -7,6 +7,7 @@ import de.hsa.games.deeznutz.botapi.OutOfViewException;
 import de.hsa.games.deeznutz.core.EntityType;
 import de.hsa.games.deeznutz.core.XY;
 import de.hsa.games.deeznutz.core.XYsupport;
+
 import java.util.logging.Logger;
 
 public class DpekezMini implements BotController {
@@ -56,8 +57,7 @@ public class DpekezMini implements BotController {
         if (refreshSelector <= 0) {
             refreshSelector = 30;
             selectedQ = qSelector(context);
-        }
-        else
+        } else
             refreshSelector--;
 
         XY nearestEntity = null;

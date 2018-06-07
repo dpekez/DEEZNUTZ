@@ -3,6 +3,7 @@ package de.hsa.games.deeznutz.entities;
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.core.EntityContext;
 import de.hsa.games.deeznutz.core.XY;
+
 import java.util.logging.Logger;
 
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
