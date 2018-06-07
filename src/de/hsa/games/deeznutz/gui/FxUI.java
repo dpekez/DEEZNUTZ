@@ -139,10 +139,10 @@ public class FxUI extends Scene implements UI {
                 PrintEntity(view, gc, x, y);
             }
         }
-        printImplosion(gc, view);
+        printImplosion(gc);
     }
 
-    private void printImplosion(GraphicsContext gc, BoardView view) {
+    private void printImplosion(GraphicsContext gc) {
         String master1 = game.state.getBoard().getMainMasterSquirrel().getName();
         Color color;
 
