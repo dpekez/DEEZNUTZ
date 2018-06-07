@@ -32,4 +32,6 @@ public interface EntityContext {
 
     int getGameDurationLeft();
 
+    void setImplosionRadius(int x);
+
 }

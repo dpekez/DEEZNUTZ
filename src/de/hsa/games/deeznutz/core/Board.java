@@ -13,6 +13,7 @@ public class Board {
     private ArrayList<Entity> entities;
     private ArrayList<MasterSquirrel> masters;
     private int gameDurationLeft;
+    private int implosionRadius;
 
     public Board() {
         this.boardConfig = Launcher.boardConfig;
@@ -158,7 +159,11 @@ public class Board {
     }
 
     public void setImplosionRadius(int radius) {
+        implosionRadius = radius;
+    }
 
+    public int getImplosionRadius() {
+        return implosionRadius;
     }
 
     @Override

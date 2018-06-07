@@ -10,5 +10,4 @@ public interface BoardView {
 
     XY getSize();
 
-    void setImplosionRadius(int x);
 }
