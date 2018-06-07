@@ -139,6 +139,14 @@ public class FxUI extends Scene implements UI {
                 PrintEntity(view, gc, x, y);
             }
         }
+        printImplosion(gc);
+    }
+
+    private void printImplosion(GraphicsContext gc) {
+        gc.setFill(Color.rgb(255, 0, 0, 0.2));
+        for (MiniSquirrel miniSquirrel: game.state.getBoard().getMiniList()) {
+            gc.fillOval(miniSquirrel.getLocation().getX() * CELL_SIZE, miniSquirrel.getLocation().getY() * CELL_SIZE, CELL_SIZE*game.state.getBoard().getImplosionRadius(), CELL_SIZE*game.state.getBoard().getImplosionRadius());
+        }
     }
 
     private void PrintEntity(BoardView view, GraphicsContext gc, int x, int y) {

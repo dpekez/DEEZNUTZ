@@ -12,6 +12,7 @@ public class Board {
     private BoardConfig boardConfig;
     private ArrayList<Entity> entities;
     private ArrayList<MasterSquirrel> masters;
+    private ArrayList<MiniSquirrel> implodingMinis;
     private int gameDurationLeft;
     private int implosionRadius;
 
@@ -19,6 +20,7 @@ public class Board {
         this.boardConfig = Launcher.boardConfig;
         entities = new ArrayList<>();
         masters = new ArrayList<>();
+        implodingMinis = new ArrayList<>();
 
         switch (boardConfig.getPlayerMode()) {
             case 1:
@@ -164,6 +166,18 @@ public class Board {
 
     public int getImplosionRadius() {
         return implosionRadius;
+    }
+
+    public void addImplodingMinis(MiniSquirrel mini) {
+        implodingMinis.add(mini);
+    }
+
+    public void removeImplodingMinis() {
+        implodingMinis.clear();
+    }
+
+    public ArrayList<MiniSquirrel> getMiniList() {
+        return implodingMinis;
     }
 
     @Override

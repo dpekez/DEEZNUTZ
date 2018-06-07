@@ -34,4 +34,8 @@ public interface EntityContext {
 
     void setImplosionRadius(int x);
 
+    void addImplodingMinis(MiniSquirrel mini);
+
+    void removeImplodingMinis();
+
 }

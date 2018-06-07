@@ -320,4 +320,14 @@ public class FlattenedBoard implements BoardView, EntityContext {
         board.setImplosionRadius(radius);
     }
 
+    @Override
+    public void addImplodingMinis(MiniSquirrel mini) {
+        board.addImplodingMinis(mini);
+    }
+
+    @Override
+    public void removeImplodingMinis() {
+        board.removeImplodingMinis();
+    }
+
 }
