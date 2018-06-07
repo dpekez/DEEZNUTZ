@@ -31,15 +31,15 @@ public class DpekezMaster implements BotController {
 
         // spawn mini
         if (context.getEnergy() >= miniSpawnThreshhold) {
-            logger.info("Trying to spawn Mini.");
+            logger.fine("Trying to spawn Mini.");
             miniSpawnThreshhold += miniSpawnThreshholdStepper;
-            miniSpawnThreshholdStepper *= 0.5;
+            miniSpawnThreshholdStepper *= 1.1;
             int miniEnergy = (int)(context.getEnergy()*0.1);
             if (miniEnergy >= maxMiniEnergy)
                 miniEnergy = maxMiniEnergy;
             XY pos = new XY(getMiniSpawnPosition(context).getX(), getMiniSpawnPosition(context).getY());
             if (pos != XY.ZERO_ZERO) {
-                logger.info("Spawning Mini.");
+                logger.fine("Spawning Mini.");
                 context.spawnMiniBot(pos, miniEnergy);
             }
             return;

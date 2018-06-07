@@ -23,13 +23,18 @@ public class DpekezMini implements BotController {
         refreshSelector = 0;
         selectedQ = 1;
         standStill = 0;
-        implodeThreshold = 6;
+        implodeThreshold = 4;
     }
 
     @Override
     public void nextStep(ControllerContext context) {
         if (standStill > 0) {
             standStill--;
+            return;
+        }
+
+        if (context.getRemainingSteps() <= 100) {
+            context.move(context.directionOfMaster());
             return;
         }
 

@@ -72,6 +72,7 @@ public class State {
             System.exit(0);
         }
 
+        board.setGameDurationLeft(gameDuration);
         logger.finest("Update FlattenedBoard.");
         board.update(flattenedBoard());
         gameDuration--;

@@ -12,6 +12,7 @@ public class Board {
     private BoardConfig boardConfig;
     private ArrayList<Entity> entities;
     private ArrayList<MasterSquirrel> masters;
+    private int gameDurationLeft;
 
     public Board() {
         this.boardConfig = Launcher.boardConfig;
@@ -64,6 +65,14 @@ public class Board {
         for (int i = 0; i < boardConfig.getGoodPlantQuant(); i++) {
             insert(new GoodPlant(XYsupport.generateRandomLocation(boardConfig.getBoardSize(), getEntities())));
         }
+    }
+
+    public int getGameDurationLeft() {
+        return gameDurationLeft;
+    }
+
+    public void setGameDurationLeft(int gameDurationLeft) {
+        this.gameDurationLeft = gameDurationLeft;
     }
 
     /**

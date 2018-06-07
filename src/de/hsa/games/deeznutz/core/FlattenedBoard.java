@@ -301,4 +301,10 @@ public class FlattenedBoard implements BoardView, EntityContext {
     public void insertEntity(Entity entity) {
         board.insert(entity);
     }
+
+    @Override
+    public int getGameDurationLeft() {
+        return board.getGameDurationLeft();
+    }
+
 }
