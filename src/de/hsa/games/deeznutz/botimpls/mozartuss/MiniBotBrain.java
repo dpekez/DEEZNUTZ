@@ -20,7 +20,7 @@ public class MiniBotBrain implements BotController {
         boolean shouldImplode = implodeCondition(view, impactRadius);
 
         if (shouldImplode) {
-            logger.info("MiniSquirrelBot implode!");
+            logger.fine("MiniSquirrelBot implode!");
             view.implode(impactRadius);
         }
 

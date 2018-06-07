@@ -151,6 +151,7 @@ public class FxUI extends Scene implements UI {
     private void printImplosion(GraphicsContext gc) {
         String master1 = game.state.getBoard().getMainMasterSquirrel().getName();
         Color color;
+        int radius = game.state.getBoard().getImplosionRadius();
 
             for (MiniSquirrel miniSquirrel: game.state.getBoard().getMiniList()) {
                 if (miniSquirrel.getName().equalsIgnoreCase(master1)) {
@@ -159,7 +160,7 @@ public class FxUI extends Scene implements UI {
                     color = Color.rgb(231, 70, 98, 0.2);
                 }
                 gc.setFill(color);
-                gc.fillOval(miniSquirrel.getLocation().getX() * CELL_SIZE, miniSquirrel.getLocation().getY() * CELL_SIZE, CELL_SIZE*game.state.getBoard().getImplosionRadius(), CELL_SIZE*game.state.getBoard().getImplosionRadius());
+                gc.fillOval(miniSquirrel.getLocation().getX() * CELL_SIZE + CELL_SIZE / 2 - CELL_SIZE * radius, miniSquirrel.getLocation().getY() * CELL_SIZE + CELL_SIZE / 2 - CELL_SIZE * radius, CELL_SIZE*2*radius, CELL_SIZE*2*radius);
             }
 
     }
