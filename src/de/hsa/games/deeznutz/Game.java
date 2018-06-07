@@ -7,13 +7,14 @@ import java.util.logging.Logger;
 public abstract class Game {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    private static final int FPS = 10;
+    private int fps;
     public UI ui;
     public State state;
     public boolean threaded;
 
     public Game(State state) {
         this.state = state;
+        fps = Launcher.boardConfig.getFps();
     }
 
     public void run() throws ScanException {
@@ -26,7 +27,7 @@ public abstract class Game {
 
             if (threaded) {
                 try {
-                    Thread.sleep(1000 / FPS);
+                    Thread.sleep(1000 / fps);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -64,5 +65,16 @@ public abstract class Game {
     public abstract void processInput() throws ScanException;
 
     public abstract String message();
+
+    public void increaseFps(int step) {
+        fps += step;
+    }
+
+    public void decreaseFps(int step) {
+        if (fps - step <= 0)
+            fps = 1;
+        else
+            fps -= step;
+    }
 
 }

@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 public class BoardConfig {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
+    private final int fps;
     private final int width;
     private final int height;
     private final XY boardSize;
@@ -39,6 +40,7 @@ public class BoardConfig {
             logger.warning("Loading boardconfig failed, using default config!");
         }
 
+        fps = Integer.parseInt(properties.getProperty("fps", "10"));
         width = Integer.parseInt(properties.getProperty("width", "45"));
         height = Integer.parseInt(properties.getProperty("height", "30"));
         // boardSize is dynamically generated, no need to load/save from/to properties file
@@ -67,6 +69,7 @@ public class BoardConfig {
     public void saveProperties(String propertiesFile) {
         Properties properties = new Properties();
 
+        properties.setProperty("fps", "" + fps);
         properties.setProperty("width", "" + width);
         properties.setProperty("height", "" + height);
         properties.setProperty("gameMode", "" + gameMode);
@@ -90,6 +93,10 @@ public class BoardConfig {
         } catch (IOException e){
             logger.warning("Writing boardconfig failed!");
         }
+    }
+
+    public int getFps() {
+        return fps;
     }
 
     public int getGameMode() {
