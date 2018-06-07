@@ -136,7 +136,6 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public void implode(int impactRadius) {
-            context.removeImplodingMinis();
             logger.info("Implode Method called");
             if (!(impactRadius >= 2 && impactRadius <= 10))
                 return;
