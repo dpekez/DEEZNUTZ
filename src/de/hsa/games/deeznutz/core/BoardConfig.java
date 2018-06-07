@@ -2,7 +2,9 @@ package de.hsa.games.deeznutz.core;
 
 import de.hsa.games.deeznutz.Launcher;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -31,10 +33,10 @@ public class BoardConfig {
         Properties properties = new Properties();
 
         try {
-            Reader reader = new FileReader(propertiesFile);
-            properties.load(reader);
+            logger.info("Loading boardconfig from file.");
+            properties.load(new FileInputStream(propertiesFile));
         } catch (IOException e){
-            logger.warning(e.getMessage());
+            logger.warning("Loading boardconfig failed, using default config!");
         }
 
         width = Integer.parseInt(properties.getProperty("width", "45"));
@@ -83,11 +85,10 @@ public class BoardConfig {
         properties.setProperty("secondaryBotPath", secondaryBotPath);
 
         try {
-            System.out.println("writing file");
-            Writer writer = new FileWriter(propertiesFile);
-            properties.store(writer, "DEEZNUTZ");
+            logger.info("Writing boardconfig to file.");
+            properties.store(new FileOutputStream(propertiesFile), "DEEZNUTZ");
         } catch (IOException e){
-            logger.warning(e.getMessage());
+            logger.warning("Writing boardconfig failed!");
         }
     }
 
