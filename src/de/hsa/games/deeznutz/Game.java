@@ -77,4 +77,8 @@ public abstract class Game {
             fps -= step;
     }
 
+    public int getFps() {
+        return fps;
+    }
+
 }

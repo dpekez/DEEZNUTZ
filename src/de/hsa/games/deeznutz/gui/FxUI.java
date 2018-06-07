@@ -223,7 +223,7 @@ public class FxUI extends Scene implements UI {
     }
 
     private void message(final String msg) {
-        String message = msg + game.message() + "\n Remaining Rounds: " + game.state.getGameRounds() + " Remaining Time: " + game.state.getGameDuration() + ((game.state.isGamePause()) ? " -PAUSED-" : "");
+        String message = msg + game.message() + "\n Remaining Rounds: " + game.state.getGameRounds() + " Remaining Time: " + game.state.getGameDuration() + " FPS: " + game.getFps() + ((game.state.isGamePause()) ? " -PAUSED-" : "");
         Platform.runLater(() -> msgLabel.setText(message));
     }
 
