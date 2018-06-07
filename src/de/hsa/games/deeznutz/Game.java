@@ -37,7 +37,7 @@ public abstract class Game {
                 }
             }
             logger.finest("start update()");
-            //state.getBoard().removeImplodingMinis();
+            state.getBoard().removeImplodingMinis();
 
             update();
             break;

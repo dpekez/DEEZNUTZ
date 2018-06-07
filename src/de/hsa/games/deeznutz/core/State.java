@@ -3,6 +3,7 @@ package de.hsa.games.deeznutz.core;
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.entities.Entity;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,8 +32,8 @@ public class State {
         superHighScores = new HashMap<>();
         loadHighscores();
         printHighscores();
-        gameDuration = board.getConfig().getGameDuration();
-        gameRounds = board.getConfig().getGameRounds();
+        gameDuration = boardConfig.getGameDuration();
+        gameRounds = boardConfig.getGameRounds();
     }
 
     public Board getBoard() {
@@ -63,7 +64,7 @@ public class State {
             updateHighscores();
             printHighscores();
             togglePause();
-            gameDuration = board.getConfig().getGameDuration();
+            gameDuration = boardConfig.getGameDuration();
             gameRounds--;
             board = new Board(boardConfig);
             return;
@@ -96,6 +97,13 @@ public class State {
 
             buffer.add(entity.getEnergy());
 
+            Collections.sort(buffer);
+            Collections.reverse(buffer);
+
+            if (buffer.size() > 10)
+                buffer.subList(10, buffer.size()).clear();
+
+
             superHighScores.put(entity.getName(), buffer);
         }
     }
@@ -103,10 +111,7 @@ public class State {
     public void saveHighscores() {
         Properties properties = new Properties();
 
-        for (ArrayList<Integer> entry : superHighScores.values()) {
-            Collections.sort(entry);
-            Collections.reverse(entry);
-        }
+
 
         for (HashMap.Entry<String, ArrayList<Integer>> entries : superHighScores.entrySet()) {
             properties.setProperty(entries.getKey(), entries.getValue().toString());
@@ -139,11 +144,7 @@ public class State {
             string = string.replaceAll(" ", "");
             strings = string.split(",");
 
-            if (strings.length > 5) {
-                for (int i = 0; i < 5; i++) {
-                    strings[i] = strings[i];
-                }
-            }
+
 
             ArrayList<Integer> values = new ArrayList<>();
             for (String stringToParse : strings) {
