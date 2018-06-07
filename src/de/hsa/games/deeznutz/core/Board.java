@@ -114,7 +114,7 @@ public class Board {
         return newArray;
     }
 
-    BoardConfig getConfig() {
+    public BoardConfig getConfig() {
         return boardConfig;
     }
 
