@@ -23,8 +23,8 @@ public class MiniSquirrelBot extends MiniSquirrel {
     private BotController botController;
     private static final int VIEW_DISTANCE = 21;
 
-    MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy, BotControllerFactory botControllerFactory) {
-        super(energy, location, daddy);
+    MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy, BotControllerFactory botControllerFactory, String name) {
+        super(energy, location, daddy, name);
         this.botControllerFactory = botControllerFactory;
         this.botController = botControllerFactory.createMiniBotController();
     }

@@ -145,18 +145,36 @@ public class FxUI extends Scene implements UI {
         if (view.getEntityType(x, y) != null) {
             switch (view.getEntityType(x, y)) {
                 case NOTHING:
-                    // looks ugly with circle entities, keep in code since it speeds switchcase up in most cases
-                    //gc.setFill(Color.WHEAT);
+                    //gc.setFill(Color.ANTIQUEWHITE);
                     //gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                     break;
                 case MASTER_SQUIRREL:
-                    gc.setFill(Color.BLACK);
-                    gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                    break;
+                case MASTER_SQUIRREL_BOT:
+                    String master1 = game.state.getBoard().getMainMasterSquirrel().getName();
+
+                    if (view.getEntity(x, y).getName().equalsIgnoreCase(master1)) {
+                        gc.setFill(Color.BLACK);
+                        gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        break;
+                    } else {
+                        gc.setFill(Color.RED);
+                        gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        break;
+                    }
+
                 case MINI_SQUIRREL:
-                    gc.setFill(Color.BLACK);
-                    gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                    break;
+                case MINI_SQUIRREL_BOT:
+                    master1 = game.state.getBoard().getMainMasterSquirrel().getName();
+
+                    if (view.getEntity(x, y).getName().equalsIgnoreCase(master1)) {
+                        gc.setFill(Color.BLACK);
+                        gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        break;
+                    } else {
+                        gc.setFill(Color.RED);
+                        gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        break;
+                    }
                 case GOOD_PLANT:
                     gc.setFill(Color.FORESTGREEN);
                     gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
@@ -176,14 +194,6 @@ public class FxUI extends Scene implements UI {
                 case WALL:
                     gc.setFill(Color.GRAY);
                     gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                    break;
-                case MASTER_SQUIRREL_BOT:
-                    gc.setFill(Color.RED);
-                    gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                    break;
-                case MINI_SQUIRREL_BOT:
-                    gc.setFill(Color.RED);
-                    gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                     break;
             }
         }

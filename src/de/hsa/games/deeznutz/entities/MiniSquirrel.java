@@ -13,6 +13,11 @@ public class MiniSquirrel extends Player {
         this.daddy = daddy;
     }
 
+    public MiniSquirrel(int energy, XY location, MasterSquirrel daddy, String name) {
+        super(energy, location, name);
+        this.daddy = daddy;
+    }
+
     public MasterSquirrel getDaddy() {
         return daddy;
     }

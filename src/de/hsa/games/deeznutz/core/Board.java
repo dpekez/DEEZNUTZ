@@ -129,7 +129,12 @@ public class Board {
     }
 
     public MasterSquirrel getSecondaryMasterSquirrel() {
-        return masters.get(1);
+        try {
+            return masters.get(1);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     public FlattenedBoard flatten() { //todo: wozu brauchen wir das?

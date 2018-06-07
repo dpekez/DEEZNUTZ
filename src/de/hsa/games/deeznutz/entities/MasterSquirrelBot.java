@@ -124,7 +124,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public void spawnMiniBot(XY direction, int energy) {
             if (energy <= getEnergy()) {
-                MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), MasterSquirrelBot.this, botControllerFactory);
+                MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), MasterSquirrelBot.this, botControllerFactory, MasterSquirrelBot.this.getName());
                 context.insertEntity(miniSquirrelBot);
                 updateEnergy(-energy);
             }
