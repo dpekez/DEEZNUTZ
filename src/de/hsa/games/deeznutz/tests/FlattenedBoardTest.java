@@ -141,7 +141,7 @@ public class FlattenedBoardTest {
         }
 
         //After waiting 4 steps
-        //      14 15 16 17 18 19 10 X
+        //      14 15 16 17 18 19 20 X
         //   16  .  .  .  .  .  .  .
         //   17  .  .  .  .  m  .  .
         //   18  .  .  .  .  .  B  .
@@ -288,7 +288,7 @@ public class FlattenedBoardTest {
 
         //There is one more BadPlant because of the insert of BadPlant4
 
-        assertEquals(13,badPlantCount);
+        assertEquals(1,badPlantCount);
     }
 
     @Test
@@ -311,7 +311,7 @@ public class FlattenedBoardTest {
 
         //There is no BadPlant left
 
-        assertSame(12,badPlantCount);
+        assertSame(0,badPlantCount);
 
         //There is Nothing at this location because the GoodPlant was killed and removed
 
