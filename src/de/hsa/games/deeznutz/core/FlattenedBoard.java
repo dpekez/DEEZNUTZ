@@ -315,4 +315,9 @@ public class FlattenedBoard implements BoardView, EntityContext {
         return board.getGameDurationLeft();
     }
 
+    @Override
+    public void setImplosionRadius(int radius) {
+        board.setImplosionRadius(radius);
+    }
+
 }

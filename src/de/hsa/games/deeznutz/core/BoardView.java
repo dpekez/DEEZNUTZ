@@ -9,4 +9,6 @@ public interface BoardView {
     Entity getEntity(int x, int y);
 
     XY getSize();
+
+    void setImplosionRadius(int x);
 }

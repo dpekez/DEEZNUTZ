@@ -157,6 +157,10 @@ public class Board {
         return null;
     }
 
+    public void setImplosionRadius(int radius) {
+
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

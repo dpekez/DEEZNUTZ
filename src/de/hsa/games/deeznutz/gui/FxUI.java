@@ -145,7 +145,7 @@ public class FxUI extends Scene implements UI {
         if (view.getEntityType(x, y) != null) {
             switch (view.getEntityType(x, y)) {
                 case NOTHING:
-                    //gc.setFill(Color.ANTIQUEWHITE);
+                    //gc.setFill(Color.rgb(210, 210, 210));
                     //gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                     break;
                 case MASTER_SQUIRREL:
@@ -153,11 +153,11 @@ public class FxUI extends Scene implements UI {
                     String master1 = game.state.getBoard().getMainMasterSquirrel().getName();
 
                     if (view.getEntity(x, y).getName().equalsIgnoreCase(master1)) {
-                        gc.setFill(Color.BLACK);
+                        gc.setFill(Color.rgb(45, 45, 45));
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         break;
                     } else {
-                        gc.setFill(Color.RED);
+                        gc.setFill(Color.rgb(231, 70, 98));
                         gc.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         break;
                     }
@@ -167,11 +167,11 @@ public class FxUI extends Scene implements UI {
                     master1 = game.state.getBoard().getMainMasterSquirrel().getName();
 
                     if (view.getEntity(x, y).getName().equalsIgnoreCase(master1)) {
-                        gc.setFill(Color.BLACK);
+                        gc.setFill(Color.rgb(51, 51, 51));
                         gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         break;
                     } else {
-                        gc.setFill(Color.RED);
+                        gc.setFill(Color.rgb(231, 70, 98));
                         gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         break;
                     }

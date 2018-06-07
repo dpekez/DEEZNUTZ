@@ -215,6 +215,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
             logger.info("Imploding: Total implosion energy: " + totalImplosionEnergy);
             context.kill(MiniSquirrelBot.this);
             MiniSquirrelBot.this.getDaddy().updateEnergy(totalImplosionEnergy);
+            //context.se
         }
 
         /*
