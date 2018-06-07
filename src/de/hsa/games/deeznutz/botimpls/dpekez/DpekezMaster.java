@@ -30,7 +30,7 @@ public class DpekezMaster implements BotController {
     public void nextStep(ControllerContext context) {
 
         // spawn mini
-        if (context.getEnergy() >= miniSpawnThreshhold) {
+        if (context.getEnergy() >= miniSpawnThreshhold && context.getRemainingSteps() > 400) {
             logger.fine("Trying to spawn Mini.");
             miniSpawnThreshhold += miniSpawnThreshholdStepper;
             miniSpawnThreshholdStepper *= 0.9;
@@ -126,7 +126,8 @@ public class DpekezMaster implements BotController {
 
         // enemy evasion
         else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.MASTER_SQUIRREL_BOT) {
-            logger.fine("Evading enemy.");
+        //else if (!context.isMine(context.locate().addVector(moveVector))) {
+            logger.fine("Evading own mini.");
             refreshSelector = -5;
             moveVector = enemyEvader(moveVector);
         }

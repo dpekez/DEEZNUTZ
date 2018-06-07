@@ -40,7 +40,7 @@ public class DpekezMini implements BotController {
             startEnergyNotSet = false;
         }
 
-        if (context.getEnergy() >= startEnergy + 2000 || context.getRemainingSteps() <= 150) {
+        if (context.getEnergy() >= startEnergy + 2000 || context.getRemainingSteps() <= 200) {
             logger.fine("Looking for master");
             context.move(context.directionOfMaster());
             return;
@@ -179,7 +179,7 @@ public class DpekezMini implements BotController {
                 if (context.getEntityAt(new XY(x, y)) == EntityType.GOOD_PLANT)
                     quantity += 5;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.MINI_SQUIRREL)
-                    quantity -= 5;
+                    quantity -= 7;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.BAD_BEAST)
                     quantity -= 2;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.BAD_PLANT)
