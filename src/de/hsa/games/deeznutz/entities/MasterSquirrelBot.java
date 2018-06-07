@@ -35,7 +35,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         if (isStunned())
             return;
 
-        ControllerContext view = new ControllerContextImpl(context);
+        ControllerContext view = new ControllerContextImpl(context, this);
 
         InvocationHandler handler = new InvocationHandler() {
             @Override
@@ -59,10 +59,12 @@ public class MasterSquirrelBot extends MasterSquirrel {
     }
 
     public class ControllerContextImpl implements ControllerContext {
-        private EntityContext context;
+        private final EntityContext context;
+        private final MasterSquirrel masterSquirrel;
 
-        public ControllerContextImpl(EntityContext context) {
+        public ControllerContextImpl(EntityContext context, MasterSquirrel masterSquirrel) {
             this.context = context;
+            this.masterSquirrel = masterSquirrel;
         }
 
         @Override
@@ -92,13 +94,13 @@ public class MasterSquirrelBot extends MasterSquirrel {
         @Override
         public boolean isMine(XY target) {
             if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
-                logger.finer("No Entity in searchVector");
                 throw new OutOfViewException("Kein entity in Sichtweite (master)");
             }
             try {
-                if (MasterSquirrelBot.this.isMyChild((MiniSquirrel) context.getEntity(target)))
+                if (masterSquirrel.isMyChild((MiniSquirrel) context.getEntity(target)))
                     return true;
             } catch (Exception e) {
+                logger.finer("No Entity in searchVector");
                 return false;
             }
             return false;
@@ -106,13 +108,13 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public void move(XY direction) {
-            context.tryMove(MasterSquirrelBot.this, direction);
+            context.tryMove(masterSquirrel, direction);
         }
 
         @Override
         public void spawnMiniBot(XY direction, int energy) {
             if (energy <= getEnergy()) {
-                MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), MasterSquirrelBot.this, botControllerFactory, MasterSquirrelBot.this.getName());
+                MiniSquirrelBot miniSquirrelBot = new MiniSquirrelBot(energy, getLocation().addVector(direction), masterSquirrel, botControllerFactory, masterSquirrel.getName());
                 context.insertEntity(miniSquirrelBot);
                 updateEnergy(-energy);
             }
@@ -125,7 +127,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public int getEnergy() {
-            return MasterSquirrelBot.this.getEnergy();
+            return masterSquirrel.getEnergy();
         }
 
         @Override

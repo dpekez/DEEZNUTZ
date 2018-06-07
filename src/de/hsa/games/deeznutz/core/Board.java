@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class Board {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
     private BoardConfig boardConfig;
     private ArrayList<Entity> entities;
     private ArrayList<MasterSquirrel> masters;
@@ -141,7 +141,7 @@ public class Board {
 
     }
 
-    public FlattenedBoard flatten() { //todo: wozu brauchen wir das?
+    public FlattenedBoard flatten() {
         return new FlattenedBoard(this);
     }
 

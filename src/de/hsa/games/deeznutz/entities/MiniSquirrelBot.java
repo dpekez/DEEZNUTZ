@@ -38,7 +38,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         if (isStunned())
             return;
 
-        ControllerContext view = new ControllerContextImpl(context);
+        ControllerContext view = new ControllerContextImpl(context, this);
 
         InvocationHandler handler = new InvocationHandler() {
             @Override
@@ -62,10 +62,12 @@ public class MiniSquirrelBot extends MiniSquirrel {
     }
 
     public class ControllerContextImpl implements ControllerContext {
-        private EntityContext context;
+        private final EntityContext context;
+        private final MiniSquirrel miniSquirrel;
 
-        ControllerContextImpl(EntityContext context) {
+        ControllerContextImpl(EntityContext context, MiniSquirrel miniSquirrel) {
             this.context = context;
+            this.miniSquirrel = miniSquirrel;
         }
 
         @Override
@@ -94,20 +96,19 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public boolean isMine(XY target) throws OutOfViewException {
-            if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
-                logger.finer("Daddy not reachable");
+            if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE))
                 throw new OutOfViewException("Daddy not reachable");
-            }
             try {
-                return context.getEntityType(target).equals(MiniSquirrelBot.this.getDaddy());
+                return context.getEntity(target).equals(miniSquirrel.getDaddy());
             } catch (Exception e) {
+                logger.finer("Daddy not reachable");
                 return false;
             }
         }
 
         @Override
         public void move(XY direction) {
-            context.tryMove(MiniSquirrelBot.this, direction);
+            context.tryMove(miniSquirrel, direction);
         }
 
         @Override
@@ -144,16 +145,15 @@ public class MiniSquirrelBot extends MiniSquirrel {
                         continue;
                     if (x == locate().getX() && y == locate().getY())
                         continue;
+                    if (context.getEntityType(new XY(x, y)).equals(EntityType.WALL))
+                        continue;
 
                     Entity entity = context.getEntity(new XY(x, y));
 
                     int distance = (int) this.locate().distanceFrom(entity.getLocation());
-                    int energyLoss = (200 * (MiniSquirrelBot.this.getEnergy() / impactArea) * (1 - distance / impactRadius));
+                    int energyLoss = (200 * (miniSquirrel.getEnergy() / impactArea) * (1 - distance / impactRadius));
 
                     switch (entity.getEntityType()) {
-                        case WALL:
-                            energyLoss = 0;
-                            break;
                         case BAD_BEAST:
                         case BAD_PLANT:
                             logger.fine("Imploding on" + "Entity Type: " + entity.getEntityType() + ", Entity ID: " + entity.getId());
@@ -171,7 +171,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
                             break;
                         case MINI_SQUIRREL_BOT:
                         case MINI_SQUIRREL:
-                            if (MiniSquirrelBot.this.getDaddy() == ((MiniSquirrel) entity).getDaddy())
+                            if (miniSquirrel.getDaddy() == ((MiniSquirrel) entity).getDaddy())
                                 continue;
                             logger.fine("Imploding on" + "Entity Type: " + entity.getEntityType() + ", Entity ID: " + entity.getId());
                             entity.updateEnergy(-energyLoss);
@@ -181,33 +181,38 @@ public class MiniSquirrelBot extends MiniSquirrel {
                         case MASTER_SQUIRREL:
                         case MASTER_SQUIRREL_BOT:
                             MasterSquirrel masterSquirrel = (MasterSquirrel) entity;
-                            if (!(masterSquirrel.isMyChild(MiniSquirrelBot.this)))
-                                if (entity.getEnergy() < -energyLoss) {
-                                    energyLoss = entity.getEnergy();
-                                    updateEnergy(-energyLoss);
-                                }
+                            if (masterSquirrel.isMyChild(miniSquirrel))
+                                continue;
 
+                            if (entity.getEnergy() < -energyLoss) {
+                                energyLoss = entity.getEnergy();
+                                updateEnergy(-energyLoss);
+                            } else {
+                                updateEnergy(-energyLoss);
+                            }
                             logger.fine("Imploding on" + "Entity Type: " + entity.getEntityType() + ", Entity ID: " + entity.getId());
                             break;
+                        default:
+                            energyLoss = 0;
                     }
                     totalImplosionEnergy = totalImplosionEnergy + energyLoss;
                 }
             }
             logger.fine("Imploding: Total implosion energy: " + totalImplosionEnergy);
-            context.kill(MiniSquirrelBot.this);
-            MiniSquirrelBot.this.getDaddy().updateEnergy(totalImplosionEnergy);
-            context.addImplodingMinis(MiniSquirrelBot.this);
+            context.kill(miniSquirrel);
+            miniSquirrel.getDaddy().updateEnergy(totalImplosionEnergy);
+            context.addImplodingMinis(miniSquirrel);
             context.setImplosionRadius(impactRadius);
         }
 
         @Override
         public int getEnergy() {
-            return MiniSquirrelBot.this.getEnergy();
+            return miniSquirrel.getEnergy();
         }
 
         @Override
         public XY directionOfMaster() {
-            return XYsupport.decreaseDistance(MiniSquirrelBot.this.getDaddy().getLocation(), MiniSquirrelBot.this.getLocation());
+            return XYsupport.decreaseDistance(miniSquirrel.getLocation(), miniSquirrel.getLocation());
         }
 
         @Override

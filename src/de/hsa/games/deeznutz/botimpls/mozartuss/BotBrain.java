@@ -14,6 +14,8 @@ public class BotBrain {
 
     XY moveToNearestGoodEntity(ControllerContext context) {
         XY moveDirection = XY.ZERO_ZERO;
+        XY nearestMini = nearestEntity(context, EntityType.MINI_SQUIRREL);
+        XY nearestMiniBot = nearestEntity(context, EntityType.MINI_SQUIRREL_BOT);
         XY nearestBP = nearestEntity(context, EntityType.BAD_PLANT);
         XY nearestBB = nearestEntity(context, EntityType.BAD_BEAST);
         XY nearestGB = nearestEntity(context, EntityType.GOOD_BEAST);
@@ -30,20 +32,24 @@ public class BotBrain {
             if ((context.locate().distanceFrom(nearestPositive) > context.locate().distanceFrom(nearestBB))) {
                 moveDirection = XYsupport.decreaseDistance(nearestBB, context.locate());
             }
+        } else if ((context.locate().distanceFrom(nearestWW)) < 1) {
+            moveDirection = XYsupport.decreaseDistance(nearestWW, context.locate());
         } else if ((context.locate().distanceFrom(nearestPositive)) < 16) {
             logger.finer("shrink the distance between Squirrel and positiveEntities");
             moveDirection = XYsupport.decreaseDistance(context.locate(), nearestPositive);
         } else if ((context.locate().distanceFrom(nearestBP)) < 1) {
             moveDirection = XYsupport.decreaseDistance(nearestBP, context.locate());
-        } else if ((context.locate().distanceFrom(nearestWW)) < 1) {
-            moveDirection = XYsupport.decreaseDistance(nearestWW, context.locate());
+        } else if ((context.locate().distanceFrom(nearestMini)) < 16 && !context.isMine(nearestMini)) {
+            moveDirection = XYsupport.decreaseDistance(context.locate(), nearestMini);
+        } else if ((context.locate().distanceFrom(nearestMiniBot)) < 16 && !context.isMine(nearestMiniBot)) {
+            moveDirection = XYsupport.decreaseDistance(context.locate(), nearestMini);
         } else {
             moveDirection = XYsupport.generateRandomMoveVector();
         }
         return moveDirection;
     }
 
-    private XY nearestEntity(ControllerContext context, EntityType type) {
+    XY nearestEntity(ControllerContext context, EntityType type) {
         logger.finer("searching for the nearest entities");
         XY position = context.locate();
         int minX = context.getViewLowerLeft().getX();

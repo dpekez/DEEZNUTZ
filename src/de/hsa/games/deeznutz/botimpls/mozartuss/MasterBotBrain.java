@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class MasterBotBrain implements BotController {
     private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    private int energyToReachForSpawn = 1000;
+    private int energyToReachForSpawn = 2000;
     private BotBrain brain = new BotBrain();
 
     @Override
@@ -22,8 +22,9 @@ public class MasterBotBrain implements BotController {
                 view.move(move);
             } else {
                 XY spawnDirection = checkFreeSpawnField(view);
-                view.spawnMiniBot(spawnDirection, 500);
-                energyToReachForSpawn = energyToReachForSpawn + 2000;
+                int miniSquirrelEnergy = (int) (view.getEnergy() * 0.1);
+                view.spawnMiniBot(spawnDirection, miniSquirrelEnergy);
+                energyToReachForSpawn = energyToReachForSpawn + miniSquirrelEnergy;
             }
         } catch (SpawnException e) {
             logger.warning("Unable to spawn MiniSquirrel (Brain)");
