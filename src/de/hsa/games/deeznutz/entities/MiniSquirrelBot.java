@@ -117,7 +117,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         @Override
         public void implode(int impactRadius) {
-            logger.info("Implode Method called");
+            logger.fine("Implode Method called");
             if (!(impactRadius >= 2 && impactRadius <= 10))
                 return;
 
@@ -193,7 +193,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
                     totalImplosionEnergy = totalImplosionEnergy + energyLoss;
                 }
             }
-            logger.info("Imploding: Total implosion energy: " + totalImplosionEnergy);
+            logger.fine("Imploding: Total implosion energy: " + totalImplosionEnergy);
             context.kill(MiniSquirrelBot.this);
             MiniSquirrelBot.this.getDaddy().updateEnergy(totalImplosionEnergy);
             context.addImplodingMinis(MiniSquirrelBot.this);

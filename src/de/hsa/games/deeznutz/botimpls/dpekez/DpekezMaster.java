@@ -18,7 +18,7 @@ public class DpekezMaster implements BotController {
     private int miniSpawnThreshholdStepper;
     private int maxMiniEnergy;
 
-    public DpekezMaster() {
+    DpekezMaster() {
         refreshSelector = 0;
         selectedQ = 1;
         miniSpawnThreshhold = 1500;

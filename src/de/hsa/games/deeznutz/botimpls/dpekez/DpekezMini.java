@@ -21,7 +21,7 @@ public class DpekezMini implements BotController {
     private int implodeThreshold;
     private int impactRadius;
 
-    public DpekezMini() {
+    DpekezMini() {
         refreshSelector = 0;
         selectedQ = 1;
         standStill = 0;

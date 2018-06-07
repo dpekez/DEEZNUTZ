@@ -143,7 +143,7 @@ public class BoardConfig {
         return badBeastQuant;
     }
 
-    public int getBadPlantQuant() {
+    int getBadPlantQuant() {
         return badPlantQuant;
     }
 
