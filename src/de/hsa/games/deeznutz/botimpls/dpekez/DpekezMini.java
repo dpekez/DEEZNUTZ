@@ -18,12 +18,14 @@ public class DpekezMini implements BotController {
     private int startEnergy;
     private int standStill;
     private int implodeThreshold;
+    private int impactRadius;
 
     public DpekezMini() {
         refreshSelector = 0;
         selectedQ = 1;
         standStill = 0;
         implodeThreshold = 4;
+        impactRadius = 5;
     }
 
     @Override
@@ -33,28 +35,22 @@ public class DpekezMini implements BotController {
             return;
         }
 
-        if (context.getRemainingSteps() <= 100) {
-            context.move(context.directionOfMaster());
-            return;
-        }
-
         if (startEnergyNotSet) {
             startEnergy = context.getEnergy();
             startEnergyNotSet = false;
         }
 
-
-        if (context.getEnergy() >= startEnergy + 2000) {
+        if (context.getEnergy() >= startEnergy + 2000 || context.getRemainingSteps() <= 150) {
             logger.fine("Looking for master");
             context.move(context.directionOfMaster());
             return;
         }
 
         //check implode condition
-        /*if (implodeCondition(context, 10)) {
-            context.implode(10);
+        if (implodeCondition(context, impactRadius)) {
+            context.implode(impactRadius);
             return;
-        }*/
+        }
 
         // set quadrant selector refresh rate
         if (refreshSelector <= 0) {
@@ -182,6 +178,8 @@ public class DpekezMini implements BotController {
                     quantity += 3;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.GOOD_PLANT)
                     quantity += 5;
+                if (context.getEntityAt(new XY(x, y)) == EntityType.MINI_SQUIRREL)
+                    quantity -= 5;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.BAD_BEAST)
                     quantity -= 2;
                 if (context.getEntityAt(new XY(x, y)) == EntityType.BAD_PLANT)

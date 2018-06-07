@@ -33,7 +33,7 @@ public class DpekezMaster implements BotController {
         if (context.getEnergy() >= miniSpawnThreshhold) {
             logger.fine("Trying to spawn Mini.");
             miniSpawnThreshhold += miniSpawnThreshholdStepper;
-            miniSpawnThreshholdStepper *= 1.1;
+            miniSpawnThreshholdStepper *= 0.9;
             int miniEnergy = (int)(context.getEnergy()*0.1);
             if (miniEnergy >= maxMiniEnergy)
                 miniEnergy = maxMiniEnergy;

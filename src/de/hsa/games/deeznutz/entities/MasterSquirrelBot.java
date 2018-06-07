@@ -147,7 +147,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
         @Override
         public long getRemainingSteps() {
-            return 0;
+            return context.getGameDurationLeft();
         }
     }
 
