@@ -10,16 +10,17 @@ import de.hsa.games.deeznutz.core.XYsupport;
 import java.util.logging.Logger;
 
 public class BotBrain {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    static XY moveToNearestGoodEntity(ControllerContext context) {
+    XY moveToNearestGoodEntity(ControllerContext context) {
         XY moveDirection = XY.ZERO_ZERO;
-        XY nearestBP = BotBrain.nearestEntity(context, EntityType.BAD_PLANT);
-        XY nearestBB = BotBrain.nearestEntity(context, EntityType.BAD_BEAST);
-        XY nearestGB = BotBrain.nearestEntity(context, EntityType.GOOD_BEAST);
-        XY nearestGP = BotBrain.nearestEntity(context, EntityType.GOOD_PLANT);
-        XY nearestWW = BotBrain.nearestEntity(context, EntityType.WALL);
+        XY nearestBP = nearestEntity(context, EntityType.BAD_PLANT);
+        XY nearestBB = nearestEntity(context, EntityType.BAD_BEAST);
+        XY nearestGB = nearestEntity(context, EntityType.GOOD_BEAST);
+        XY nearestGP = nearestEntity(context, EntityType.GOOD_PLANT);
+        XY nearestWW = nearestEntity(context, EntityType.WALL);
         XY nearestPositive;
+
         if (nearestGB.distanceFrom(context.locate()) < nearestGP.distanceFrom(context.locate()))
             nearestPositive = nearestGB;
         else nearestPositive = nearestGP;
@@ -42,7 +43,7 @@ public class BotBrain {
         return moveDirection;
     }
 
-    public static XY nearestEntity(ControllerContext context, EntityType type) {
+    private XY nearestEntity(ControllerContext context, EntityType type) {
         logger.finer("searching for the nearest entities");
         XY position = context.locate();
         int minX = context.getViewLowerLeft().getX();
@@ -69,15 +70,10 @@ public class BotBrain {
         return null;
     }
 
-    static boolean checkSpawnField(ControllerContext context, XY location) {
+    boolean checkSpawnField(ControllerContext context, XY location) {
         try {
             EntityType entityType = context.getEntityAt(location);
-            switch (entityType) {
-                case NOTHING:
-                    return true;
-                default:
-                    return false;
-            }
+            return entityType == EntityType.NOTHING;
         } catch (OutOfViewException e) {
             logger.finer("No Entity in spawnfield");
         }

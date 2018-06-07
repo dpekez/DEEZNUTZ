@@ -2,10 +2,11 @@ package de.hsa.games.deeznutz;
 
 import de.hsa.games.deeznutz.console.ScanException;
 import de.hsa.games.deeznutz.core.State;
+
 import java.util.logging.Logger;
 
 public abstract class Game {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private int fps;
     public UI ui;
@@ -17,7 +18,7 @@ public abstract class Game {
         fps = Launcher.boardConfig.getFps();
     }
 
-    public void run() throws ScanException {
+    void run() throws ScanException {
 
         while (true) {
             logger.finest("start render()");
@@ -29,13 +30,14 @@ public abstract class Game {
                 try {
                     Thread.sleep(1000 / fps);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    logger.finer(e.getMessage());
                 }
             }
             logger.finest("start update()");
             //state.getBoard().removeImplodingMinis();
 
             update();
+            break;
         }
     }
 
@@ -43,7 +45,7 @@ public abstract class Game {
         return ui;
     }
 
-    public void setUi(UI ui) {
+    void setUi(UI ui) {
         this.ui = ui;
     }
 

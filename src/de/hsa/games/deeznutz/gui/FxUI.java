@@ -2,9 +2,11 @@ package de.hsa.games.deeznutz.gui;
 
 import de.hsa.games.deeznutz.Game;
 import de.hsa.games.deeznutz.Launcher;
-import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
 import de.hsa.games.deeznutz.UI;
-import de.hsa.games.deeznutz.core.*;
+import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
+import de.hsa.games.deeznutz.core.BoardView;
+import de.hsa.games.deeznutz.core.MoveCommand;
+import de.hsa.games.deeznutz.core.XY;
 import de.hsa.games.deeznutz.entities.MasterSquirrel;
 import de.hsa.games.deeznutz.entities.MiniSquirrel;
 import de.hsa.games.deeznutz.music.BackgroundMusic;
@@ -18,10 +20,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
 import java.util.logging.Logger;
 
 public class FxUI extends Scene implements UI {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private static final double CELL_SIZE = 20;
     private static MoveCommand command;
@@ -84,7 +87,8 @@ public class FxUI extends Scene implements UI {
                             fxUI.game.getState().getBoard().insert(mini);
                             daddy.updateEnergy(-energy);
                         } else {
-                            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " + (fxUI.game.getState().getBoard().getMainMasterSquirrel().getEnergy()) + " Energie");
+                            throw new NotEnoughEnergyException("Das MasterSquirrel hat nur " +
+                                    (fxUI.game.getState().getBoard().getMainMasterSquirrel().getEnergy()) + " Energie");
                         }
                     } catch (NotEnoughEnergyException e) {
                         logger.warning(e.getMessage());
@@ -105,25 +109,22 @@ public class FxUI extends Scene implements UI {
                 case X:
                     System.out.println(fxUI.game.state.getBoard());
                     break;
-                case J:
-                    fxUI.game.increaseFps(2);
-                    break;
-                case K:
-                    fxUI.game.decreaseFps(2);
-                    break;
                 case H:
-                    // todo: graphical help window
+
                     // or simple console print out
                     break;
                 case L:
                     // todo: toggle background music
                     break;
+                default:
+                    System.out.println("This key " + "\"" + keyEvent.getCode() + "\"" + " have no function");
             }
         };
     }
 
     @Override
     public void render(final BoardView view) {
+
         Platform.runLater(() -> repaintBoardCanvas(view));
     }
 
@@ -149,19 +150,13 @@ public class FxUI extends Scene implements UI {
     }
 
     private void printImplosion(GraphicsContext gc) {
-        String master1 = game.state.getBoard().getMainMasterSquirrel().getName();
-        Color color;
-
-            for (MiniSquirrel miniSquirrel: game.state.getBoard().getMiniList()) {
-                if (miniSquirrel.getName().equalsIgnoreCase(master1)) {
-                    color = Color.rgb(45, 45, 45, 0.2);
-                } else {
-                    color = Color.rgb(231, 70, 98, 0.2);
-                }
-                gc.setFill(color);
-                gc.fillOval(miniSquirrel.getLocation().getX() * CELL_SIZE, miniSquirrel.getLocation().getY() * CELL_SIZE, CELL_SIZE*game.state.getBoard().getImplosionRadius(), CELL_SIZE*game.state.getBoard().getImplosionRadius());
-            }
-
+        gc.setFill(Color.rgb(255, 0, 0, 0.2));
+        for (MiniSquirrel miniSquirrel : game.state.getBoard().getMiniList()) {
+            gc.fillOval(miniSquirrel.getLocation().getX() * CELL_SIZE,
+                    miniSquirrel.getLocation().getY() * CELL_SIZE,
+                    CELL_SIZE * game.state.getBoard().getImplosionRadius(),
+                    CELL_SIZE * game.state.getBoard().getImplosionRadius());
+        }
     }
 
     private void PrintEntity(BoardView view, GraphicsContext gc, int x, int y) {
@@ -223,7 +218,7 @@ public class FxUI extends Scene implements UI {
     }
 
     private void message(final String msg) {
-        String message = msg + game.message() + "\n Remaining Rounds: " + game.state.getGameRounds() + " Remaining Time: " + game.state.getGameDuration() + " FPS: " + game.getFps() + ((game.state.isGamePause()) ? " -PAUSED-" : "");
+        String message = msg + game.message() + "\n Remaining Rounds: " + game.state.getGameRounds() + " Remaining Time: " + game.state.getGameDuration() + ((game.state.isGamePause()) ? " -PAUSED-" : "");
         Platform.runLater(() -> msgLabel.setText(message));
     }
 

@@ -1,6 +1,7 @@
 package de.hsa.games.deeznutz.music;
 
 import de.hsa.games.deeznutz.Launcher;
+
 import javax.sound.sampled.*;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -21,17 +22,17 @@ public class BackgroundMusic {
     }
 
     public void loop() {
-            if (clip != null) {
-                new Thread(() -> {
-                    synchronized (clip) {
-                        clip.stop();
-                        clip.setFramePosition(0);
-                        clip.loop(Clip.LOOP_CONTINUOUSLY);
-                        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                        gainControl.setValue(-20);
-                    }
-                }).start();
-            }
+        if (clip != null) {
+            new Thread(() -> {
+                synchronized (clip) {
+                    clip.stop();
+                    clip.setFramePosition(0);
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                    gainControl.setValue(-20);
+                }
+            }).start();
+        }
     }
 
 }

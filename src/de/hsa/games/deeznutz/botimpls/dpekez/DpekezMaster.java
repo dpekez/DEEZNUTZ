@@ -10,7 +10,7 @@ import de.hsa.games.deeznutz.core.XYsupport;
 import java.util.logging.Logger;
 
 public class DpekezMaster implements BotController {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private int refreshSelector;
     private int selectedQ;
@@ -34,7 +34,7 @@ public class DpekezMaster implements BotController {
             logger.fine("Trying to spawn Mini.");
             miniSpawnThreshhold += miniSpawnThreshholdStepper;
             miniSpawnThreshholdStepper *= 0.9;
-            int miniEnergy = (int)(context.getEnergy()*0.1);
+            int miniEnergy = (int) (context.getEnergy() * 0.1);
             if (miniEnergy >= maxMiniEnergy)
                 miniEnergy = maxMiniEnergy;
             XY pos = new XY(getMiniSpawnPosition(context).getX(), getMiniSpawnPosition(context).getY());
@@ -49,8 +49,7 @@ public class DpekezMaster implements BotController {
         if (refreshSelector <= 0) {
             refreshSelector = 30;
             selectedQ = qSelector(context);
-        }
-        else
+        } else
             refreshSelector--;
 
         XY nearestEntity = null;
@@ -126,7 +125,7 @@ public class DpekezMaster implements BotController {
 
         // enemy evasion
         else if (context.getEntityAt(context.locate().addVector(moveVector)) == EntityType.MASTER_SQUIRREL_BOT) {
-        //else if (!context.isMine(context.locate().addVector(moveVector))) {
+            //else if (!context.isMine(context.locate().addVector(moveVector))) {
             logger.fine("Evading own mini.");
             refreshSelector = -5;
             moveVector = enemyEvader(moveVector);
@@ -196,7 +195,7 @@ public class DpekezMaster implements BotController {
             for (int y = startY; y < stopY; y++) {
                 if (context.getEntityAt(new XY(x, y)) != EntityType.GOOD_PLANT
                         && context.getEntityAt(new XY(x, y)) != EntityType.GOOD_BEAST
-                        /*&& context.getEntityAt(new XY(x, y)) != EntityType.MINI_SQUIRREL_BOT*/) {
+                    /*&& context.getEntityAt(new XY(x, y)) != EntityType.MINI_SQUIRREL_BOT*/) {
                     continue;
                 }
                 if (nearestEntity == null) {

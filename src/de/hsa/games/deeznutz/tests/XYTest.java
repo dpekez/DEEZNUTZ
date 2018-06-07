@@ -1,7 +1,7 @@
 import de.hsa.games.deeznutz.core.XY;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class XYTest {
     private final XY test1 = new XY(10, 10);

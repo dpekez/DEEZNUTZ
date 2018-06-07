@@ -1,14 +1,8 @@
 package de.hsa.games.deeznutz.core;
 
 import de.hsa.games.deeznutz.Game;
-import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.console.ConsoleUI;
 import de.hsa.games.deeznutz.console.ScanException;
-import de.hsa.games.deeznutz.entities.HandOperatedMasterSquirrel;
-import de.hsa.games.deeznutz.entities.MasterSquirrel;
-import de.hsa.games.deeznutz.entities.MasterSquirrelBot;
-
-import java.util.logging.Logger;
 
 public class GameImplBotUser extends Game {
 
@@ -20,8 +14,8 @@ public class GameImplBotUser extends Game {
 
     @Override
     public void processInput() throws ScanException {
-            MoveCommand moveCommand = ui.getCommand();
-            state.getBoard().getMainMasterSquirrel().setMoveCommand(moveCommand);
+        MoveCommand moveCommand = ui.getCommand();
+        state.getBoard().getMainMasterSquirrel().setMoveCommand(moveCommand);
     }
 
     @Override

@@ -8,19 +8,45 @@ import de.hsa.games.deeznutz.core.GameImplBotUser;
 import de.hsa.games.deeznutz.gui.FxUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
 public class Launcher extends Application {
-    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
-
-    private static Launcher launcher = new Launcher();
     public static final BoardConfig boardConfig = new BoardConfig("default.properties");
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static Launcher launcher = new Launcher();
     private static Game game;
 
     public static void main(String[] args) {
         launcher.menu();
+    }
+
+    private static void startGame(boolean threaded, Game game) {
+        if (threaded) {
+            logger.info("Starting Game Multithreaded...");
+
+            Timer timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        game.run();
+                    } catch (ScanException e) {
+                        logger.fine(e.getMessage());
+                    }
+                }
+            };
+
+            System.out.println("Get ready to rumble!");
+            timer.schedule(timerTask, 0, 1);
+            game.ui.multiThreadCommandProcess();
+        } else {
+            logger.info("Starting Game Singlethreaded...");
+
+            game.run();
+        }
     }
 
     private void menu() {
@@ -60,32 +86,6 @@ public class Launcher extends Application {
             Application.launch();
         else
             startGame(threaded, game);
-    }
-
-    private static void startGame(boolean threaded, Game game) {
-        if (threaded) {
-            logger.info("Starting Game Multithreaded...");
-
-            Timer timer = new Timer();
-            TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        game.run();
-                    } catch (ScanException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-
-            System.out.println("Get ready to rumble!");
-            timer.schedule(timerTask, 0, 1);
-            game.ui.multiThreadCommandProcess();
-        } else {
-            logger.info("Starting Game Singlethreaded...");
-
-            game.run();
-        }
     }
 
     @Override

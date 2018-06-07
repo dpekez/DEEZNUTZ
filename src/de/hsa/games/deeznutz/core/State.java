@@ -2,6 +2,7 @@ package de.hsa.games.deeznutz.core;
 
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.entities.Entity;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class State {
-    private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private Board board;
     private int gameDuration;
@@ -81,7 +82,7 @@ public class State {
 
 
     private void updateHighscores() {
-        for (Entity entity: board.getMasters()) {
+        for (Entity entity : board.getMasters()) {
             highScores.put(entity.getName(), entity.getEnergy());
 
             ArrayList<Integer> buffer;
@@ -100,12 +101,12 @@ public class State {
     public void saveHighscores() {
         Properties properties = new Properties();
 
-        for (ArrayList<Integer> entry: superHighScores.values()) {
+        for (ArrayList<Integer> entry : superHighScores.values()) {
             Collections.sort(entry);
             Collections.reverse(entry);
         }
 
-        for (HashMap.Entry<String, ArrayList<Integer>> entries: superHighScores.entrySet()) {
+        for (HashMap.Entry<String, ArrayList<Integer>> entries : superHighScores.entrySet()) {
             properties.setProperty(entries.getKey(), entries.getValue().toString());
         }
 
@@ -130,7 +131,7 @@ public class State {
 
         String string;
         String[] strings;
-        for (Object object: properties.stringPropertyNames()) {
+        for (Object object : properties.stringPropertyNames()) {
             string = properties.getProperty(object.toString(), "");
             string = string.substring(1, string.length() - 1);
             string = string.replaceAll(" ", "");
@@ -143,7 +144,7 @@ public class State {
             }
 
             ArrayList<Integer> values = new ArrayList<>();
-            for (String stringToParse: strings) {
+            for (String stringToParse : strings) {
                 values.add(Integer.parseInt(stringToParse));
             }
 
@@ -154,17 +155,17 @@ public class State {
 
     public void printHighscores() {
 
-        for (ArrayList<Integer> entry: superHighScores.values()) {
+        for (ArrayList<Integer> entry : superHighScores.values()) {
             Collections.sort(entry);
             Collections.reverse(entry);
         }
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Highscore List:\n");
-        for (HashMap.Entry<String, ArrayList<Integer>> entries: superHighScores.entrySet()) {
+        for (HashMap.Entry<String, ArrayList<Integer>> entries : superHighScores.entrySet()) {
             stringBuilder.append(entries.getKey()).append(": ");
 
-            for (Integer entry: entries.getValue()) {
+            for (Integer entry : entries.getValue()) {
                 stringBuilder.append(entry).append(" ");
             }
 

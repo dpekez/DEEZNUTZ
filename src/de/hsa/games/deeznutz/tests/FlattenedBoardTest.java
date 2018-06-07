@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 
 public class FlattenedBoardTest {
+    //TODO load the test.properties and not the default.properties
     private BoardConfig boardConfig = new BoardConfig("test.properties");
     private Board board = new Board();
     private EntityContext context = new FlattenedBoard(board);
@@ -142,7 +143,7 @@ public class FlattenedBoardTest {
         }
 
         //After waiting 4 steps
-        //      14 15 16 17 18 19 10 X
+        //      14 15 16 17 18 19 20 X
         //   16  .  .  .  .  .  .  .
         //   17  .  .  .  .  m  .  .
         //   18  .  .  .  .  .  B  .
@@ -275,7 +276,7 @@ public class FlattenedBoardTest {
         int badPlantCount = 0;
 
         context.killAndReplace(badPlant);
-        assertEquals(context.getEntityType(badPlant.getLocation()),EntityType.NOTHING);
+        assertEquals(context.getEntityType(badPlant.getLocation()), EntityType.NOTHING);
 
         //Count the quantity of BadPlants on the Board
 
@@ -289,11 +290,11 @@ public class FlattenedBoardTest {
 
         //There is one more BadPlant because of the insert of BadPlant4
 
-        assertEquals(13,badPlantCount);
+        assertEquals(13, badPlantCount);
     }
 
     @Test
-    public void killEntity(){
+    public void killEntity() {
         int badPlantCount = 0;
         GoodPlant goodPlant = new GoodPlant(new XY(17, 27));
         board.insert(goodPlant);
@@ -312,11 +313,11 @@ public class FlattenedBoardTest {
 
         //There is no BadPlant left
 
-        assertSame(12,badPlantCount);
+        assertSame(12, badPlantCount);
 
         //There is Nothing at this location because the GoodPlant was killed and removed
 
-        assertSame(context.getEntityType(goodPlant.getLocation()),EntityType.NOTHING);
+        assertSame(context.getEntityType(goodPlant.getLocation()), EntityType.NOTHING);
 
     }
 }

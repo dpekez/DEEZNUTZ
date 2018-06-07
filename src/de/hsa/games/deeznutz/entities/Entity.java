@@ -3,6 +3,7 @@ package de.hsa.games.deeznutz.entities;
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.core.EntityType;
 import de.hsa.games.deeznutz.core.XY;
+
 import java.util.logging.Logger;
 
 public abstract class Entity {
