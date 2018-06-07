@@ -8,7 +8,7 @@ public abstract class MasterSquirrel extends Player {
     private static final int DEFAULT_ENERGY = 1000;
     MoveCommand moveCommand;
 
-    MasterSquirrel(XY location, String name) {
+    protected MasterSquirrel(XY location, String name) {
         super(DEFAULT_ENERGY, location, name);
     }
 

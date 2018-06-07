@@ -274,7 +274,7 @@ public class FlattenedBoardTest {
         int badPlantCount = 0;
 
         context.killAndReplace(badPlant);
-        assertEquals(context.getEntityType(badPlant.getLocation()),EntityType.NOTHING);
+        assertEquals(EntityType.NOTHING, context.getEntityType(badPlant.getLocation()));
 
         //Count the quantity of BadPlants on the Board
 
@@ -315,7 +315,7 @@ public class FlattenedBoardTest {
 
         //There is Nothing at this location because the GoodPlant was killed and removed
 
-        assertSame(context.getEntityType(goodPlant.getLocation()),EntityType.NOTHING);
+        assertSame(EntityType.NOTHING, context.getEntityType(goodPlant.getLocation()));
 
     }
 }
