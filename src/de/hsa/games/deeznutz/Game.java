@@ -1,20 +1,23 @@
 package de.hsa.games.deeznutz;
 
 import de.hsa.games.deeznutz.console.ScanException;
+import de.hsa.games.deeznutz.core.BoardConfig;
 import de.hsa.games.deeznutz.core.State;
 import java.util.logging.Logger;
 
 public abstract class Game {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
-    private int fps;
     public UI ui;
     public State state;
+    public BoardConfig boardConfig;
     public boolean threaded;
+    private int fps;
 
-    public Game(State state) {
-        this.state = state;
-        fps = Launcher.boardConfig.getFps();
+    public Game(BoardConfig boardConfig) {
+        this.boardConfig = boardConfig;
+        state = new State(boardConfig);
+        fps = boardConfig.getFps();
     }
 
     public void run() throws ScanException {

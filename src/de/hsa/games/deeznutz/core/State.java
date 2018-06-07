@@ -15,6 +15,7 @@ public class State {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private Board board;
+    private BoardConfig boardConfig;
     private int gameDuration;
     private int gameRounds;
     private boolean gamePause = false;
@@ -22,8 +23,9 @@ public class State {
     private HashMap<String, ArrayList<Integer>> superHighScores;
     private String highScoresFile = "highscores.properties";
 
-    State() {
-        board = new Board();
+    public State(BoardConfig boardConfig) {
+        this.boardConfig = boardConfig;
+        board = new Board(boardConfig);
         highScores = new HashMap<>();
         superHighScores = new HashMap<>();
         loadHighscores();
@@ -62,7 +64,7 @@ public class State {
             togglePause();
             gameDuration = board.getConfig().getGameDuration();
             gameRounds--;
-            board = new Board();
+            board = new Board(boardConfig);
             return;
         }
 

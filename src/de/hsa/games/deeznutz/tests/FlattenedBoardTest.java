@@ -7,8 +7,7 @@ import static org.junit.Assert.*;
 
 
 public class FlattenedBoardTest {
-    private BoardConfig boardConfig = new BoardConfig("test.properties");
-    private Board board = new Board();
+    private Board board = new Board(new BoardConfig("test.properties"));
     private EntityContext context = new FlattenedBoard(board);
 
     private HandOperatedMasterSquirrel handOperatedMasterSquirrel = new HandOperatedMasterSquirrel(new XY(11, 8), "hand1");

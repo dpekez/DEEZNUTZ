@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class GameImplBotUser extends Game {
 
     public GameImplBotUser(boolean threaded, BoardConfig boardConfig) {
-        super(new State());
+        super(boardConfig);
         super.threaded = threaded;
         ui = new ConsoleUI(state, threaded);
     }

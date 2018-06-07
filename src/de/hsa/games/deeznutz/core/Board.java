@@ -16,8 +16,8 @@ public class Board {
     private int gameDurationLeft;
     private int implosionRadius;
 
-    public Board() {
-        this.boardConfig = Launcher.boardConfig;
+    public Board(BoardConfig boardConfig) {
+        this.boardConfig = boardConfig;
         entities = new ArrayList<>();
         masters = new ArrayList<>();
         implodingMinis = new ArrayList<>();

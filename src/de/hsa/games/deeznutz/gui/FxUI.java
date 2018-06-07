@@ -105,10 +105,10 @@ public class FxUI extends Scene implements UI {
                 case X:
                     System.out.println(fxUI.game.state.getBoard());
                     break;
-                case J:
+                case K:
                     fxUI.game.increaseFps(2);
                     break;
-                case K:
+                case J:
                     fxUI.game.decreaseFps(2);
                     break;
                 case H:

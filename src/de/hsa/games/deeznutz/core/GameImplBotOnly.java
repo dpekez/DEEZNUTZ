@@ -6,7 +6,7 @@ import de.hsa.games.deeznutz.console.ConsoleUI;
 public class GameImplBotOnly extends Game {
 
     public GameImplBotOnly(boolean threaded, BoardConfig boardConfig) {
-        super(new State());
+        super(boardConfig);
         super.threaded = threaded;
         ui = new ConsoleUI(state, threaded);
     }

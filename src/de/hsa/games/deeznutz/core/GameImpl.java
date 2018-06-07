@@ -3,12 +3,11 @@ package de.hsa.games.deeznutz.core;
 import de.hsa.games.deeznutz.Game;
 import de.hsa.games.deeznutz.console.ConsoleUI;
 import de.hsa.games.deeznutz.console.ScanException;
-import de.hsa.games.deeznutz.entities.MasterSquirrel;
 
 public class GameImpl extends Game {
 
     public GameImpl(boolean threaded, BoardConfig boardConfig) {
-        super(new State());
+        super(boardConfig);
         super.threaded = threaded;
         ui = new ConsoleUI(state, threaded);
     }
