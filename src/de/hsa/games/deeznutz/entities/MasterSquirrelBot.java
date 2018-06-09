@@ -62,7 +62,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         private final EntityContext context;
         private final MasterSquirrel masterSquirrel;
 
-        public ControllerContextImpl(EntityContext context, MasterSquirrel masterSquirrel) {
+        ControllerContextImpl(EntityContext context, MasterSquirrel masterSquirrel) {
             this.context = context;
             this.masterSquirrel = masterSquirrel;
         }

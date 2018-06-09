@@ -21,12 +21,8 @@ public abstract class Player extends Character {
             stunnedRounds--;
     }
 
-    public boolean isStunned() {
+    boolean isStunned() {
         return stunnedRounds > 0;
-    }
-
-    public boolean isStunnedNextRound() {
-        return stunnedRounds > 1;
     }
 
     @Override
