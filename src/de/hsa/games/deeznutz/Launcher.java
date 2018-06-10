@@ -17,7 +17,7 @@ public class Launcher extends Application {
     private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private static Launcher launcher = new Launcher();
-    private static BoardConfig boardConfig = new BoardConfig("default.properties");
+    private static BoardConfig boardConfig = new BoardConfig("Properties/default.properties");
     private static Game game;
 
     public static void main(String[] args) {
@@ -78,6 +78,7 @@ public class Launcher extends Application {
     private static void startGame(boolean threaded, Game game) {
         if (threaded) {
             logger.info("Starting Game Multithreaded...");
+
 
             Timer timer = new Timer();
             TimerTask timerTask = new TimerTask() {

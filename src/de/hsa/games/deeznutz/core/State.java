@@ -3,7 +3,6 @@ package de.hsa.games.deeznutz.core;
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.entities.Entity;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class State {
     private boolean gamePause = false;
     private HashMap<String, Integer> highScores;
     private HashMap<String, ArrayList<Integer>> superHighScores;
-    private String highScoresFile = "highscores.properties";
+    private String highScoresFile = "Properties/highscores.properties";
 
     public State(BoardConfig boardConfig) {
         this.boardConfig = boardConfig;

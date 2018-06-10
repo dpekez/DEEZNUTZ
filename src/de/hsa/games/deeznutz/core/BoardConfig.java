@@ -89,7 +89,7 @@ public class BoardConfig {
 
         try {
             logger.info("Writing boardconfig to file.");
-            properties.store(new FileOutputStream(propertiesFile), "DEEZNUTZ");
+            properties.store(new FileOutputStream(propertiesFile), "Properties");
         } catch (IOException e) {
             logger.warning("Writing boardconfig failed!");
         }
