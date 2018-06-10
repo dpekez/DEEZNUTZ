@@ -8,6 +8,7 @@ import de.hsa.games.deeznutz.core.GameImplBotUser;
 import de.hsa.games.deeznutz.gui.FxUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
@@ -22,6 +23,11 @@ public class Launcher extends Application {
     public static void main(String[] args) {
         launcher.menu();
     }
+
+    /**
+     * Change between diffrent game modes
+     * like between a siglethreaded game on the console or an multithreaded game on the GUI
+     */
 
     private void menu() {
         switch (boardConfig.getGameMode()) {
@@ -39,6 +45,13 @@ public class Launcher extends Application {
                 break;
         }
     }
+
+    /**
+     * choose wich type of MasterSquirrel will be spawned on the board
+     *
+     * @param threaded yes or no
+     * @param display  console or GUI
+     */
 
     private void fighterMenu(boolean threaded, String display) {
         switch (boardConfig.getPlayerMode()) {

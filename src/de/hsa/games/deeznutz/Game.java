@@ -21,6 +21,12 @@ public abstract class Game {
         fps = boardConfig.getFps();
     }
 
+    /**
+     * //TODO kann das nicht beschreiben
+     *
+     * @throws ScanException
+     */
+
     void run() throws ScanException {
 
         while (true) {

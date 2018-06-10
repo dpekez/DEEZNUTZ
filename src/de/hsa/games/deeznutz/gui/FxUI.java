@@ -2,9 +2,11 @@ package de.hsa.games.deeznutz.gui;
 
 import de.hsa.games.deeznutz.Game;
 import de.hsa.games.deeznutz.Launcher;
-import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
 import de.hsa.games.deeznutz.UI;
-import de.hsa.games.deeznutz.core.*;
+import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
+import de.hsa.games.deeznutz.core.BoardView;
+import de.hsa.games.deeznutz.core.MoveCommand;
+import de.hsa.games.deeznutz.core.XY;
 import de.hsa.games.deeznutz.entities.MasterSquirrel;
 import de.hsa.games.deeznutz.entities.MiniSquirrel;
 import de.hsa.games.deeznutz.music.BackgroundMusic;
@@ -18,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
 import java.util.logging.Logger;
 
 public class FxUI extends Scene implements UI {
@@ -51,6 +54,13 @@ public class FxUI extends Scene implements UI {
         fxUI.setOnKeyPressed(control(fxUI));
         return fxUI;
     }
+
+    /**
+     * Handle all the key inputs to move or to print something for example.
+     *
+     * @param fxUI -fxUI
+     * @return command
+     */
 
     private static EventHandler<KeyEvent> control(FxUI fxUI) {
         return keyEvent -> {
@@ -135,6 +145,12 @@ public class FxUI extends Scene implements UI {
         this.game = game;
     }
 
+    /**
+     * Paint the whole board
+     *
+     * @param view BoardView
+     */
+
     private void repaintBoardCanvas(BoardView view) {
         message("");
         GraphicsContext gc = boardCanvas.getGraphicsContext2D();
@@ -148,22 +164,37 @@ public class FxUI extends Scene implements UI {
         printImplosion(gc);
     }
 
+    /**
+     * Print the Implosion radius if a miniSquirrel implode
+     *
+     * @param gc GraphicsContext
+     */
+
     private void printImplosion(GraphicsContext gc) {
         String master1 = game.state.getBoard().getMainMasterSquirrel().getName();
         Color color;
         int radius = game.state.getBoard().getImplosionRadius();
 
-            for (MiniSquirrel miniSquirrel: game.state.getBoard().getMiniList()) {
-                if (miniSquirrel.getName().equalsIgnoreCase(master1)) {
-                    color = Color.rgb(45, 45, 45, 0.2);
-                } else {
-                    color = Color.rgb(231, 70, 98, 0.2);
-                }
-                gc.setFill(color);
-                gc.fillOval(miniSquirrel.getLocation().getX() * CELL_SIZE + CELL_SIZE / 2 - CELL_SIZE * radius, miniSquirrel.getLocation().getY() * CELL_SIZE + CELL_SIZE / 2 - CELL_SIZE * radius, CELL_SIZE*2*radius, CELL_SIZE*2*radius);
+        for (MiniSquirrel miniSquirrel : game.state.getBoard().getMiniList()) {
+            if (miniSquirrel.getName().equalsIgnoreCase(master1)) {
+                color = Color.rgb(45, 45, 45, 0.2);
+            } else {
+                color = Color.rgb(231, 70, 98, 0.2);
             }
+            gc.setFill(color);
+            gc.fillOval(miniSquirrel.getLocation().getX() * CELL_SIZE + CELL_SIZE / 2 - CELL_SIZE * radius, miniSquirrel.getLocation().getY() * CELL_SIZE + CELL_SIZE / 2 - CELL_SIZE * radius, CELL_SIZE * 2 * radius, CELL_SIZE * 2 * radius);
+        }
 
     }
+
+    /**
+     * Print all the Entitys
+     * the goodEntities are circles ant the badEntyties are squares.
+     * @param view BoardView
+     * @param gc GraphicContext
+     * @param x xPosition
+     * @param y yPosition
+     */
 
     private void PrintEntity(BoardView view, GraphicsContext gc, int x, int y) {
         if (view.getEntityType(x, y) != null) {
@@ -199,6 +230,7 @@ public class FxUI extends Scene implements UI {
                         gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         break;
                     }
+
                 case GOOD_PLANT:
                     gc.setFill(Color.FORESTGREEN);
                     gc.fillOval(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
@@ -222,6 +254,11 @@ public class FxUI extends Scene implements UI {
             }
         }
     }
+
+    /**
+     * Shows the Bot energys, the remainingGameTime, the rounds, the fps and pause if the game is paused
+     * @param msg String
+     */
 
     private void message(final String msg) {
         String message = msg + game.message() + "\n Remaining Rounds: " + game.state.getGameRounds() + " Remaining Time: " + game.state.getGameDuration() + " FPS: " + game.getFps() + ((game.state.isGamePause()) ? " -PAUSED-" : "");

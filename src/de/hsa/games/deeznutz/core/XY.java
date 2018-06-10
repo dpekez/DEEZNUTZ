@@ -50,6 +50,12 @@ public final class XY {
         return 0;
     }
 
+    /**
+     * Check if two objects have the same coordinates
+     *
+     * @param obj Checked Object
+     * @return true or false
+     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof XY)) {

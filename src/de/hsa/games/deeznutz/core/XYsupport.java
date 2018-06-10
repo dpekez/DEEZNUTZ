@@ -54,15 +54,27 @@ public class XYsupport {
         return xy;
     }
 
+    /**
+     * Check if an Entity is in the field of view.
+     *
+     * @param start        the location of the Entity
+     * @param target       coordinate from the target
+     * @param viewDistance of the MasterSquirrel or MiniSquirrel
+     * @return boolean
+     */
+
     public static boolean isInRange(XY start, XY target, int viewDistance) {
-        if (Math.abs(start.getX() - target.getX()) > (viewDistance - 1) / 2 ||
-                (Math.abs(start.getY() - target.getY()) > (viewDistance - 1) / 2)) {
-            return false;
-        }
-
-
-        return true;
+        return Math.abs(start.getX() - target.getX()) <= (viewDistance - 1) / 2 &&
+                (Math.abs(start.getY() - target.getY()) <= (viewDistance - 1) / 2);
     }
+
+    /**
+     * Decrease the distance between two coordinates and convert it to an moveVector.
+     *
+     * @param start  position of the start object
+     * @param target position of the target object
+     * @return an moveVector
+     */
 
     public static XY decreaseDistance(XY start, XY target) {
         int xDiff = target.getX() - start.getX();
@@ -74,6 +86,15 @@ public class XYsupport {
 
         return new XY(moveX, moveY);
     }
+
+    /**
+     * Calculate the lowest left point of the field of view
+     *
+     * @param context EntityContext
+     * @param viewDistance of the Master or MiniSquirrel
+     * @param location of the Emtity
+     * @return the lowest left coordinate
+     */
 
     public static XY viewLowerLeft(EntityContext context, int viewDistance, XY location) {
         int x = location.getX() - (viewDistance - 1) / 2;
@@ -87,6 +108,15 @@ public class XYsupport {
 
         return new XY(x, y);
     }
+
+    /**
+     * Calculate the highest right point of the field of view
+     *
+     * @param context EntityContext
+     * @param viewDistance of the Master or MiniSquirrel
+     * @param location of the Emtity
+     * @return the highest right coordinate
+     */
 
     public static XY viewUpperRight(EntityContext context, int viewDistance, XY location) {
         int x = location.getX() + (viewDistance - 1) / 2;

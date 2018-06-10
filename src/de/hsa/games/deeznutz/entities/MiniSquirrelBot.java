@@ -38,8 +38,9 @@ public class MiniSquirrelBot extends MiniSquirrel {
      * Also you catch all the Invocations.
      * After that you call the nextStep methode from your BotAI over the ControllerontextInterface
      *
-     * @param context //TODO
+     * @param context EntitxContext
      */
+
     @Override
     public void nextStep(EntityContext context) {
         // Not needed here, otherwise the minisquirrel would move twice (random + bot move)
@@ -73,6 +74,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
     /**
      * Here you define all the MiniSquirrelBot specific rules
      */
+
     public class ControllerContextImpl implements ControllerContext {
         private final EntityContext context;
         private final MiniSquirrel miniSquirrel;
@@ -85,6 +87,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         /**
          * The getViewerLowerLeft methode check the lowestLeft point of the filed of view.
          * If the lowestLeft coordinate is outside the filed the lowerLeft coordinate is automaticly the lowestLeft coordinate of the Board.
+         *
          * @return new XY(x,y)
          */
 
@@ -96,6 +99,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         /**
          * The getViewerUpperRight methode check the highestRight point of the filed of view.
          * If this coordinate is also outside the board the highestRight coordinate is the highestRight coordinate of the Board.
+         *
          * @return new XY(x,y)
          */
 
@@ -106,8 +110,10 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         /**
          * The mthode returns the current position of the MiniSquirrelBot
+         *
          * @return new XY (x,y)
          */
+
         @Override
         public XY locate() {
             return getLocation();
@@ -115,10 +121,12 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         /**
          * Here you can find EntityTypes at specific positions.
+         *
          * @param target the coordinate of the field where you want to get the EntityType
          * @return EntityType
          * @throws OutOfViewException it throws this Exception if No entity is in the searchVector
          */
+
         @Override
         public EntityType getEntityAt(XY target) throws OutOfViewException {
             if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE)) {
@@ -129,11 +137,13 @@ public class MiniSquirrelBot extends MiniSquirrel {
         }
 
         /**
-         * The methode checks an Entity if the Entity is your daddy-MasterSquirrel or one of your sibling MiniSquirrels
+         * The methode checks an Entity if the Entity is your daddy-MasterSquirrel or one of your sibling MiniSquirrels.
+         *
          * @param target the coordinate of the Entity you want to check
          * @return true if it is your MasterSquirrel/MiniSquirrel and false if it isn't
          * @throws OutOfViewException when no Entity is in the searchVector
          */
+
         @Override
         public boolean isMine(XY target) throws OutOfViewException {
             if (!XYsupport.isInRange(locate(), target, VIEW_DISTANCE))
@@ -160,18 +170,20 @@ public class MiniSquirrelBot extends MiniSquirrel {
          * This methode collect the energy of an certain impactRadius.
          * The MiniSquirrelbot scan the filed in the impactRadius and get all the EntityTypes.
          * The impactArea is the rounded result of (impactRadius² * π)
-         *  The formular to calculate the EnergyLoss is (200 * (MinisquirrelEnergy / impactArea) * (1-distance form the Entity / impactRadius)
-         *  Now you iterate throw all the coordinates in the ImpactRadius:
-         *  The GoodBests, Badbeasts, GoodPlants, BadPlants and Mini or masterSquirrels from the Enemy return the EnergyLoss.
-         *  the EnergyLoss will be add at the ende and give tahn the TotalImplodeEnergy
-         *  The EnergyLoss decrease the Energy of the GoodBeast or Goodplants if the energy of the GoodEntitys is under 0
-         *  the Entity will be killed and replaced.
-         *  Also the EnergyLoss invrease the Energy of the Badentitys if there energy is higher than 0 the Entity will be killed.
-         *  The EnergyLoss decrease also the energy of the MasterSquirrel but his energy can't go under 0 so you can get all of the rest energy of him
-         *  if his current energy is lower than the EnergyLoss.
-         *  After all the MiniSquirrel which Implode will die and send all the collected energy to his daddy MasterSquirrel
+         * The formular to calculate the EnergyLoss is (200 * (MinisquirrelEnergy / impactArea) * (1-distance form the Entity / impactRadius)
+         * Now you iterate throw all the coordinates in the ImpactRadius:
+         * The GoodBests, Badbeasts, GoodPlants, BadPlants and Mini or masterSquirrels from the Enemy return the EnergyLoss.
+         * the EnergyLoss will be add at the ende and give tahn the TotalImplodeEnergy
+         * The EnergyLoss decrease the Energy of the GoodBeast or Goodplants if the energy of the GoodEntitys is under 0
+         * the Entity will be killed and replaced.
+         * Also the EnergyLoss invrease the Energy of the Badentitys if there energy is higher than 0 the Entity will be killed.
+         * The EnergyLoss decrease also the energy of the MasterSquirrel but his energy can't go under 0 so you can get all of the rest energy of him
+         * if his current energy is lower than the EnergyLoss.
+         * After all the MiniSquirrel which Implode will die and send all the collected energy to his daddy MasterSquirrel
+         *
          * @param impactRadius : radius of the impact circle
          */
+
         @Override
         public void implode(int impactRadius) {
             logger.fine("Implode Method called");
@@ -267,17 +279,15 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
         /**
          * This methode decrease the distance between the MiniSquirrelBot and his Daddy
+         *
          * @return a new movevector
          */
+
         @Override
         public XY directionOfMaster() {
             return XYsupport.decreaseDistance(miniSquirrel.getLocation(), miniSquirrel.getLocation());
         }
 
-        /**
-         *
-         * @return the remaining StepNumber
-         */
         @Override
         public long getRemainingSteps() {
             return context.getGameDurationLeft();

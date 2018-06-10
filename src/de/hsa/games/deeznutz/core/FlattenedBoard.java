@@ -5,6 +5,10 @@ import de.hsa.games.deeznutz.entities.*;
 
 import java.util.logging.Logger;
 
+/**
+ * All the movements and their consequences are checked in this class.
+ */
+
 public class FlattenedBoard implements BoardView, EntityContext {
     private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
@@ -73,6 +77,14 @@ public class FlattenedBoard implements BoardView, EntityContext {
     public XY getSize() {
         return board.getConfig().getBoardSize();
     }
+
+    /**
+     * This methode define the Entity rules.
+     * What happen if a MasterSquirrel is moving against a wall or a Badbeast ,etc...
+     *
+     * @param miniSquirrel, goodBeast, badBeats, masterSquirrel
+     * @param moveDirection of the Entity
+     */
 
     @Override
     public void tryMove(MiniSquirrel miniSquirrel, XY moveDirection) {
@@ -275,12 +287,24 @@ public class FlattenedBoard implements BoardView, EntityContext {
         return nearestPlayer;
     }
 
+    /**
+     * Kill the enemy and delete it from tehe EntityList
+     *
+     * @param entity which will be killed
+     */
+
     @Override
     public void kill(Entity entity) {
         logger.fine("Entity with ID: " + entity.getId() + " and Energy: " + entity.getEnergy() + " killed.");
         board.remove(entity);
         updateFlattenedBoard();
     }
+
+    /**
+     * Kill an Entity and insert the Entity again with a random position on the board.
+     *
+     * @param entity which will be killed and replaced
+     */
 
     @Override
     public void killAndReplace(Entity entity) {

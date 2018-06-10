@@ -2,6 +2,7 @@ import de.hsa.games.deeznutz.core.XY;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class XYTest {
     private final XY test1 = new XY(10, 10);
@@ -34,8 +35,8 @@ public class XYTest {
 
     @Test
     public void equals() {
-        assertEquals(test1, new XY(10, 10));
-        assertEquals(test2, new XY(20, 25));
+        assertTrue(test1.equals(new XY(10, 10)));
+        assertTrue(test2.equals(new XY(20, 25)));
 
     }
 }
