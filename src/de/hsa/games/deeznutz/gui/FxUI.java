@@ -3,10 +3,14 @@ package de.hsa.games.deeznutz.gui;
 import de.hsa.games.deeznutz.Game;
 import de.hsa.games.deeznutz.Launcher;
 import de.hsa.games.deeznutz.UI;
+import de.hsa.games.deeznutz.console.CommandTypeInfo;
+import de.hsa.games.deeznutz.console.GameCommandType;
 import de.hsa.games.deeznutz.console.NotEnoughEnergyException;
 import de.hsa.games.deeznutz.core.BoardView;
 import de.hsa.games.deeznutz.core.MoveCommand;
 import de.hsa.games.deeznutz.core.XY;
+import de.hsa.games.deeznutz.core.XYsupport;
+import de.hsa.games.deeznutz.entities.Entity;
 import de.hsa.games.deeznutz.entities.MasterSquirrel;
 import de.hsa.games.deeznutz.entities.MiniSquirrel;
 import de.hsa.games.deeznutz.music.BackgroundMusic;
@@ -17,11 +21,17 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class FxUI extends Scene implements UI {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
@@ -84,10 +94,9 @@ public class FxUI extends Scene implements UI {
                 case M:
                     try {
                         int energy = 100;
-                        int x = 1;
-                        int y = 0;
+
                         MasterSquirrel daddy = fxUI.game.getState().getBoard().getMainMasterSquirrel();
-                        XY direction = new XY(x, y);
+                        XY direction = XYsupport.generateRandomMoveVector();
 
                         if (fxUI.game.getState().getBoard().getMainMasterSquirrel().getEnergy() >= energy) {
                             MiniSquirrel mini = new MiniSquirrel(energy, daddy.getLocation().addVector(direction), daddy);
@@ -122,12 +131,35 @@ public class FxUI extends Scene implements UI {
                     fxUI.game.decreaseFps(2);
                     break;
                 case H:
-                    // todo: graphical help window
-                    // or simple console print out
+                    fxUI.game.state.togglePause();
+                    GridPane helpPane = new GridPane();
+                    helpPane.getChildren().add(new Label(fxUI.help()));
+                    helpPane.setMinSize(400, 170);
+                    Scene helpScene = new Scene(helpPane);
+                    Stage helpStage = new Stage();
+                    helpStage.setScene(helpScene);
+                    helpStage.show();
+                    helpStage.setTitle("HELP");
+                    fxUI.help();
                     break;
-                case L:
-                    // todo: toggle background music
+                case E:
+                    fxUI.game.state.togglePause();
+                    GridPane entittyPane = new GridPane();
+                    entittyPane.getChildren().add(new Label(fxUI.all()));
+                    ScrollPane sp = new ScrollPane();
+                    sp.setContent(entittyPane);
+                    Scene entityScene = new Scene(sp, 400, 650);
+                    Stage entityStage = new Stage();
+                    entityStage.setScene(entityScene);
+                    entityStage.show();
+                    entityStage.setTitle(fxUI.game.state.getBoard().getEntities().length + " entites in the game");
+                    fxUI.all();
                     break;
+                case PLUS:
+                    fxUI.backgroundMusic.increaseVolume();
+                    break;
+                case MINUS:
+                    fxUI.backgroundMusic.decreaseVolume();
             }
         };
     }
@@ -190,10 +222,11 @@ public class FxUI extends Scene implements UI {
     /**
      * Print all the Entitys
      * the goodEntities are circles ant the badEntyties are squares.
+     *
      * @param view BoardView
-     * @param gc GraphicContext
-     * @param x xPosition
-     * @param y yPosition
+     * @param gc   GraphicContext
+     * @param x    xPosition
+     * @param y    yPosition
      */
 
     private void PrintEntity(BoardView view, GraphicsContext gc, int x, int y) {
@@ -257,6 +290,7 @@ public class FxUI extends Scene implements UI {
 
     /**
      * Shows the Bot energys, the remainingGameTime, the rounds, the fps and pause if the game is paused
+     *
      * @param msg String
      */
 
@@ -276,4 +310,29 @@ public class FxUI extends Scene implements UI {
         }
     }
 
+    public String all() {
+        logger.info("Print all Entities");
+
+        Entity[] entities = game.state.getBoard().getEntities();
+        int iMax = entities.length - 1;
+
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; ; i++) {
+            b.append(String.valueOf(entities[i]));
+            b.append("\n");
+            if (i == iMax) {
+                return b.toString();
+            }
+        }
+    }
+
+    public String help() {
+        logger.info("Print help");
+        List<String> help = new ArrayList<>();
+
+        for (CommandTypeInfo cmdti : GameCommandType.values()) {
+            help.add(cmdti.getCommandFxUI() + " " + cmdti.getHelpText());
+        }
+        return help.stream().collect(Collectors.joining("\15" + "\n"));
+    }
 }
