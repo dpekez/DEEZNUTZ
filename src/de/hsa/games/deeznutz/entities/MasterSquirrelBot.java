@@ -21,6 +21,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
     private static final int VIEW_DISTANCE = 31;
     private BotControllerFactory botControllerFactory;
     private BotController botController;
+    private MasterSquirrelBot masterSquirrel = MasterSquirrelBot.this;
 
     public MasterSquirrelBot(XY location, BotControllerFactory botControllerFactory, String name) {
         super(location, name);
@@ -35,7 +36,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
         if (isStunned())
             return;
 
-        ControllerContext view = new ControllerContextImpl(context, this);
+        ControllerContext view = new ControllerContextImpl(context);
 
         InvocationHandler handler = new InvocationHandler() {
             @Override
@@ -60,11 +61,11 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
     public class ControllerContextImpl implements ControllerContext {
         private final EntityContext context;
-        private final MasterSquirrel masterSquirrel;
 
-        ControllerContextImpl(EntityContext context, MasterSquirrel masterSquirrel) {
+
+        ControllerContextImpl(EntityContext context) {
             this.context = context;
-            this.masterSquirrel = masterSquirrel;
+
         }
 
         @Override

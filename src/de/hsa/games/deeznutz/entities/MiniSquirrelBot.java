@@ -26,6 +26,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
     private static final int VIEW_DISTANCE = 21;
     private BotControllerFactory botControllerFactory;
     private BotController botController;
+    private MiniSquirrelBot miniSquirrel = MiniSquirrelBot.this;
 
     MiniSquirrelBot(int energy, XY location, MasterSquirrel daddy, BotControllerFactory botControllerFactory, String name) {
         super(energy, location, daddy, name);
@@ -51,7 +52,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
         if (isStunned())
             return;
 
-        ControllerContext view = new ControllerContextImpl(context, this);
+        ControllerContext view = new ControllerContextImpl(context);
 
         InvocationHandler handler = (proxy, method, args) -> {
             logger.finest("MiniBot(ID: " + getId() + ") invoked: " + method.getName() + "(" + Arrays.toString(args) + ")");
@@ -77,11 +78,9 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
     public class ControllerContextImpl implements ControllerContext {
         private final EntityContext context;
-        private final MiniSquirrel miniSquirrel;
 
-        ControllerContextImpl(EntityContext context, MiniSquirrel miniSquirrel) {
+        ControllerContextImpl(EntityContext context) {
             this.context = context;
-            this.miniSquirrel = miniSquirrel;
         }
 
         /**
