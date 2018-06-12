@@ -154,11 +154,8 @@ public class FxUI extends Scene implements UI {
                     entityStage.setTitle(fxUI.game.state.getBoard().getEntities().length + " entites in the game");
                     fxUI.all();
                     break;
-                case I:
-                    fxUI.backgroundMusic.stopMusic();
-                    break;
                 case O:
-                    fxUI.backgroundMusic.startMusic();
+                    fxUI.backgroundMusic.toggleMusic();
                     break;
                 case PLUS:
                     fxUI.backgroundMusic.increaseVolume();

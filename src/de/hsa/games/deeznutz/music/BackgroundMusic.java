@@ -31,18 +31,10 @@ public class BackgroundMusic {
     }
 
     public void toggleMusic() {
-        if (clip.isRunning())
+        if (clip.isActive())
             clip.stop();
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-
-    }
-
-    public void stopMusic() {
-        clip.stop();
-    }
-
-    public void startMusic() {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        else
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void decreaseVolume() {
