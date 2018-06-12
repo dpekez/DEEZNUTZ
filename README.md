@@ -16,7 +16,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 ##### JavaDoc
 [link](https://www.hs-augsburg.de/homes/dejan/deeznutz/JavaDoc/overview-summary.html)
 ##### UML Class Diagramm
-[link](https://www.hs-augsburg.de/homes/dejan/deeznutz/file.png) 
+[link](https://www.hs-augsburg.de/homes/dejan/deeznutz/file.png)
 
 ## Authors
 
