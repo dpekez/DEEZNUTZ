@@ -4,9 +4,6 @@ Project [Computer Science HS-Augsburg](https://www.hs-augsburg.de/en/Computer-Sc
 
 ![Alt text](screenshot.png?raw=true "Screenshot, Mac Version")
 
-## JavaDoc
-[link](https://www.hs-augsburg.de/homes/dejan/JavaDoc/overview-summary.html)
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
@@ -14,6 +11,12 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/dpekez/DEEZNUTS/blob/master/LICENSE) file for details
+
+## For Developers
+##### JavaDoc
+[link](https://www.hs-augsburg.de/homes/dejan/deeznutz/JavaDoc/overview-summary.html)
+##### UML Class Diagramm
+[link](https://www.hs-augsburg.de/homes/dejan/deeznutz/file.png) 
 
 ## Authors
 
