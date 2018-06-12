@@ -157,10 +157,10 @@ public class FxUI extends Scene implements UI {
                 case O:
                     fxUI.backgroundMusic.toggleMusic();
                     break;
-                case PLUS:
+                case V:
                     fxUI.backgroundMusic.increaseVolume();
                     break;
-                case MINUS:
+                case C:
                     fxUI.backgroundMusic.decreaseVolume();
             }
         };
