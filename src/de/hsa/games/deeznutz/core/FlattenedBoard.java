@@ -160,6 +160,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
             case MINI_SQUIRREL:
                 logger.fine("Hitting on Master/Mini " + goodBeast);
                 nextEntity.updateEnergy(goodBeast.getEnergy());
+                // leads to GB duplication, commented until fixed
                 //killAndReplace(goodBeast);
                 break;
         }
@@ -208,15 +209,17 @@ public class FlattenedBoard implements BoardView, EntityContext {
                 masterSquirrel.updateEnergy(nextEntity.getEnergy());
                 masterSquirrel.stun();
                 break;
+            case GOOD_BEAST:
             case BAD_BEAST:
             case GOOD_PLANT:
             case BAD_PLANT:
+                logger.fine(masterSquirrel + " is hitting on: " + getEntityType(nextPosition));
                 masterSquirrel.updateEnergy(nextEntity.getEnergy());
                 killAndReplace(nextEntity);
                 break;
             case MINI_SQUIRREL:
             case MINI_SQUIRREL_BOT:
-                logger.fine("Hitting on MiniSquirrel " + masterSquirrel);
+                logger.fine(masterSquirrel + " is hitting on: " + getEntityType(nextPosition));
                 MiniSquirrel miniSquirrel = (MiniSquirrel) nextEntity;
                 int energy;
                 if (masterSquirrel.isMyChild(miniSquirrel)) {
@@ -229,13 +232,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
                     kill(nextEntity);
                 }
                 masterSquirrel.updateEnergy(energy);
-                masterSquirrel.move(moveDirection);
-                updateFlattenedBoard();
-                break;
-            case GOOD_BEAST:
-                logger.fine("Hitting on GoodBeast " + masterSquirrel);
-                masterSquirrel.updateEnergy(nextEntity.getEnergy());
-                killAndReplace(nextEntity);
                 masterSquirrel.move(moveDirection);
                 updateFlattenedBoard();
                 break;

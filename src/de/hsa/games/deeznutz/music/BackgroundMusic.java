@@ -10,7 +10,7 @@ public class BackgroundMusic {
     private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 
     private Clip clip;
-    private int volume = 20;
+    private int volume = 0;
 
     public BackgroundMusic(String fileName) {
         try {
@@ -23,25 +23,38 @@ public class BackgroundMusic {
     }
 
     public void loop() {
-        if (clip != null) {
-            new Thread(() -> {
-                synchronized (clip) {
-                    clip.stop();
-                    clip.setFramePosition(0);
-                    clip.loop(Clip.LOOP_CONTINUOUSLY);
-                    FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                    gainControl.setValue(volume);
-                }
-            }).start();
-        }
+        clip.start();
+        clip.setFramePosition(0);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(volume);
+    }
+
+    public void toggleMusic() {
+        if (clip.isRunning())
+            clip.stop();
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+    }
+
+    public void stopMusic() {
+        clip.stop();
+    }
+
+    public void startMusic() {
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void decreaseVolume() {
-        volume -= 5;
+        volume -= 1;
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(volume);
     }
 
     public void increaseVolume() {
-        volume += 5;
+        volume += 1;
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(volume);
     }
 
 

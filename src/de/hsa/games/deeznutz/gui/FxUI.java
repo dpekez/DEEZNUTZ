@@ -48,7 +48,7 @@ public class FxUI extends Scene implements UI {
         super(parent);
         this.msgLabel = msgLabel;
         this.boardCanvas = boardCanvas;
-        BackgroundMusic backgroundMusic = new BackgroundMusic("bolt.wav");
+        this.backgroundMusic = new BackgroundMusic("bolt.wav");
         backgroundMusic.loop();
     }
 
@@ -71,7 +71,6 @@ public class FxUI extends Scene implements UI {
      * @param fxUI -fxUI
      * @return command
      */
-
     private static EventHandler<KeyEvent> control(FxUI fxUI) {
         return keyEvent -> {
             switch (keyEvent.getCode()) {
@@ -154,6 +153,12 @@ public class FxUI extends Scene implements UI {
                     entityStage.show();
                     entityStage.setTitle(fxUI.game.state.getBoard().getEntities().length + " entites in the game");
                     fxUI.all();
+                    break;
+                case I:
+                    fxUI.backgroundMusic.stopMusic();
+                    break;
+                case O:
+                    fxUI.backgroundMusic.startMusic();
                     break;
                 case PLUS:
                     fxUI.backgroundMusic.increaseVolume();
