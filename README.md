@@ -10,7 +10,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/dpekez/DEEZNUTS/blob/master/LICENSE) file for details
+This project is licensed under the WTFNMFPL-1.0 License - see the [LICENSE](https://github.com/dpekez/DEEZNUTS/blob/master/LICENSE) file for details
 
 ## For Developers
 ##### JavaDoc
